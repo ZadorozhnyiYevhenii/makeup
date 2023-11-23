@@ -1,0 +1,41 @@
+@import "../../mixins/pointBrakers.scss";
+
+.search {
+  &__container {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #EBEBEB;
+
+    @include onDesktop {
+      border: none;
+    }
+  }
+
+  &__input {
+    margin-block: 20px;
+    width: calc(100% - 90px);
+    outline: none;
+    border: none;
+    margin-left: 14px;
+    height: 32px;
+    font-size: 14px;
+    
+    &::placeholder {
+      color: #EBEBEB;
+      font-size: 14px;
+    }
+  }
+
+  &__icon {
+    margin-left: 40px;
+
+    @include onDesktop {
+      margin-left: 48px;
+    }
+  }
+
+  &__cross {
+    margin-right: 48px;
+    cursor: pointer;
+  }
+}

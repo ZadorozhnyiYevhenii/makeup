@@ -1,0 +1,48 @@
+@import "../src/mixins/pointBrakers.scss";
+
+iframe {
+  display: none;
+}
+
+.App {
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+
+  @include onDesktop {
+    margin-inline: 48px;
+  }
+}
+
+button {
+  border: none;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
