@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/makeup/static/css/main.b9912157.css",
+    "main.js": "/makeup/static/js/main.38222dd6.js",
+    "index.html": "/makeup/index.html",
+    "main.b9912157.css.map": "/makeup/static/css/main.b9912157.css.map",
+    "main.38222dd6.js.map": "/makeup/static/js/main.38222dd6.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b9912157.css",
+    "static/js/main.38222dd6.js"
+  ]
+}
