@@ -37,7 +37,6 @@ body.no-scroll {
       z-index: 1004;
       height: 74px;
       margin-left: 48px;
-      max-width: 1660px;
       background-color: #fff;
     }
   }
@@ -55,6 +54,19 @@ body.no-scroll {
     @include onDesktop {
       display: block;
     }
+  }
+
+  &__login {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 100vh;
+    z-index: 1003;
+    background-color: rgba(33,33,33,.2);
   }
 
   &__left {
@@ -132,11 +144,12 @@ body.no-scroll {
   }
 
   &__navbar-mobile {
-    position: fixed;
+    position: absolute;
     top: 111px;
     right: 0;
     left: 0;
     background-color: #fff;
+    visibility: hidden;
 
     @include onDesktop {
       display: none;
@@ -145,10 +158,12 @@ body.no-scroll {
 
     &.show-menu {
       animation: slideIn 1s ease-in-out forwards;
+      visibility: visible;
     }
 
     &.close-menu {
       animation: slideOut 1s ease-in-out forwards;
+      visibility: visible;
     }
 
     &__container {
@@ -228,11 +243,11 @@ body.no-scroll {
       position: static;
     }
   }
-  
+
   &__item {
     padding: 8px 0;
   }
-  
+
   &__link {
     color: #212121;
     line-height: 24px;
@@ -257,13 +272,16 @@ body.no-scroll {
   opacity: 0;
   background-color: #fff;
   z-index: 1;
-  transition: all 0.3s ease;
+
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  visibility: hidden;
 }
 
 .header__item:hover .header__submenu {
   display: block;
   max-height: 200px;
   opacity: 1;
+  visibility: visible;
 }
 
 .header__submenu-link {

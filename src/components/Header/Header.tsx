@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import './Header.scss';
 import cn from 'classnames';
@@ -9,10 +9,20 @@ import { AccountIcon } from '../../assets/AccountIcon';
 import { CartIcon } from '../../assets/CartIcon';
 import { CrossIcon } from '../../assets/CrossIcon';
 import { SearchBar } from '../Search/Search';
+import { LoginForm } from '../Login/LoginForm';
 
-export const Header: React.FC = () => {
+export const Header: React.FC = memo(() => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+
+  const toggleLogin = () => {
+    setIsLoginOpen(prevopen => !prevopen);
+  };
+
+  const closeLogin = () => {
+    setIsLoginOpen(false);
+  };
 
   const toggleSearch = () => {
     setIsSearchOpen(prevOpen => !prevOpen);
@@ -33,7 +43,7 @@ export const Header: React.FC = () => {
       document.body.classList.remove('no-scroll');
     }
   }, [isMenuOpen]);
-  
+
   const closeMenu = () => {
     setIsMenuOpen(false);
   }
@@ -42,7 +52,7 @@ export const Header: React.FC = () => {
     <header className="header">
       <div className="header__top">
         <div className="header__upperContent">
-          Worldwide Free Shipping!
+          Worldwide Free Shipping!`
         </div>
       </div>
       <div className="header__wrap">
@@ -70,11 +80,11 @@ export const Header: React.FC = () => {
           </div>
           {isSearchOpen &&
             <>
-            <div className="header__searchBackdrop" onClick={closeSearch}></div>
-            <div className="header__searchBar">
-              <SearchBar onCross={closeSearch} />
-            </div>
-          </>
+              <div className="header__searchBackdrop" onClick={closeSearch}></div>
+              <div className="header__searchBar">
+                <SearchBar onCross={closeSearch} />
+              </div>
+            </>
           }
         </div>
         <Link className="header__logo" to="/makeup">
@@ -83,9 +93,15 @@ export const Header: React.FC = () => {
         <div className="header__right">
           <div
             className="header__account"
+            onClick={toggleLogin}
           >
             <AccountIcon />
           </div>
+          {isLoginOpen && (
+            <div className="header__login">
+              <LoginForm onClose={closeLogin} />
+            </div>
+          )}
           <NavLink
             to="/makeup/cart"
             className="header__cart"
@@ -219,4 +235,4 @@ export const Header: React.FC = () => {
       </nav>
     </header>
   );
-};
+});
