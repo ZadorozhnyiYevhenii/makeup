@@ -45,7 +45,6 @@ export const SliderMain: React.FC = () => {
         className="slider__arrowLeft"
         onClick={handlePrevClick}
       >
-        вйвйрвй
       </button>
       <ul className="slider__slides">
         {sliderPhoto.map((img, index) => (
@@ -68,7 +67,6 @@ export const SliderMain: React.FC = () => {
         className="slider__arrowRight"
         onClick={handleNextClick}
       >
-        вйшившйй
       </button>
     </div>
   )
