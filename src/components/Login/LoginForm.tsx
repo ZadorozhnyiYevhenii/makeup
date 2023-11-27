@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import { Link } from 'react-router-dom';
 import './LoginForm.scss';
 import { CrossIcon } from "../../assets/CrossIcon";
@@ -9,14 +9,48 @@ type Props = {
   onClose: () => void,
 }
 
-export const LoginForm: React.FC<Props> = ({ onClose }) => {
+export const LoginForm: React.FC<Props> = memo(({ onClose }) => {
   const [type, setType] = useState('password');
   const [toggleIcon, setToggleIcon] = useState(<VisibilityOffIcon />);
+  const [error, setError] = useState('');
+  const [email, setEmail] = useState('');
+  const emailRef = useRef<HTMLInputElement | null>(null);
 
   const togglePasswordVisibility = () => {
     setType((prevType) => prevType === 'password' ? 'text' : 'password');
     setToggleIcon((prevIcon) => prevIcon.type === VisibilityOffIcon ? <VisibilityIcon /> : <VisibilityOffIcon />);
   };
+
+  const emailCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const emailOnBlur = () => {
+    if (!email.includes('@')) {
+      setError('Enter a valid email!');
+    } else {
+      setError('');
+    }
+  };
+
+  const emailOnFocus = () => {
+    if (!email.includes('@')) {
+      setEmail('');
+    }
+    setError('');
+  };
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
+  useEffect(() => {
+    const desktopWidth = window.innerWidth > 1023;
+
+    if (desktopWidth && emailRef.current) {
+      emailRef.current.focus();
+    }
+  }, [])
 
   return (
     <div className="login">
@@ -32,13 +66,22 @@ export const LoginForm: React.FC<Props> = ({ onClose }) => {
       <div className="login__wrapper">
         {/* атрибут action после появления апи! */}
         <form
+          onSubmit={onSubmit}
           className="login__form"
         >
+          <div className="login__email-container">
+          {error && <div className="login__error">{error}</div>}
           <input 
             type="text"
             className="login__input"
             placeholder="E-mail"
+            value={email}
+            onChange={emailCheck}
+            onBlur={emailOnBlur}
+            onFocus={emailOnFocus}
+            ref={emailRef}
           />
+          </div>
          <div className="login__password-container">
             <input
               type={type}
@@ -66,5 +109,5 @@ export const LoginForm: React.FC<Props> = ({ onClose }) => {
         </Link>
       </div>
     </div>
-  )
-}
+  );
+});

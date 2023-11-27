@@ -65,8 +65,33 @@ body.no-scroll {
     align-items: flex-end;
     justify-content: center;
     height: 100vh;
-    z-index: 1003;
-    background-color: rgba(33,33,33,.2);
+    z-index: 100000;
+    background: rgba(33,33,33,.2);
+    
+    @include onDesktop {
+      background: none;
+      position: absolute;
+      right: 0;
+      top: 100px;
+      left: auto;
+      z-index: 1010;
+      height: 367px;
+      opacity: 1;
+      transition: opacity 0.5s ease-in-out;
+    }
+  }
+
+  &__login-overlay {
+    @include onDesktop {
+      position: absolute;
+      right: 0;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      height: 100vh;
+      width: 100vw;
+      transition: background-color 0.3s ease; 
+    }
   }
 
   &__left {
@@ -242,6 +267,10 @@ body.no-scroll {
     &--not {
       position: static;
     }
+
+    &--logged {
+      position: static;
+    }
   }
 
   &__item {
@@ -302,6 +331,7 @@ body.no-scroll {
   max-height: 200px;
   overflow-y: auto;
 }
+
 
 
 @keyframes slideIn {

@@ -16,24 +16,30 @@ export const Header: React.FC = memo(() => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
-  const toggleLogin = () => {
-    setIsLoginOpen(prevopen => !prevopen);
+  const toggle = {
+    login: () => {
+      setIsLoginOpen(prevopen => !prevopen);
+    },
+    search: () => {
+      setIsSearchOpen(prevOpen => !prevOpen);
+    },
+    menu: () => {
+      setIsMenuOpen(prevOpen => !prevOpen);
+    }
   };
 
-  const closeLogin = () => {
-    setIsLoginOpen(false);
-  };
+  const close = {
+    search: () => {
+      setIsSearchOpen(false);
+    },
 
-  const toggleSearch = () => {
-    setIsSearchOpen(prevOpen => !prevOpen);
-  };
+    login: () => {
+      setIsLoginOpen(false);
+    },
 
-  const toggleMenu = () => {
-    setIsMenuOpen(prevOpen => !prevOpen);
-  };
-
-  const closeSearch = () => {
-    setIsSearchOpen(false);
+    menu: () => {
+      setIsMenuOpen(false);
+    }
   };
 
   useEffect(() => {
@@ -44,15 +50,12 @@ export const Header: React.FC = memo(() => {
     }
   }, [isMenuOpen]);
 
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  }
 
   return (
     <header className="header">
       <div className="header__top">
         <div className="header__upperContent">
-          Worldwide Free Shipping!`
+          Worldwide Free Shipping!
         </div>
       </div>
       <div className="header__wrap">
@@ -60,29 +63,29 @@ export const Header: React.FC = memo(() => {
           {isMenuOpen ? (
             <div
               className="header__menu"
-              onClick={closeMenu}
+              onClick={close.menu}
             >
               <CrossIcon />
             </div>
           ) : (
             <div
               className="header__menu"
-              onClick={toggleMenu}
+              onClick={toggle.menu}
             >
               <Menu />
             </div>
           )}
           <div
             className="header__search"
-            onClick={toggleSearch}
+            onClick={toggle.search}
           >
             <SearchIconHeader />
           </div>
           {isSearchOpen &&
             <>
-              <div className="header__searchBackdrop" onClick={closeSearch}></div>
+              <div className="header__searchBackdrop" onClick={close.search}></div>
               <div className="header__searchBar">
-                <SearchBar onCross={closeSearch} />
+                <SearchBar onCross={close.search} />
               </div>
             </>
           }
@@ -93,14 +96,17 @@ export const Header: React.FC = memo(() => {
         <div className="header__right">
           <div
             className="header__account"
-            onClick={toggleLogin}
+            onClick={toggle.login}
           >
             <AccountIcon />
           </div>
           {isLoginOpen && (
-            <div className="header__login">
-              <LoginForm onClose={closeLogin} />
-            </div>
+            <>
+              <div className="header__login-overlay" onClick={close.login}></div>
+              <div className="header__login">
+                <LoginForm onClose={close.login} />
+              </div>
+            </>
           )}
           <NavLink
             to="/makeup/cart"
@@ -164,6 +170,7 @@ export const Header: React.FC = memo(() => {
       })}>
         <ul className={cn('header__list', {
           'header__list--not': isSearchOpen,
+          'header__list--logged': isLoginOpen,
         })}>
           <li className='header__item'>
             <NavLink to="" className="header__link">

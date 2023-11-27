@@ -1,13 +1,25 @@
+@import "../../mixins/pointBrakers.scss";
+
 .login {
-  background-color: #fff;
   padding: 32px 16px;
   width: 100vw;
+  z-index: 100000;
+  background-color: #fff;
+
+  @include onDesktop {
+    max-width: 336px;
+    box-shadow: 0 4px 30px rgba(0,0,0,.1);
+  }
 
   &__top {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 18px;
+
+    @include onDesktop {
+      padding-top: 14px;
+    }
   }
 
   &__title {
@@ -28,18 +40,43 @@
     cursor: pointer;
   }
 
+  &__email-container {
+    position: relative;
+  }
+
+  &__error {
+    color: red;
+    font-size: 14px;
+    position: absolute;
+    right: 0;
+    transform: translateY(100%);
+    top: 10%;
+  }
+
   &__wrapper {
     padding-top: 24px;
+
+    @include onDesktop {
+      width: 338px;
+    }
   }
 
   &__close {
     display: flex;
     cursor: pointer;
+
+    @include onDesktop {
+      display: none;
+    }
   }
 
   &__form {
     display: flex;
     flex-direction: column;
+    
+    @include onDesktop {
+      align-items: center;
+    }
   }
 
   &__input {
@@ -52,6 +89,10 @@
     &::placeholder {
       font-size: 14px;
       color: #333;
+    }
+
+    @include onDesktop {
+      width: 230px;
     }
   }
 
@@ -67,6 +108,10 @@
       font-size: 14px;
       color: #333;
     }
+
+    @include onDesktop {
+      width: 230px;
+    }
   }
 
   &__button {
@@ -74,12 +119,21 @@
     background-color: #212121;
     color: #fff;
     font-size: 16px;
+    width: 100%;
+
+    @include onDesktop {
+      width: 234px;
+    }
   }
 
   &__last {
     margin-top: 24px;
     display: flex;
     justify-content: space-between;
+
+    @include onDesktop {
+      margin-inline: 54px;
+    }
   }
 
   &__lost {
@@ -91,6 +145,10 @@
     &:hover {
       color: #5b24c9;
     }
+
+    @include onDesktop {
+      font-size: 12px;
+    }
   }
 
   &__register {
@@ -100,6 +158,10 @@
 
     &:hover {
       color: #5b24c9;
+    }
+
+    @include onDesktop {
+      font-size: 12px;
     }
   }
 }
