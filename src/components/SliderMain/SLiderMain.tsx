@@ -3,11 +3,11 @@ import { sliderPhotoDesktop, sliderPhotoMobile } from "../../assets/MockSliderMo
 import './SliderMain.scss';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import cn from 'classnames';
 
 export const SliderMain: React.FC = memo(() => {
   const [sliderPhoto, setSliderPhoto] = useState<string[]>([]);
   const [slideInd, setSlideInd] = useState<number>(0);
-
   const [imageHeight, setImageHeight] = useState<number>(0);
 
   const handleImageLoad = (index: number, height: number) => {
@@ -41,8 +41,17 @@ export const SliderMain: React.FC = memo(() => {
       : prev - 1);
   }, [sliderPhoto]);
 
+  const handleKeydownDots = (
+    event: React.KeyboardEvent<HTMLDivElement>,
+    index: number,
+  ) => {
+    if (event.key === 'Enter' || event.key === '') {
+      setSlideInd(index);
+    }
+  };
+
   useEffect(() => {
-    const interval = setInterval(handleNextClick, 3000);
+    const interval = setInterval(handleNextClick, 5000);
 
     return () => clearInterval(interval);
   }, [handleNextClick])
@@ -75,15 +84,27 @@ export const SliderMain: React.FC = memo(() => {
               opacity: index === slideInd ? 1 : 0,
             }}
           >
-              <img
-                src={img}
-                alt={`${img}-${index}`}
-                className="slider__img"
-                onLoad={(e) => handleImageLoad(index, (e.target as HTMLImageElement).height)}
-              />
+            <img
+              src={img}
+              alt={`${img}-${index}`}
+              className="slider__img"
+              onLoad={(e) => handleImageLoad(index, (e.target as HTMLImageElement).height)}
+            />
           </li>
         ))}
       </ul>
+      <div className="slider__dots">
+        {sliderPhoto.map((img, ind) => (
+          <div
+            onKeyDown={(event) => handleKeydownDots(event, ind)}
+            key={img}
+            onClick={() => setSlideInd(ind)}
+            className={cn('slider__dot', {
+              active: ind === slideInd,
+            })}
+          />
+        ))}
+      </div>
     </div>
   )
 });

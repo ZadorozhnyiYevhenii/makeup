@@ -36,9 +36,8 @@
   }
 
   &:hover .slider__arrows {
-    opacity: 1;
+      opacity: 1;
   }
-
 
   &__arrow {
     border: none;
@@ -55,4 +54,29 @@
   &__arrowRight {
     margin-left: auto;
   }
+
+  &__dots {
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    top: 95%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &__dot {
+    background-color: #e2e6e9;
+    height: 4px;
+    width: 4px;
+    border-radius: 50%;
+
+    cursor: pointer;
+    transition-duration: 0.3s;
+
+    &.active {
+      background-color: black;
+    }
+  }
+
+  
 }

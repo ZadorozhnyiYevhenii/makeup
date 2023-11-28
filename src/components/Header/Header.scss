@@ -175,6 +175,7 @@ body.no-scroll {
     left: 0;
     background-color: #fff;
     visibility: hidden;
+    z-index: 2;
 
     @include onDesktop {
       display: none;
