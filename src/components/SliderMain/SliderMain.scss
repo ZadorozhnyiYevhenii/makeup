@@ -1,18 +1,58 @@
+@import "../../mixins/pointBrakers.scss";
+
 .slider {
   display: flex;
-  flex-direction: row;
+  position: relative;
+  height: auto;
 
   &__slides {
     width: 100%;
     height: auto;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   &__slide {
     position: absolute;
     top: 0;
     left: 0;
-    transition: opacity 0.5s ease-in; 
+    transition: opacity 0.5s ease-in;
+  }
+
+  &__arrows {
+    @include onDesktop {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+  }
+
+  &:hover .slider__arrows {
+    opacity: 1;
+  }
+
+
+  &__arrow {
+    border: none;
+    cursor: pointer;
+    margin-inline: 20px;
+    background-color: #fff;
+    padding: 10px;
+  }
+
+  &__arrowLeft {
+    margin-right: auto;
+  }
+
+  &__arrowRight {
+    margin-left: auto;
   }
 }
-
