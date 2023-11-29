@@ -26,6 +26,26 @@
 
   &__button {
     background: none;
+    cursor: pointer;
+  }
+
+  &__dots {
+    display: flex;
+    gap: 10px;
+  }
+
+  &__dot {
+    background-color: #e2e6e9;
+    height: 4px;
+    width: 4px;
+    border-radius: 50%;
+
+    cursor: pointer;
+    transition-duration: 0.3s;
+
+    &.active {
+      background-color: black;
+    }
   }
 }
 
