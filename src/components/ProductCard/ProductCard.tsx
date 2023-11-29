@@ -1,24 +1,31 @@
 import React from "react";
 import './ProductCard.scss';
+import { products } from "../../MockProducts";
 
-export const ProductCard: React.FC = () => {
+type Props = {
+  id: number,
+}
+
+export const ProductCard: React.FC<Props> = ({ id }) => {
+  const product = products.find(prod => prod.id === id);
+
   return (
     <div className="card">
       <div className="card__wrap">
         <img
-          src="https://u.makeup.com.ua/g/gj/gj9mojcjeaga.jpg"
+          src={product?.img}
           alt="img"
           className="card__photo"
         />
       </div>
       <div className="card__container">
         <div className="card__content">
-          <h2 className="card__name">Burberry My Burberry Black</h2>
-          <div className="card__type">fragrancies</div>
+          <h2 className="card__name">{product?.name}</h2>
+          <div className="card__type">{product?.type}</div>
         </div>
         <div className="card__bottom">
-          <div className="card__rate">50</div>
-          <div className="card__price">500$</div>
+          <div className="card__rate">{product?.quantity}</div>
+          <div className="card__price">{product?.price}</div>
         </div>
       </div>
     </div>

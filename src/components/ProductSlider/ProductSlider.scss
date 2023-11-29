@@ -1,8 +1,37 @@
 @import "../../mixins/pointBrakers.scss";
 
+.slider-top {
+  margin: 48px 16px 16px 16px;
+  display: flex;
+  justify-content: space-between;
+
+  @include onDesktop {
+    margin-block: 96px 32px;
+  }
+
+  &__title {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 600;
+
+    @include onDesktop {
+      margin: 0 auto;
+    }
+  }
+
+  &__content {
+    display: flex;
+    gap: 20px;
+  }
+
+  &__button {
+    background: none;
+  }
+}
+
 .productSlider {
-  margin: 0 14px;
   overflow: hidden;
+  margin-inline: 16px;
 
   @include onDesktop {
     margin: 0 -10px -150px -10px;
@@ -10,6 +39,7 @@
 
   &__list {
     display: flex;
+    transition: transform 0.4s ease-in-out;
   }
 
   &__item {
