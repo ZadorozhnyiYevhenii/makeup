@@ -10,11 +10,11 @@ export const SliderMain: React.FC = memo(() => {
   const [slideInd, setSlideInd] = useState<number>(0);
   const [imageHeight, setImageHeight] = useState<number>(0);
 
-  const handleImageLoad = (index: number, height: number) => {
+  const handleImageLoad = useCallback((index: number, height: number) => {
     if (index === slideInd) {
       setImageHeight(height);
     }
-  };
+  }, [slideInd]);
 
   useEffect(() => {
     const handleResize = () => {

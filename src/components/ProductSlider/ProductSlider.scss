@@ -1,0 +1,25 @@
+@import "../../mixins/pointBrakers.scss";
+
+.productSlider {
+  margin: 0 14px;
+  overflow: hidden;
+
+  @include onDesktop {
+    margin: 0 -10px -150px -10px;
+  }
+
+  &__list {
+    display: flex;
+  }
+
+  &__item {
+    flex: 0 0 calc(50% - 10px);
+    margin: 0 5px;
+    pointer-events: auto;
+
+    @include onDesktop {
+      flex: 0 0 calc(25% - 16px);
+      margin: 0 8px;
+    }
+}
+}
