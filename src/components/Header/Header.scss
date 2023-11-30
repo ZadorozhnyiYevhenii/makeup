@@ -5,6 +5,9 @@ body.no-scroll {
 }
 
 .header {
+  position: relative;
+  z-index: 2;
+
   &__wrap {
     display: flex;
     align-items: center;
@@ -66,7 +69,7 @@ body.no-scroll {
     align-items: flex-end;
     justify-content: center;
     height: 100vh;
-    z-index: 100000;
+    z-index: 1050;
     background: rgba(33,33,33,.2);
     
     @include onDesktop {
@@ -75,9 +78,8 @@ body.no-scroll {
       right: 0;
       top: 100px;
       left: auto;
-      z-index: 1010;
+      z-index: 1051;
       height: 367px;
-      opacity: 1;
       transition: opacity 0.5s ease-in-out;
     }
   }

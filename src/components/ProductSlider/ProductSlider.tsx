@@ -34,35 +34,35 @@ export const ProductSlider: React.FC<Props> = memo(({ title }) => {
         <div className="slider-top__content">
           {mobile ? (
             <div className="slider-top__dots">
-            {Array.from({ length: Math.ceil(products.length / 2) }).map((_, ind) => (
-              <div
-                key={ind}
-                onClick={() => setSlideIndex(ind * 2)}
-                className={cn('slider-top__dot', {
-                  active: ind * 2 === slideIndex,
-                })}
-              />
-            ))}
-          </div>
+              {Array.from({ length: Math.ceil(products.length / 2) }).map((_, ind) => (
+                <div
+                  key={ind}
+                  onClick={() => setSlideIndex(ind * 2)}
+                  className={cn('slider-top__dot', {
+                    active: ind * 2 === slideIndex,
+                  })}
+                />
+              ))}
+            </div>
           ) : (
             <>
-            <button
-            onClick={handlePrevSlide}
-            className="slider-top__button"
-            disabled={prevButtonDisabled}
-          >
-            <WestIcon />
-          </button>
-          <button
-            onClick={handleNextSlide}
-            disabled={nextButtonDisabled}
-            className="slider-top__button"
-          >
-            <EastIcon />
-          </button>
+              <button
+                onClick={handlePrevSlide}
+                className="slider-top__button"
+                disabled={prevButtonDisabled}
+              >
+                <WestIcon />
+              </button>
+              <button
+                onClick={handleNextSlide}
+                disabled={nextButtonDisabled}
+                className="slider-top__button"
+              >
+                <EastIcon />
+              </button>
             </>
           )}
-          
+
         </div>
       </div>
       <div className="productSlider">
