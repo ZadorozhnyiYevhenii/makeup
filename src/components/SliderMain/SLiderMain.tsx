@@ -46,6 +46,7 @@ export const SliderMain: React.FC = memo(() => {
     index: number,
   ) => {
     if (event.key === 'Enter' || event.key === '') {
+      console.log(event.key === 'Enter')
       setSlideInd(index);
     }
   };
