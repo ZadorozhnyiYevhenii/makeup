@@ -1,9 +1,9 @@
 import NorthIcon from '@mui/icons-material/North';
 import './BackToTopButton.scss';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import cn from 'classnames';
 
-export const BackToTopButton = () => {
+export const BackToTopButton = memo(() => {
   const [isVisible, setIsVisible] = useState(false);
 
   const scrollUp = () => {
@@ -35,4 +35,4 @@ export const BackToTopButton = () => {
       <NorthIcon />
     </div>
   )
-};
+});

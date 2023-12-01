@@ -84,6 +84,8 @@
     width: 100%;
     padding-block: 24px;
     border-bottom: 1px solid #EBEBEB;
+    text-size-adjust: 100%;
+
 
     &::placeholder {
       font-size: 14px;
@@ -102,6 +104,7 @@
     padding-block: 24px;
     border-bottom: 1px solid #EBEBEB;
     margin-bottom: 24px;
+    text-size-adjust: 100%;
 
     &::placeholder {
       font-size: 14px;
