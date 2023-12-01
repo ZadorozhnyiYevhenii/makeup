@@ -4,6 +4,7 @@ import {Header} from "./components/Header/Header";
 import { Route, Routes } from 'react-router-dom';
 import { HomePage } from './pages/HomePage/HomePage';
 import { Footer } from './components/Footer/Footer';
+import { BackToTopButton } from './components/BackToTopButton/BackToTopButton';
 
 function App() {
   return (
@@ -15,8 +16,8 @@ function App() {
           <Route index element={<HomePage />} />
         </Route>
       </Routes>
+      <BackToTopButton />
       <Footer />
-
     </div>
   );
 }

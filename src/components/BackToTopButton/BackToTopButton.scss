@@ -1,0 +1,25 @@
+.backButton {
+  position: fixed;
+  background-color: white;
+  bottom: 30px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 23;
+  border-radius: 50%;
+  box-shadow: 0 4px 15px rgba(0,0,0,.08);
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+
+  &:hover {
+    background-color: black;
+    color: white;
+  }
+
+  &--none {
+    display: none;
+  }
+}
