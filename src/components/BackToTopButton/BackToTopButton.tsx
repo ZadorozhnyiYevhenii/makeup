@@ -11,7 +11,7 @@ export const BackToTopButton = memo(() => {
       top: 0,
       behavior: 'smooth',
     })
-  }
+  };
 
   useEffect(() => {
     const handleScroll = () => {

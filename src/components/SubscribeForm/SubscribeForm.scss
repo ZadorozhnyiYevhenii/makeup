@@ -1,0 +1,120 @@
+@import "../../mixins/pointBrakers.scss";
+
+.subscribe {
+  margin: 48px 16px 0;
+  padding: 29px 16px 32px;
+  background-color: #fafafa;
+
+  &.focused {
+    .subscribe__label {
+      top: -19px;
+      font-size: 12px;
+    }
+  }
+
+  @include onDesktop {
+    padding: 78px 16px 41px;
+  }
+
+  &__wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+  }
+
+  &__content {
+    max-width: 400px;
+    width: 100%;
+  }
+
+  &__button {
+    background: none;
+    text-transform: uppercase;
+    position: absolute;
+    top: 8px;
+    right: 0;
+    cursor: pointer;
+  }
+
+  &__input {
+    color: #212121;
+    font-size: 14px;
+    padding: 10px 0;
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #212121;
+    outline: none;
+    background-color: #fafafa;
+    transition: all 0.3s ease-in;
+
+    &:focus {
+      border-bottom: 1px solid #5b24c9;
+    }
+  }
+
+  &__title {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+
+    @include onDesktop {
+      font-size: 20px;
+    }
+  }
+
+  &__label {
+    color: #a6a2a2;
+    font-size: 14px;
+    font-weight: 400;
+    position: absolute;
+    pointer-events: none;
+    left: 0;
+    top: 8px;
+    transition: .3s ease all;
+  }
+
+  &__list {
+    display: flex;
+    gap: 12px;
+    margin-top: 62px;
+  }
+
+  &__item {
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    border-radius: 100%;
+    display: inline-block;
+    vertical-align: top;
+    border: 1px solid #ebebeb;
+    text-align: center;
+    white-space: nowrap;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &--fb {
+      background-image: url(../../assets/fb-icon.svg);
+    }
+
+    &--inst {
+      background-image: url(../../assets/inst-icon.svg);
+    }
+
+    &--tw {
+      background-image: url(../../assets/tw-icon.svg);
+    }
+
+    &--yt {
+      background-image: url(../../assets/yt-icon.svg);
+    }
+  }
+}

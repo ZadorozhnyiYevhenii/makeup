@@ -25,6 +25,17 @@ export const Header: React.FC = memo(() => {
     },
     menu: () => {
       setIsMenuOpen(prevOpen => !prevOpen);
+
+      const scrollUp = () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        })
+      };
+
+      if (!isMenuOpen) {
+        scrollUp();
+      }
     }
   };
 
