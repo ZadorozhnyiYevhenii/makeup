@@ -1,0 +1,149 @@
+@import "../../mixins/pointBrakers.scss";
+
+.footer {
+  margin-top: 29px;
+  margin-inline: 16px;
+
+
+  @include onTablet {
+    margin-top: 84px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__phones {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    @include onTablet {
+      flex-direction: column;
+    }
+
+    @include onDesktop {
+      flex-direction: row;
+    }
+  }
+
+  &__phone {
+    color: #212121;
+    line-height: 1.3;
+    display: block;
+    margin: 0 12px 2px 0;
+    font-weight: 500;
+    transition: color 0.2s ease-in;
+
+    &:hover {
+      color: #5b24c9;
+    }
+  }
+
+  &__time {
+    font-size: 14px;
+    color: #a6a2a2;
+    margin: 0 auto;
+    margin-bottom: 3px;
+
+    @include onTablet {
+      margin-inline: 0;
+    }
+  }
+
+  &__call {
+    color: #5b24c9;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 0 auto;
+    margin-top: 16px;
+
+    @include onTablet {
+      margin-inline: 0;
+      margin-top: 24px;
+    }
+  }
+
+  &__cooperation {
+    color: #5b24c9;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 0 auto;
+    margin-top: 14px;
+
+    @include onTablet {
+      margin-inline: 0;
+      margin-top: 28px;
+    }
+  }
+
+  &__wrap {
+    width: auto;
+    order: 2;
+    margin: 32px 0 0 0;
+    border-top: 1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+    padding: 16px 0;
+
+    @include onTablet {
+      width: 50%;
+      border: none;
+      margin-top: 16px;
+    }
+  }
+
+  &__cols {
+    flex-wrap: wrap;
+    margin: -32px 0 0 0;
+    columns: 2;
+    display: flex;
+
+    @include onTablet {
+      columns: 0;
+      flex-wrap: nowrap;
+    }
+  }
+
+  &__col {
+    display: flex;
+    flex-direction: column;
+    padding: 32px 0 0 0;
+    width: 50%;
+    max-width: 50%;
+
+    @include onTablet {
+      flex-grow: 1;
+      padding: 0 12px 0 0;
+    }
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #212121;
+    line-height: 20px;
+    margin: 0 0 20px;
+    transition: color 0.2s ease-in;
+    cursor: pointer;
+
+    &:hover {
+      color: #5b24c9;
+    }
+  }
+
+  &__item {
+    color: #212121;
+    font-size: 14px;
+    transition: color 0.2s ease-in;
+    cursor: pointer;
+    margin: 0 0 20px;
+
+    &:hover {
+      color: #5b24c9;
+    }
+  }
+}
