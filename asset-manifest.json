@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/makeup/static/css/main.18f0b44e.css",
-    "main.js": "/makeup/static/js/main.1734b820.js",
+    "main.css": "/makeup/static/css/main.5a267660.css",
+    "main.js": "/makeup/static/js/main.d3d43216.js",
     "static/media/tw-icon.svg": "/makeup/static/media/tw-icon.f8ed4341222ee2f28c40.svg",
     "static/media/yt-icon.svg": "/makeup/static/media/yt-icon.464c1e627ea8fcd440c2.svg",
     "index.html": "/makeup/index.html",
     "static/media/inst-icon.svg": "/makeup/static/media/inst-icon.a0943643c0d5afa017fc.svg",
     "static/media/fb-icon.svg": "/makeup/static/media/fb-icon.b88d523e574251e45119.svg",
-    "main.18f0b44e.css.map": "/makeup/static/css/main.18f0b44e.css.map",
-    "main.1734b820.js.map": "/makeup/static/js/main.1734b820.js.map"
+    "main.5a267660.css.map": "/makeup/static/css/main.5a267660.css.map",
+    "main.d3d43216.js.map": "/makeup/static/js/main.d3d43216.js.map"
   },
   "entrypoints": [
-    "static/css/main.18f0b44e.css",
-    "static/js/main.1734b820.js"
+    "static/css/main.5a267660.css",
+    "static/js/main.d3d43216.js"
   ]
 }
