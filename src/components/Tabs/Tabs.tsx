@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { products } from '../../MockProducts';
 import './Tabs.scss';
+import { VerticalTabs } from '../TabsDesktop/TabsDesktop';
+
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -14,6 +16,7 @@ interface TabPanelProps {
 
 function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
+
 
   return (
     <div
@@ -43,7 +46,9 @@ type Props = {
   id: number,
 }
 
-export const  BasicTabs:React.FC<Props> = ({ id }) => {
+const isMobile = window.innerWidth < 1024;
+
+export const BasicTabs: React.FC<Props> = ({ id }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -53,14 +58,17 @@ export const  BasicTabs:React.FC<Props> = ({ id }) => {
   const product = products.find(prod => prod.id === +id);
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider',  }}>
-        <Tabs 
-          value={value} 
-          onChange={handleChange} 
-          aria-label="basic tabs example" 
-          indicatorColor="primary" 
+    <>
+    {isMobile ? (
+      <Box sx={{ width: '100%' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+          indicatorColor="primary"
           textColor="inherit"
+          orientation='horizontal'
           sx={{
             '& .MuiTabs-indicator': {
               backgroundColor: 'black',
@@ -76,48 +84,54 @@ export const  BasicTabs:React.FC<Props> = ({ id }) => {
             },
           }}
         >
-           <Tab 
-            label="Characteristics" 
-            {...a11yProps(0)} 
+          <Tab
+            label="Characteristics"
+            {...a11yProps(0)}
           />
-          <Tab 
-            label="Description" 
-            {...a11yProps(1)} 
+          <Tab
+            label="Description"
+            {...a11yProps(1)}
           />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}>
-        <div className='tabs'>
-          <ul className='tabs__list'>
-            <li className="tabs__item">
-              <strong>Counrty:</strong> {product?.country}
-            </li>
-            <li className="tabs__item">
-              <strong>Made in:</strong> {product?.country}
-            </li>
-            <li className="tabs__item">
-              <strong>Sex:</strong> {product?.sex}
-            </li>
-            <li className="tabs__item">
-              <strong>Flavor type:</strong> {product?.smellType}
-            </li>
-            <li className="tabs__item">
-              <strong>Starting note:</strong> {product?.начальнаяНота}
-            </li>
-            <li className="tabs__item">
-              <strong>Heart note:</strong> {product?.нотаСердца}
-            </li>
-            <li className="tabs__item">
-              <strong>Ending note:</strong> {product?.конечнаяНота}
-            </li>
-          </ul>
-        </div>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <div className='tabs__paragraph'>
-          {product?.description}
-        </div>
-      </CustomTabPanel>
+      <Box>
+        <CustomTabPanel value={value} index={0} >
+          <div className='tabs'>
+            <ul className='tabs__list'>
+              <li className="tabs__item">
+                <strong>Counrty:</strong> {product?.country}
+              </li>
+              <li className="tabs__item">
+                <strong>Made in:</strong> {product?.country}
+              </li>
+              <li className="tabs__item">
+                <strong>Sex:</strong> {product?.sex}
+              </li>
+              <li className="tabs__item">
+                <strong>Flavor type:</strong> {product?.smellType}
+              </li>
+              <li className="tabs__item">
+                <strong>Starting note:</strong> {product?.начальнаяНота}
+              </li>
+              <li className="tabs__item">
+                <strong>Heart note:</strong> {product?.нотаСердца}
+              </li>
+              <li className="tabs__item">
+                <strong>Ending note:</strong> {product?.конечнаяНота}
+              </li>
+            </ul>
+          </div>
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+          <div className='tabs__paragraph'>
+            {product?.description}
+          </div>
+        </CustomTabPanel>
+      </Box>
     </Box>
+    ) : (
+      <VerticalTabs id={+id}/>
+    )}
+    </>
   );
 }

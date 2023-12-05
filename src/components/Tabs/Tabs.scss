@@ -1,10 +1,27 @@
+@import "../../mixins/pointBrakers.scss";
+
 .tabs {
   &__paragraph {
     width: calc(100% + 16px);
     max-height: 400px;
-    overflow: auto;
+    overflow-y: scroll;
     color: #212121;
     line-height: 27px;
+
+    @include onDesktop {
+      width: 700px;
+      max-height: 288px;
+      padding: 0 16px 0 56px;
+    }
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #6b6b6b;
+      border-radius: 6px;
+    }
   }
 
   &__item {

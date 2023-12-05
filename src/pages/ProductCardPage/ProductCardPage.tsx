@@ -12,29 +12,31 @@ export const ProductCardPage = () => {
 
   return (
     <div className='product'>
-      <div className='product__wrapper'>
-        <div className='product__photo'>
-          <img
-            src={product?.img}
-            alt={`${product?.name} img`}
-            className='product__img'
-          />
+      <div className='product__content'>
+        <div className='product__wrapper'>
+          <div className='product__photo'>
+            <img
+              src={product?.img}
+              alt={`${product?.name} img`}
+              className='product__img'
+            />
+          </div>
         </div>
-      </div>
-      <div className='product__description'>
-        <h1 className='product__name'>{product?.name}</h1>
-        <div className='product__type'>{product?.productType}</div>
-      </div>
-      <div className='product__container'>
-        <div className='product__price'>
-          {product?.price}
+        <div className='product__description'>
+          <h1 className='product__name'>{product?.name}</h1>
+          <div className='product__type'>{product?.productType}</div>
         </div>
-        <div className='product__buy'>
-          <div className='product__button'>Buy</div>
-          <div className='product__info'>
-            <div className='product__stock'>In stock!</div>
-            <div className='product__code'>code: 
-            <span className='product__number'> {product?.code}</span>
+        <div className='product__container'>
+          <div className='product__price'>
+            {product?.price}
+          </div>
+          <div className='product__buy'>
+            <div className='product__button'>Buy</div>
+            <div className='product__info'>
+              <div className='product__stock'>In stock!</div>
+              <div className='product__code'>code:
+                <span className='product__number'> {product?.code}</span>
+              </div>
             </div>
           </div>
         </div>
