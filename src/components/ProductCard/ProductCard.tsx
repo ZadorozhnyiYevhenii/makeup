@@ -1,6 +1,7 @@
 import React from "react";
 import './ProductCard.scss';
 import { products } from "../../MockProducts";
+import { Link } from 'react-router-dom';
 
 type Props = {
   id: number,
@@ -12,11 +13,13 @@ export const ProductCard: React.FC<Props> = ({ id }) => {
   return (
     <div className="card">
       <div className="card__wrap">
-        <img
-          src={product?.img}
-          alt="img"
-          className="card__photo"
-        />
+        <Link to={`/makeup/product/${product?.id}`}>
+          <img
+            src={product?.img}
+            alt="img"
+            className="card__photo"
+          />
+        </Link>
       </div>
       <div className="card__container">
         <div className="card__content">
