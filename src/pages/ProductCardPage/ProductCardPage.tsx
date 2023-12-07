@@ -9,7 +9,7 @@ import { SelectMenu } from '../../components/SelectMenu/SelectMenu';
 import { mobile } from '../../helpers/mobilePX';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { useSwipeable } from 'react-swipeable';
+
 
 export const ProductCardPage = () => {
   const { id = '' } = useParams<{ id: string }>();
@@ -45,19 +45,12 @@ export const ProductCardPage = () => {
 
   const product = products.find(prod => prod.id === +id);
 
-  const handlers = useSwipeable({
-    onSwipedLeft: handleNextSlide,
-    onSwipedRight: handlePrevSlide,
-    trackTouch: true,
-    trackMouse: true,
-  });
-
   return (
     <>
       <div className='product'>
         <div className='product__content'>
           <div className='product__wrapper'>
-            <div className='product__photo' {...handlers}>
+            <div className='product__photo'>
               <ul className='product__photo-slider' style={{ transform: `translateX(-${slideIndex * 100}%)` }}>
                 {product?.img.map((image) => (
                   <li className='product__photo-item'>
