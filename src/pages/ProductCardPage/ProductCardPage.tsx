@@ -66,7 +66,7 @@ export const ProductCardPage = () => {
         <div className='product__content'>
           <div className='product__wrapper'>
             <div className='product__photo' {...handlers}>
-              <ul className='product__photo-slider' style={{ transform: `translateX(-${slideIndex * 100}%)` }} ref={sliderRef}>
+              <ul className='product__photo-slider' style={{ transform: `translateX(-${slideIndex * 100}%)` }}>
                 {product?.img.map((image) => (
                   <li className='product__photo-item'>
                     <img
