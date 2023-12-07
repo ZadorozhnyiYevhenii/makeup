@@ -5,7 +5,7 @@ export const products = [
     type: "fragrancies",
     quantity: 50,
     price: '500$',
-    img: "https://u.makeup.com.ua/g/gj/gj9mojcjeaga.jpg",
+    img: ["https://u.makeup.com.ua/g/gj/gj9mojcjeaga.jpg", 'https://u.makeup.com.ua/n/nv/nv58d9az3ukf.jpg', 'https://u.makeup.com.ua/t/tr/trvhbjgtp5vz.jpg', 'https://u.makeup.com.ua/a/ap/apusvqdqujjl.jpg'],
     country: "UK",
     sex: 'Women',
     productType: 'Parfum',
@@ -23,7 +23,8 @@ export const products = [
     type: "fragrancies",
     quantity: 50,
     price: '500$',
-    img: "https://u.makeup.com.ua/g/gj/gj9mojcjeaga.jpg",
+    img: ["https://u.makeup.com.ua/g/gj/gj9mojcjeaga.jpg", 'https://u.makeup.com.ua/n/nv/nv58d9az3ukf.jpg', 'https://u.makeup.com.ua/t/tr/trvhbjgtp5vz.jpg', 'https://u.makeup.com.ua/a/ap/apusvqdqujjl.jpg'],
+
   },
   {
     id: 3,
@@ -31,7 +32,8 @@ export const products = [
     type: "fragrancies",
     quantity: 50,
     price: '500$',
-    img: "https://u.makeup.com.ua/0/0h/0harpst4no05.jpg",
+    img: ["https://u.makeup.com.ua/g/gj/gj9mojcjeaga.jpg", 'https://u.makeup.com.ua/n/nv/nv58d9az3ukf.jpg', 'https://u.makeup.com.ua/t/tr/trvhbjgtp5vz.jpg', 'https://u.makeup.com.ua/a/ap/apusvqdqujjl.jpg'],
+
   },
   {
     id: 4,
@@ -39,7 +41,8 @@ export const products = [
     type: "fragrancies",
     quantity: 50,
     price: '500$',
-    img: "https://u.makeup.com.ua/0/0h/0harpst4no05.jpg",
+    img: ["https://u.makeup.com.ua/g/gj/gj9mojcjeaga.jpg", 'https://u.makeup.com.ua/n/nv/nv58d9az3ukf.jpg', 'https://u.makeup.com.ua/t/tr/trvhbjgtp5vz.jpg', 'https://u.makeup.com.ua/a/ap/apusvqdqujjl.jpg'],
+
   },
   {
     id: 5,
@@ -47,7 +50,8 @@ export const products = [
     type: "fragrancies",
     quantity: 50,
     price: '500$',
-    img: "https://u.makeup.com.ua/g/gj/gj9mojcjeaga.jpg",
+    img: ["https://u.makeup.com.ua/g/gj/gj9mojcjeaga.jpg", 'https://u.makeup.com.ua/n/nv/nv58d9az3ukf.jpg', 'https://u.makeup.com.ua/t/tr/trvhbjgtp5vz.jpg', 'https://u.makeup.com.ua/a/ap/apusvqdqujjl.jpg'],
+
   },
   {
     id: 6,
@@ -55,7 +59,8 @@ export const products = [
     type: "fragrancies",
     quantity: 50,
     price: '500$',
-    img: "https://u.makeup.com.ua/0/0h/0harpst4no05.jpg",
+    img: ["https://u.makeup.com.ua/g/gj/gj9mojcjeaga.jpg", 'https://u.makeup.com.ua/n/nv/nv58d9az3ukf.jpg', 'https://u.makeup.com.ua/t/tr/trvhbjgtp5vz.jpg', 'https://u.makeup.com.ua/a/ap/apusvqdqujjl.jpg'],
+
   },
   {
     id: 7,
@@ -63,7 +68,8 @@ export const products = [
     type: "fragrancies",
     quantity: 50,
     price: '500$',
-    img: "https://u.makeup.com.ua/g/gj/gj9mojcjeaga.jpg",
+    img: ["https://u.makeup.com.ua/g/gj/gj9mojcjeaga.jpg", 'https://u.makeup.com.ua/n/nv/nv58d9az3ukf.jpg', 'https://u.makeup.com.ua/t/tr/trvhbjgtp5vz.jpg', 'https://u.makeup.com.ua/a/ap/apusvqdqujjl.jpg'],
+
   },
   {
     id: 8,
@@ -71,6 +77,7 @@ export const products = [
     type: "fragrancies",
     quantity: 50,
     price: '500$',
-    img: "https://u.makeup.com.ua/0/0h/0harpst4no05.jpg",
+    img: ["https://u.makeup.com.ua/g/gj/gj9mojcjeaga.jpg", 'https://u.makeup.com.ua/n/nv/nv58d9az3ukf.jpg', 'https://u.makeup.com.ua/t/tr/trvhbjgtp5vz.jpg', 'https://u.makeup.com.ua/a/ap/apusvqdqujjl.jpg'],
+
   },
 ]

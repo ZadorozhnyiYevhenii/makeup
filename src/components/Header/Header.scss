@@ -22,7 +22,7 @@ body.no-scroll {
       padding: 18px 0;
       border: none;
       z-index: 0;
-      margin-inline: 48px;
+      margin-inline: 0;
     }
   }
 
@@ -103,6 +103,7 @@ body.no-scroll {
 
     @include onDesktop {
       padding-block: 20px;
+      margin-right: 64px;
     }
   }
 

@@ -12,11 +12,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    position: relative;
 
     @include onDesktop {
       order: 2;
-      width: calc(100% / 12 * 6);
       padding: 88px calc(100% / 12);
+      padding-bottom: 0;
     }
   }
 
@@ -46,6 +48,126 @@
     }
   }
 
+  &__photo {
+    margin-inline: 16px;
+    overflow: hidden;
+    padding: 0;
+
+    @include onDesktop {
+      margin-bottom: 36px;
+    }
+  }
+  
+  &__photo-slider {
+    display: flex;
+    transition: transform 0.6s ease-in-out;
+
+  }
+
+  &__photo-item {
+    flex: 0 0 calc(100% - 10px);
+    display: flex;
+    margin: 0 5px;
+    pointer-events: auto;
+    align-items: center;
+    justify-content: center;
+
+    @include onDesktop {
+      flex: 0 0 calc(100% - 10px);
+    }
+  }
+
+  &__dots-desktop {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+  }
+
+  &__dots {
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    bottom: 45px;
+
+    @include onDesktop {
+      position: static;
+    }
+  }
+
+  &__dot {
+    background-color: #e2e6e9;
+    height: 4px;
+    width: 4px;
+    border-radius: 50%;
+
+    cursor: pointer;
+    transition-duration: 0.3s;
+
+    &.active {
+      background-color: black;
+    }
+  }
+
+  &__delivery {
+    color: #5b24c9;
+    font-size: 14px;
+    cursor: pointer;
+    display: block;
+    margin-top: 40px;
+    position: relative;
+    width: max-content;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background-image: url(../../assets/box.svg);
+      background-size: contain;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+  }
+
+  &__delivery-modal {
+    position: absolute;
+    font-size: 12px;
+    background-color: #212121;
+    line-height: 18px;
+    color: #fff;
+    padding: 16px;
+    min-width: 370px;
+    z-index: 2;
+    top: 30px;
+
+    @include onDesktop {
+      min-width: 240px;
+    }
+
+    &::before {
+      position: absolute;
+      border-top: 2px solid #212121;
+      border-left: 2px solid #5b24c9;
+      transform: rotate(45deg);
+      content: '';
+      background: #212121;
+      border-color: #212121;
+      top: -4px;
+      left: 24px;
+      width: 6px;
+      height: 6px;
+      left: 24px
+    }
+  }
+
+  &__select {
+    margin-top: 20px;
+  }
+
+  &__tabs {
+    margin: 40px 0 0 0;
+  }
+
   &__name {
     font-size: 26px;
     font-weight: 400;
@@ -67,7 +189,6 @@
   &__photo {
     height: 300px;
     line-height: 300px;
-    padding: 0 calc(100% / 12);
   }
 
   &__container {
@@ -76,6 +197,26 @@
 
   &__buy {
     margin: 8px 0 0 0;
+
+    @include onDesktop {
+      margin: 16px 0 0 0;
+    }
+  }
+
+  &__photo-dot {
+    border: 1px solid #ebebeb;
+    cursor: pointer;
+    padding: 5px;
+
+    &.active {
+      border: 1px solid #212121;
+    }
+  }
+
+  &__dot-item {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
   }
 
   &__button {
@@ -118,5 +259,9 @@
   &__number {
     color: #a6a2a2;
     font-size: 13px;
+  }
+
+  &__dots-button {
+    background: none;
   }
 }

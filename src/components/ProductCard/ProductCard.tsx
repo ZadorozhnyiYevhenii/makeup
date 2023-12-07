@@ -15,7 +15,7 @@ export const ProductCard: React.FC<Props> = ({ id }) => {
       <div className="card__wrap">
         <Link to={`/makeup/product/${product?.id}`}>
           <img
-            src={product?.img}
+            src={product?.img[0]}
             alt="img"
             className="card__photo"
           />

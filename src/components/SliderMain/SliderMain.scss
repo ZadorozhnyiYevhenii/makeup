@@ -23,6 +23,7 @@
   }
 
   &__arrows {
+    display: none;
     @include onDesktop {
       position: absolute;
       top: 50%;

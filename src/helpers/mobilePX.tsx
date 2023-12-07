@@ -1,0 +1,1 @@
+export const mobile = window.innerWidth <= 1023;

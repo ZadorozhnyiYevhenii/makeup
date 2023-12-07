@@ -58,7 +58,7 @@ export const BasicTabs: React.FC<Props> = ({ id }) => {
   const product = products.find(prod => prod.id === +id);
 
   return (
-    <>
+    <div className='tabs__wrapper'>
     {isMobile ? (
       <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider', }}>
@@ -132,6 +132,6 @@ export const BasicTabs: React.FC<Props> = ({ id }) => {
     ) : (
       <VerticalTabs id={+id}/>
     )}
-    </>
+    </div>
   );
 }
