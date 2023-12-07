@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import './Header.scss';
 import cn from 'classnames';
@@ -10,6 +10,7 @@ import { CartIcon } from '../../assets/CartIcon';
 import { CrossIcon } from '../../assets/CrossIcon';
 import { SearchBar } from '../Search/Search';
 import { LoginForm } from '../Login/LoginForm';
+import { useDisableScroll } from '../../hooks/useDisableScroll';
 
 export const Header: React.FC = memo(() => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -53,14 +54,7 @@ export const Header: React.FC = memo(() => {
     }
   };
 
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.classList.add('no-scroll');
-    } else {
-      document.body.classList.remove('no-scroll');
-    }
-  }, [isMenuOpen]);
-
+  useDisableScroll('no-scroll', isMenuOpen);
 
   return (
     <header className="header">

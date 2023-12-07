@@ -5,7 +5,7 @@ export const products = [
     type: "fragrancies",
     quantity: 50,
     price: '500$',
-    img: ["https://u.makeup.com.ua/g/gj/gj9mojcjeaga.jpg", 'https://u.makeup.com.ua/n/nv/nv58d9az3ukf.jpg', 'https://u.makeup.com.ua/t/tr/trvhbjgtp5vz.jpg', 'https://u.makeup.com.ua/a/ap/apusvqdqujjl.jpg'],
+    img: ["https://u.makeup.com.ua/g/gj/gj9mojcjeaga.jpg", 'https://u.makeup.com.ua/n/nv/nv58d9az3ukf.jpg', 'https://u.makeup.com.ua/t/tr/trvhbjgtp5vz.jpg', 'https://u.makeup.com.ua/a/ap/apusvqdqujjl.jpg', 'https://u.makeup.com.ua/x/x3/x3oyctekmvrn.jpg'],
     country: "UK",
     sex: 'Women',
     productType: 'Parfum',

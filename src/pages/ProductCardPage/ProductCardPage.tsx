@@ -9,6 +9,7 @@ import { SelectMenu } from '../../components/SelectMenu/SelectMenu';
 import { mobile } from '../../helpers/mobilePX';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { useSwipeable } from 'react-swipeable';
 
 export const ProductCardPage = () => {
   const { id = '' } = useParams<{ id: string }>();
@@ -44,12 +45,19 @@ export const ProductCardPage = () => {
 
   const product = products.find(prod => prod.id === +id);
 
+  const handlers = useSwipeable({
+    onSwipedLeft: handleNextSlide,
+    onSwipedRight: handlePrevSlide,
+    trackTouch: true,
+    trackMouse: true,
+  });
+
   return (
     <>
       <div className='product'>
         <div className='product__content'>
           <div className='product__wrapper'>
-            <div className='product__photo'>
+            <div className='product__photo' {...handlers}>
               <ul className='product__photo-slider' style={{ transform: `translateX(-${slideIndex * 100}%)` }}>
                 {product?.img.map((image) => (
                   <li className='product__photo-item'>
@@ -65,14 +73,14 @@ export const ProductCardPage = () => {
             <div className='product__dots'>
               {mobile ? (
                 <>
-                  {product?.img && Array.from({ length: product?.img.length }).map((_, ind) => (
-                    <div
-                      key={ind}
-                      onClick={() => setSlideIndex(ind)}
-                      className={cn('slider-top__dot', {
-                        active: ind === slideIndex,
-                      })}
-                    />
+                  {product?.img.map((image, index) => (
+                    <div key={index} className="product__photo-item">
+                      <img
+                        src={image}
+                        alt={`${product?.name} img`}
+                        className="product__img"
+                      />
+                    </div>
                   ))}
                 </>
               ) : (
