@@ -9,12 +9,28 @@ import { SelectMenu } from '../../components/SelectMenu/SelectMenu';
 import { mobile } from '../../helpers/mobilePX';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { useSwipeable } from 'react-swipeable';
+
 
 export const ProductCardPage = () => {
   const { id = '' } = useParams<{ id: string }>();
   const [showDeliveryInfo, setShowDeliveryInfo] = useState(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const [slideIndex, setSlideIndex] = useState(0);
+  const sliderRef = useRef<HTMLUListElement | null>(null);
+
+  const handlers = useSwipeable({
+    onSwipedLeft: () => handleSwipe('left'),
+    onSwipedRight: () => handleSwipe('right'),
+  });
+
+  const handleSwipe = (direction: 'left' | 'right') => {
+    if (direction === 'left') {
+      handleNextSlide();
+    } else if (direction === 'right') {
+      handlePrevSlide();
+    }
+  };
 
   const handleOutsideClick = (event: MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
@@ -49,8 +65,8 @@ export const ProductCardPage = () => {
       <div className='product'>
         <div className='product__content'>
           <div className='product__wrapper'>
-            <div className='product__photo'>
-              <ul className='product__photo-slider' style={{ transform: `translateX(-${slideIndex * 100}%)` }}>
+            <div className='product__photo' {...handlers}>
+              <ul className='product__photo-slider' style={{ transform: `translateX(-${slideIndex * 100}%)` }} ref={sliderRef}>
                 {product?.img.map((image) => (
                   <li className='product__photo-item'>
                     <img
