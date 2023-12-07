@@ -10,7 +10,6 @@ import { mobile } from '../../helpers/mobilePX';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
-
 export const ProductCardPage = () => {
   const { id = '' } = useParams<{ id: string }>();
   const [showDeliveryInfo, setShowDeliveryInfo] = useState(false);
@@ -66,14 +65,14 @@ export const ProductCardPage = () => {
             <div className='product__dots'>
               {mobile ? (
                 <>
-                  {product?.img.map((image, index) => (
-                    <div key={index} className="product__photo-item">
-                      <img
-                        src={image}
-                        alt={`${product?.name} img`}
-                        className="product__img"
-                      />
-                    </div>
+                  {product?.img && Array.from({ length: product?.img.length }).map((_, ind) => (
+                    <div
+                      key={ind}
+                      onClick={() => setSlideIndex(ind)}
+                      className={cn('slider-top__dot', {
+                        active: ind === slideIndex,
+                      })}
+                    />
                   ))}
                 </>
               ) : (
