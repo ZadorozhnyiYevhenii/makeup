@@ -10,6 +10,7 @@ export const SliderMain: React.FC = memo(() => {
   const [sliderPhoto, setSliderPhoto] = useState<string[]>([]);
   const [slideInd, setSlideInd] = useState<number>(0);
   const [imageHeight, setImageHeight] = useState<number>(0);
+  const [isManualSlider, setIsManualSlider] = useState(false);
 
   const handlers = useSwipeable({
     onSwipedLeft: () => handleSwipe('left'),
@@ -47,12 +48,15 @@ export const SliderMain: React.FC = memo(() => {
 
   const handleNextClick = useCallback(() => {
     setSlideInd((prev) => (prev + 1) % sliderPhoto.length);
+    setIsManualSlider(true);
   }, [sliderPhoto]);
 
   const handlePrevClick = useCallback(() => {
     setSlideInd((prev) => prev === 0
       ? sliderPhoto.length - 1
-      : prev - 1);
+      : prev - 1
+    );
+    setIsManualSlider(true);
   }, [sliderPhoto]);
 
   const handleKeydownDots = (
@@ -65,10 +69,16 @@ export const SliderMain: React.FC = memo(() => {
   };
 
   useEffect(() => {
-    const interval = setInterval(handleNextClick, 5000);
-
+    const interval = setInterval(() => {
+      if (!isManualSlider) {
+        handleNextClick();
+      } else {
+        setIsManualSlider(false);
+      }
+    }, 5000);
+  
     return () => clearInterval(interval);
-  }, [handleNextClick])
+  }, [isManualSlider, handleNextClick]);
 
   return (
     <div 
