@@ -4,11 +4,25 @@ import './SliderMain.scss';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import cn from 'classnames';
+import { useSwipeable } from "react-swipeable";
 
 export const SliderMain: React.FC = memo(() => {
   const [sliderPhoto, setSliderPhoto] = useState<string[]>([]);
   const [slideInd, setSlideInd] = useState<number>(0);
   const [imageHeight, setImageHeight] = useState<number>(0);
+
+  const handlers = useSwipeable({
+    onSwipedLeft: () => handleSwipe('left'),
+    onSwipedRight: () => handleSwipe('right'),
+  });
+
+  const handleSwipe = (direction: 'left' | 'right') => {
+    if (direction === 'left') {
+      handleNextClick();
+    } else if (direction === 'right') {
+      handlePrevClick();
+    }
+  };
 
   const handleImageLoad = useCallback((index: number, height: number) => {
     if (index === slideInd) {
@@ -57,9 +71,13 @@ export const SliderMain: React.FC = memo(() => {
   }, [handleNextClick])
 
   return (
-    <div className="slider" style={{
+    <div 
+      className="slider" 
+      style={{
       height: imageHeight ? `${imageHeight}px` : 'auto',
-    }}>
+      }}
+      {...handlers}
+    >
       <ul className="slider__slides">
         <div className="slider__arrows">
           <button

@@ -1,7 +1,7 @@
 import React from "react";
 import './ProductCard.scss';
 import { products } from "../../MockProducts";
-import { Link } from 'react-router-dom';
+import { ScrollTopLink } from "../../helpers/scrollTopLink";
 
 type Props = {
   id: number,
@@ -13,13 +13,13 @@ export const ProductCard: React.FC<Props> = ({ id }) => {
   return (
     <div className="card">
       <div className="card__wrap">
-        <Link to={`/makeup/product/${product?.id}`}>
+        <ScrollTopLink to={`/makeup/product/${product?.id}`}>
           <img
             src={product?.img[0]}
             alt="img"
             className="card__photo"
           />
-        </Link>
+        </ScrollTopLink>
       </div>
       <div className="card__container">
         <div className="card__content">
