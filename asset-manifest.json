@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/makeup/static/css/main.fe62f1d4.css",
-    "main.js": "/makeup/static/js/main.bdd6fbca.js",
+    "main.js": "/makeup/static/js/main.aaaf0c9f.js",
     "static/media/tw-icon.svg": "/makeup/static/media/tw-icon.f8ed4341222ee2f28c40.svg",
     "static/media/yt-icon.svg": "/makeup/static/media/yt-icon.464c1e627ea8fcd440c2.svg",
     "index.html": "/makeup/index.html",
@@ -9,10 +9,10 @@
     "static/media/fb-icon.svg": "/makeup/static/media/fb-icon.b88d523e574251e45119.svg",
     "static/media/box.svg": "/makeup/static/media/box.d869d0341003401b54fc.svg",
     "main.fe62f1d4.css.map": "/makeup/static/css/main.fe62f1d4.css.map",
-    "main.bdd6fbca.js.map": "/makeup/static/js/main.bdd6fbca.js.map"
+    "main.aaaf0c9f.js.map": "/makeup/static/js/main.aaaf0c9f.js.map"
   },
   "entrypoints": [
     "static/css/main.fe62f1d4.css",
-    "static/js/main.bdd6fbca.js"
+    "static/js/main.aaaf0c9f.js"
   ]
 }
