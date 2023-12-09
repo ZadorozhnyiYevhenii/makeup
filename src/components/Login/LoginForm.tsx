@@ -64,7 +64,6 @@ export const LoginForm: React.FC<Props> = memo(({ onClose }) => {
         </div>
       </div>
       <div className="login__wrapper">
-        {/* атрибут action после появления апи! */}
         <form
           onSubmit={onSubmit}
           className="login__form"

@@ -5,12 +5,11 @@ import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
 import { products } from "../../MockProducts";
 import cn from 'classnames';
+import { useWindowResize } from "../../hooks/useWindowResize";
 
 type Props = {
   title: string,
 }
-
-const mobile = window.innerWidth <= 1024;
 
 export const ProductSlider: React.FC<Props> = memo(({ title }) => {
   const [slideIndex, setSlideIndex] = useState(0);
@@ -23,7 +22,9 @@ export const ProductSlider: React.FC<Props> = memo(({ title }) => {
     setSlideIndex((prevIndex) => Math.min(prevIndex + 2, products.length - 2));
   };
 
-  const nextButtonDisabled = mobile ? slideIndex === products.length - 2 : slideIndex === products.length - 6;
+  const isMobile = useWindowResize(1023);
+
+  const nextButtonDisabled = isMobile ? slideIndex === products.length - 2 : slideIndex === products.length - 6;
 
   const prevButtonDisabled = slideIndex === 0;
 
@@ -32,7 +33,7 @@ export const ProductSlider: React.FC<Props> = memo(({ title }) => {
       <div className="slider-top">
         <h2 className="slider-top__title">{title}</h2>
         <div className="slider-top__content">
-          {mobile ? (
+          {isMobile ? (
             <div className="slider-top__dots">
               {Array.from({ length: Math.ceil(products.length / 2) }).map((_, ind) => (
                 <div

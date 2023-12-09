@@ -9,6 +9,7 @@ import { ProductCardInfo } from '../../components/ProductCardInfo/PRoductCardInf
 import { Dots } from '../../components/Dots/Dots';
 import { PhotoSlider } from '../../components/PhotoSlider/PhotoSlider';
 import { handleSwipe } from '../../helpers/swipe';
+import { PhotoPopup } from '../../components/PhotoPopup/PhotoPopup';
 
 
 export const ProductCardPage = () => {
@@ -16,6 +17,15 @@ export const ProductCardPage = () => {
   const [showDeliveryInfo, setShowDeliveryInfo] = useState(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const [slideIndex, setSlideIndex] = useState(0);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const handleOpenPopup = () => {
+    setIsPopupOpen(prev => !prev);
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+  };
 
   const handlers = useSwipeable({
     onSwipedLeft: () => handleSwipe('left', handleNextSlide, handlePrevSlide),
@@ -53,12 +63,22 @@ export const ProductCardPage = () => {
   return (
     <>
       <div className='product'>
+        {isPopupOpen && (
+          <PhotoPopup
+            product={product}
+            selectedPhotoIndex={slideIndex}
+            onClose={handleClosePopup}
+          />
+        )}
         <div className='product__content'>
           <div className='product__wrapper'>
             <div className='product__photo' {...handlers}>
               <PhotoSlider
                 product={product}
                 slideIndex={slideIndex}
+                onOpenPopup={handleOpenPopup}
+                handlePrevSlide={handlePrevSlide}
+                handleNextSlide={handleNextSlide}
               />
             </div>
             <Dots
@@ -69,7 +89,7 @@ export const ProductCardPage = () => {
               handleNextSlide={handleNextSlide}
             />
           </div>
-          <ProductCardInfo 
+          <ProductCardInfo
             product={product}
             modalRef={modalRef}
             deliveryInfoOpened={deliveryInfoOpened}

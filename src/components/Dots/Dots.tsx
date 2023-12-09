@@ -1,9 +1,9 @@
 import { FC } from "react";
 import cn from 'classnames';
-import { mobile } from "../../helpers/mobilePX";
 import { IProd } from "../../types/IProduct";
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { useWindowResize } from "../../hooks/useWindowResize";
 
 type Props = {
   product: IProd | undefined,
@@ -20,9 +20,11 @@ export const Dots: FC<Props> = ({
   handlePrevSlide,
   handleNextSlide
 }) => {
+  const isMobile = useWindowResize(1023)
+
   return (
     <div className='product__dots'>
-      {mobile ? (
+      {isMobile ? (
         <>
           {product?.img && Array.from({ length: product?.img.length }).map((_, ind) => (
             <div

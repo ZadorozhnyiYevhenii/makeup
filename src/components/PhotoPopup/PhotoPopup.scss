@@ -1,0 +1,37 @@
+.popup {
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background-color: #fff;
+  margin-inline: 16px;
+
+  &__cross {
+    padding-top: 40px;
+    padding-bottom: 60px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 100px;
+    gap: 24px;
+  }
+
+  &__type {
+    color: #a6a2a2;
+    font-weight: 400;
+    font-size: 14px;
+  }
+
+  &__dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
