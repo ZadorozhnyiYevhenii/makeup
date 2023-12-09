@@ -5,6 +5,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import cn from 'classnames';
 import { useSwipeable } from "react-swipeable";
+import { handleSwipe } from "../../helpers/swipe";
 
 export const SliderMain: React.FC = memo(() => {
   const [sliderPhoto, setSliderPhoto] = useState<string[]>([]);
@@ -13,17 +14,9 @@ export const SliderMain: React.FC = memo(() => {
   const [isManualSlider, setIsManualSlider] = useState(false);
 
   const handlers = useSwipeable({
-    onSwipedLeft: () => handleSwipe('left'),
-    onSwipedRight: () => handleSwipe('right'),
+    onSwipedLeft: () => handleSwipe('left', handleNextClick, handlePrevClick),
+    onSwipedRight: () => handleSwipe('right', handleNextClick, handlePrevClick),
   });
-
-  const handleSwipe = (direction: 'left' | 'right') => {
-    if (direction === 'left') {
-      handleNextClick();
-    } else if (direction === 'right') {
-      handlePrevClick();
-    }
-  };
 
   const handleImageLoad = useCallback((index: number, height: number) => {
     if (index === slideInd) {

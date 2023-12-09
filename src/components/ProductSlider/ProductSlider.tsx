@@ -6,6 +6,8 @@ import EastIcon from '@mui/icons-material/East';
 import { products } from "../../MockProducts";
 import cn from 'classnames';
 import { useWindowResize } from "../../hooks/useWindowResize";
+import { useSwipeable } from "react-swipeable";
+import { handleSwipe } from "../../helpers/swipe";
 
 type Props = {
   title: string,
@@ -21,6 +23,11 @@ export const ProductSlider: React.FC<Props> = memo(({ title }) => {
   const handleNextSlide = () => {
     setSlideIndex((prevIndex) => Math.min(prevIndex + 2, products.length - 2));
   };
+
+  const handlers = useSwipeable({
+    onSwipedLeft: () => handleSwipe('left', handleNextSlide, handlePrevSlide),
+    onSwipedRight: () => handleSwipe('right', handleNextSlide, handlePrevSlide),
+  });
 
   const isMobile = useWindowResize(1023);
 
@@ -67,7 +74,7 @@ export const ProductSlider: React.FC<Props> = memo(({ title }) => {
         </div>
       </div>
       <div className="productSlider">
-        <ul className="productSlider__list" style={{ transform: `translateX(-${slideIndex * 50}%)` }}>
+        <ul className="productSlider__list" style={{ transform: `translateX(-${slideIndex * 50}%)` }} {...handlers}>
           {products.map((prod) => (
             <li className="productSlider__item" key={prod.id}>
               <ProductCard id={prod.id} />

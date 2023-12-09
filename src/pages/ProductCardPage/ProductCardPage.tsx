@@ -4,7 +4,6 @@ import './ProductCardPage.scss';
 import { BasicTabs } from '../../components/Tabs/Tabs';
 import { useEffect, useRef, useState } from 'react';
 import { ProductSlider } from '../../components/ProductSlider/ProductSlider';
-import { useSwipeable } from 'react-swipeable';
 import { ProductCardInfo } from '../../components/ProductCardInfo/PRoductCardInfo';
 import { Dots } from '../../components/Dots/Dots';
 import { PhotoSlider } from '../../components/PhotoSlider/PhotoSlider';
