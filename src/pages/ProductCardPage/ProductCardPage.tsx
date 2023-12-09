@@ -8,7 +8,6 @@ import { useSwipeable } from 'react-swipeable';
 import { ProductCardInfo } from '../../components/ProductCardInfo/PRoductCardInfo';
 import { Dots } from '../../components/Dots/Dots';
 import { PhotoSlider } from '../../components/PhotoSlider/PhotoSlider';
-import { handleSwipe } from '../../helpers/swipe';
 import { PhotoPopup } from '../../components/PhotoPopup/PhotoPopup';
 
 
@@ -26,11 +25,6 @@ export const ProductCardPage = () => {
   const handleClosePopup = () => {
     setIsPopupOpen(false);
   };
-
-  const handlers = useSwipeable({
-    onSwipedLeft: () => handleSwipe('left', handleNextSlide, handlePrevSlide),
-    onSwipedRight: () => handleSwipe('right', handleNextSlide, handlePrevSlide),
-  });
 
   const handleOutsideClick = (event: MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
@@ -72,7 +66,7 @@ export const ProductCardPage = () => {
         )}
         <div className='product__content'>
           <div className='product__wrapper'>
-            <div className='product__photo' {...handlers}>
+            <div className='product__photo'>
               <PhotoSlider
                 product={product}
                 slideIndex={slideIndex}
