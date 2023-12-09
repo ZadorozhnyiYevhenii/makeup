@@ -1,6 +1,7 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { IProd } from "../../types/IProduct";
 import { useSwipeable } from "react-swipeable";
+import { handleSwipe } from "../../helpers/swipe";
 
 type Props = {
   product: IProd | undefined,
@@ -19,17 +20,9 @@ export const PhotoSlider: FC<Props> = ({
 }) => {
 
   const handlers = useSwipeable({
-    onSwipedLeft: () => handleSwipe('left'),
-    onSwipedRight: () => handleSwipe('right'),
+    onSwipedLeft: () => handleSwipe('left', handleNextSlide, handlePrevSlide),
+    onSwipedRight: () => handleSwipe('right', handleNextSlide, handlePrevSlide),
   });
-
-  const handleSwipe = (direction: 'left' | 'right') => {
-    if (direction === 'left') {
-      handleNextSlide();
-    } else if (direction === 'right') {
-      handlePrevSlide();
-    }
-  };
   
   return (
     <div className="product__photo-slider" style={{ transform: `translateX(-${slideIndex * 100}%)` }} {...handlers}>
