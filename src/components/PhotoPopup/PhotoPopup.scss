@@ -1,17 +1,50 @@
+@import "../../mixins/pointBrakers.scss";
+
+.background-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
 .popup {
   position: fixed;
   height: 100vh;
   top: 0;
   left: 0;
+  right: 0;
   z-index: 9999;
   background-color: #fff;
-  margin-inline: 16px;
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 1s ease;
+
+  @include onTablet {
+    top: 32px;
+    bottom: 32px;
+    height: auto;
+    right: 10px;
+    left: 10px;
+    margin-inline: 32px;
+    
+  }
+
+  &--open {
+    opacity: 1;
+    transform: scale(1);
+    visibility: visible;
+  }
 
   &__cross {
     padding-top: 40px;
     padding-bottom: 60px;
     display: flex;
     justify-content: flex-end;
+    margin-right: 16px;
   }
 
   &__content {
@@ -33,5 +66,25 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @include onDesktop {
+      position: absolute;
+      left: 40px;
+      top: 25%;
+    }
+  }
+
+  &__productSlider {
+    @include onDesktop {
+      margin-inline: 100px;
+      overflow: hidden;
+      padding-block: 64px;
+    }
+  }
+
+  &__container {
+    @include onDesktop {
+      display: flex;
+    }
   }
 }

@@ -4,6 +4,7 @@ import { IProd } from "../../types/IProduct";
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { useWindowResize } from "../../hooks/useWindowResize";
+import './Dots.scss';
 
 type Props = {
   product: IProd | undefined,
@@ -11,6 +12,7 @@ type Props = {
   slideIndex: number,
   handlePrevSlide: () => void,
   handleNextSlide: () => void,
+  isPopupOpen?: boolean
 }
 
 export const Dots: FC<Props> = ({
@@ -18,30 +20,31 @@ export const Dots: FC<Props> = ({
   setSlideIndex,
   slideIndex,
   handlePrevSlide,
-  handleNextSlide
+  handleNextSlide,
+  isPopupOpen
 }) => {
   const isMobile = useWindowResize(1023)
 
   return (
-    <div className='product__dots'>
+    <div className='dots'>
       {isMobile ? (
         <>
           {product?.img && Array.from({ length: product?.img.length }).map((_, ind) => (
             <div
               key={ind}
               onClick={() => setSlideIndex(ind)}
-              className={cn('slider-top__dot', {
+              className={cn('dots__dot', {
                 active: ind === slideIndex,
               })}
             />
           ))}
         </>
       ) : (
-        <div className='product__dots-desktop'>
+        <div className={cn('dots__desktop', {'dots__desktop--popup': isPopupOpen })}>
           <button
             onClick={handlePrevSlide}
             disabled={slideIndex === 0}
-            className='product__dots-button'
+            className='dots__button'
             style={{ cursor: 'pointer' }}
           >
             <KeyboardArrowLeftIcon />
@@ -50,17 +53,17 @@ export const Dots: FC<Props> = ({
             <div
               key={ind}
               onClick={() => setSlideIndex(ind)}
-              className={cn('product__photo-dot', {
+              className={cn('dots__photo-dot', {
                 active: ind === slideIndex,
               })}
             >
-              <img src={ph} alt={`${ph} + ${ind}`} className='product__dot-item' />
+              <img src={ph} alt={`${ph} + ${ind}`} className='dots__dot-item' />
             </div>
           ))}
           <button
             onClick={handleNextSlide}
             disabled={slideIndex === (product?.img?.length || 0) - 1}
-            className='product__dots-button'
+            className='dots__button'
             style={{ cursor: 'pointer' }}
           >
             <KeyboardArrowRightIcon />

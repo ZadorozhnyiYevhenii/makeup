@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import { products } from '../../MockProducts';
 import './Tabs.scss';
 import { VerticalTabs } from '../TabsDesktop/TabsDesktop';
+import { useWindowResize } from '../../hooks/useWindowResize';
 
 
 interface TabPanelProps {
@@ -46,8 +47,6 @@ type Props = {
   id: number,
 }
 
-const isMobile = window.innerWidth < 1024;
-
 export const BasicTabs: React.FC<Props> = ({ id }) => {
   const [value, setValue] = React.useState(0);
 
@@ -56,6 +55,8 @@ export const BasicTabs: React.FC<Props> = ({ id }) => {
   };
 
   const product = products.find(prod => prod.id === +id);
+
+  const isMobile = useWindowResize(1023);
 
   return (
     <div className='tabs__wrapper'>

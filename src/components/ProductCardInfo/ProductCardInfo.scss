@@ -1,0 +1,143 @@
+@import "../../mixins/pointBrakers.scss";
+
+.product-info {
+  &__description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include onDesktop {
+      width: calc(100% / 12 * 6);
+      padding: 152px 0 0 0;
+      align-items: flex-start;
+    }
+  }
+
+  &__name {
+    font-size: 26px;
+    font-weight: 400;
+    color: #212121;
+    margin: 8px 0 0 0;
+    line-height: 40px;
+  }
+
+  &__type {
+    font-size: 14px;
+    color: #a6a2a2;
+    margin: 24px 0 0 0;
+
+    @include onDesktop {
+      align-items: start;
+    }
+  }
+
+  &__container {
+    margin-top: 40px;
+  }
+
+  &__select {
+    margin-top: 20px;
+  }
+
+  &__buy {
+    margin: 8px 0 0 0;
+
+    @include onDesktop {
+      margin: 16px 0 0 0;
+    }
+  }
+
+  &__button {
+    width: calc(100% - 32px);
+    background-color: #212121;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    height: auto;
+    min-height: 48px;
+    padding: 0 16px;
+    cursor: pointer;
+    outline: 0;
+    user-select: none;
+    font-size: 14px;
+    line-height: 24px;
+    white-space: nowrap;
+    border: none;
+    transition: all .2s ease-in-out;
+    font-size: 16px;
+  }
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    margin: 16px 0;
+  }
+
+  &__stock {
+    font-size: 14px;
+    color: #212121;
+  }
+
+  &__code {
+    font-size: 14px;
+    color: #212121;
+  }
+
+  &__number {
+    color: #a6a2a2;
+    font-size: 13px;
+  }
+
+  &__delivery {
+    color: #5b24c9;
+    font-size: 14px;
+    cursor: pointer;
+    display: block;
+    margin-top: 40px;
+    position: relative;
+    width: max-content;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background-image: url(../../assets/box.svg);
+      background-size: contain;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+  }
+
+  &__delivery-modal {
+    position: absolute;
+    font-size: 12px;
+    background-color: #212121;
+    line-height: 18px;
+    color: #fff;
+    padding: 16px;
+    min-width: 370px;
+    z-index: 2;
+    top: 30px;
+
+    @include onDesktop {
+      min-width: 240px;
+    }
+
+    &::before {
+      position: absolute;
+      border-top: 2px solid #212121;
+      border-left: 2px solid #5b24c9;
+      transform: rotate(45deg);
+      content: '';
+      background: #212121;
+      border-color: #212121;
+      top: -4px;
+      left: 24px;
+      width: 6px;
+      height: 6px;
+      left: 24px
+    }
+  }
+}

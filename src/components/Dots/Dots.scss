@@ -1,0 +1,57 @@
+@import "../../mixins/pointBrakers.scss";
+
+.dots {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  bottom: 45px;
+
+  @include onDesktop {
+    position: static;
+  }
+
+  &__dot {
+    background-color: #e2e6e9;
+    height: 4px;
+    width: 4px;
+    border-radius: 50%;
+
+    cursor: pointer;
+    transition-duration: 0.3s;
+
+    &.active {
+      background-color: black;
+    }
+  }
+
+  &__desktop {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+
+    &--popup {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &__photo-dot {
+    border: 1px solid #ebebeb;
+    cursor: pointer;
+    padding: 5px;
+
+    &.active {
+      border: 1px solid #212121;
+    }
+  }
+
+  &__dot-item {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+  }
+
+  &__button {
+    background: none;
+  }
+}

@@ -1,13 +1,14 @@
 import { useParams } from 'react-router-dom';
 import { products } from '../../MockProducts';
-import './ProductCardPage.scss';
 import { BasicTabs } from '../../components/Tabs/Tabs';
 import { useEffect, useRef, useState } from 'react';
 import { ProductSlider } from '../../components/ProductSlider/ProductSlider';
-import { ProductCardInfo } from '../../components/ProductCardInfo/PRoductCardInfo';
 import { Dots } from '../../components/Dots/Dots';
 import { PhotoSlider } from '../../components/PhotoSlider/PhotoSlider';
 import { PhotoPopup } from '../../components/PhotoPopup/PhotoPopup';
+import { useDisableScroll } from '../../hooks/useDisableScroll';
+import './ProductCardPage.scss';
+import { ProductCardInfo } from '../../components/ProductCardInfo/PRoductCardInfo';
 
 
 export const ProductCardPage = () => {
@@ -51,18 +52,19 @@ export const ProductCardPage = () => {
     setShowDeliveryInfo((prev) => !prev);
   }
 
+  useDisableScroll('no-scroll', isPopupOpen);
+
   const product = products.find(prod => prod.id === +id);
 
   return (
     <>
       <div className='product'>
-        {isPopupOpen && (
           <PhotoPopup
             product={product}
             selectedPhotoIndex={slideIndex}
             onClose={handleClosePopup}
+            isPopupOpen={isPopupOpen}
           />
-        )}
         <div className='product__content'>
           <div className='product__wrapper'>
             <div className='product__photo'>

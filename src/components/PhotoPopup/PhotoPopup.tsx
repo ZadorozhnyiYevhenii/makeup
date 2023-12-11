@@ -9,9 +9,10 @@ type Props = {
   product: IProd | undefined;
   selectedPhotoIndex: number | null;
   onClose: () => void;
+  isPopupOpen: boolean,
 }
 
-export const PhotoPopup: React.FC<Props> = ({ product, selectedPhotoIndex, onClose }) => {
+export const PhotoPopup: React.FC<Props> = ({ product, selectedPhotoIndex, onClose, isPopupOpen }) => {
   const [slideIndex, setSlideIndex] = useState(selectedPhotoIndex || 0);
 
   const handlePrevSlide = () => {
@@ -27,32 +28,38 @@ export const PhotoPopup: React.FC<Props> = ({ product, selectedPhotoIndex, onClo
   }
 
   return (
-    <div className='popup'>
-      <div onClick={onClose} className='popup__cross'>
-        <CrossIcon />
-      </div>
-      <div className='popup__content'>
-        <h2 className='popup__name'>{product?.name}</h2>
-        <h3 className='popup__type'>{product?.type}</h3>
-      </div>
-      <div>
-        <PhotoSlider
-          product={product}
-          slideIndex={slideIndex}
-          handleNextSlide={handleNextSlide}
-          handlePrevSlide={handlePrevSlide}
-        />
-        <div className='popup__dots'>
-          <Dots
-            product={product}
-            setSlideIndex={setSlideIndex}
-            handleNextSlide={handleNextSlide}
-            handlePrevSlide={handlePrevSlide}
-            slideIndex={slideIndex}
-          />
+    <>
+      <div className="background-overlay" style={{ display: isPopupOpen ? 'block' : 'none' }}></div>
+      <div className={`popup ${isPopupOpen ? 'popup--open' : ''}`}>
+        <div onClick={onClose} className='popup__cross'>
+          <CrossIcon />
+        </div>
+        <div className='popup__content'>
+          <h2 className='popup__name'>{product?.name}</h2>
+          <h3 className='popup__type'>{product?.type}</h3>
+        </div>
+        <div className='popup__container'>
+          <div className='popup__productSlider'>
+            <PhotoSlider
+              product={product}
+              slideIndex={slideIndex}
+              handleNextSlide={handleNextSlide}
+              handlePrevSlide={handlePrevSlide}
+              styleOnPopup={true}
+            />
+          </div>
+          <div className='popup__dots'>
+            <Dots
+              product={product}
+              setSlideIndex={setSlideIndex}
+              handleNextSlide={handleNextSlide}
+              handlePrevSlide={handlePrevSlide}
+              slideIndex={slideIndex}
+              isPopupOpen={isPopupOpen}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
-
