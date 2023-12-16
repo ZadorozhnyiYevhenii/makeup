@@ -1,15 +1,15 @@
 import { useEffect } from "react"
 
-export const useBackgroundOverlay = (condition: boolean) => {
+export const useBackgroundOverlay = (condition: boolean, classname: string) => {
   useEffect(() => {
     if (condition) {
-      document.body.classList.add('background-overlay');
+      document.body.classList.add(classname);
     } else {
-      document.body.classList.remove('background-overlay');
+      document.body.classList.remove(classname);
     }
 
     return () => {
-      document.body.classList.remove('background-overlay');
+      document.body.classList.remove(classname);
     };
-  }, [condition]);
+  }, [condition, classname]);
 }

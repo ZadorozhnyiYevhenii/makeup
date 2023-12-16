@@ -27,8 +27,8 @@ export const ProductCard: React.FC<Props> = ({ id }) => {
           <div className="card__type">{product?.type}</div>
         </div>
         <div className="card__bottom">
-          <div className="card__rate">{product?.quantity}</div>
-          <div className="card__price">{product?.price}</div>
+          <div className="card__rate">{product?.quantity} ml</div>
+          <div className="card__price">{product?.price} $</div>
         </div>
       </div>
     </div>

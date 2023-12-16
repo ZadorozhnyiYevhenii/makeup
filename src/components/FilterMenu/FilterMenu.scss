@@ -1,0 +1,53 @@
+.filter-menu {
+  transition: transform 0.3s ease-in-out;
+    transform: translateX(-100%);
+    overflow: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #fff;
+    z-index: 4;
+
+    &.open {
+      transform: translateX(0);
+      transition: transform 0.3s ease-in;
+    }
+
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 16px 16px 16px;
+  }
+
+  &__title {
+    font-size: 22px;
+    line-height: 32px;
+  }
+
+  &__brand-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__name {
+    display: flex;
+    align-items: center;
+    padding: 20px 16px;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  &__after {
+    font-size: 24px;
+    font-weight: 400;
+  }
+
+  &__category {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+  }
+}

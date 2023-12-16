@@ -3,16 +3,17 @@ export interface IProd {
   name: string;
   type: string;
   quantity: number;
-  price: string;
+  price: number;
   img: string[];
   country?: string;
   sex?: string;
-  productType?: string;
+  productType: string;
   smellType?: string;
-  начальнаяНота?: string; // Add the appropriate types for these properties
-  нотаСердца?: string; // Add the appropriate types for these properties
-  конечнаяНота?: string; // Add the appropriate types for these properties
+  начальнаяНота?: string; 
+  нотаСердца?: string; 
+  конечнаяНота?: string; 
   value?: string;
   code?: string;
   description?: string;
-}
+  brand: string;
+};

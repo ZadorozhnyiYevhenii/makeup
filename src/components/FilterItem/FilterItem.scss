@@ -1,0 +1,16 @@
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  max-height: 380px;
+
+  &__label {
+    display: flex;
+    gap: 10px;
+    color: #212121;
+    font-size: 14px;
+    line-height: 24px;
+    padding: 7px 8px 7px 16px;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,28 @@
+.filter {
+  &__mobile-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 24px 8px;
+  }
+
+  &__mobile-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    min-height: 48px;
+    padding: 0 16px;
+    cursor: pointer;
+    outline: 0;
+    user-select: none;
+    font-size: 14px;
+    line-height: 24px;
+    color: #212121;
+    border: 1px solid #212121;
+    background: #fff;
+    margin: 0 8px;
+    font-size: 16px;
+  }
+}

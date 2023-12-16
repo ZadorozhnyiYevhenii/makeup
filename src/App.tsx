@@ -8,6 +8,7 @@ import { BackToTopButton } from './components/BackToTopButton/BackToTopButton';
 import UnderConstructionPage from './pages/NotFoundPage.tsx/NotFoundPage';
 import { ErrorPage } from './pages/404/404';
 import { ProductCardPage } from './pages/ProductCardPage/ProductCardPage';
+import { CategoriesPage } from './pages/CatalogPage/CategoriesPage';
 
 function App() {
   const underConstructionRoutes = [
@@ -22,6 +23,7 @@ function App() {
         <Route path='/makeup/'>
           <Route index element={<HomePage />} />
           <Route path='product/:id' element={<ProductCardPage />} />
+          <Route path='categories' element={<CategoriesPage />} />
 
           {underConstructionRoutes.map((route, index) => (
             <Route key={index} path={route} element={<UnderConstructionPage />} />

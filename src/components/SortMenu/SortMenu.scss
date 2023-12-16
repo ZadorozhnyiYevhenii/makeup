@@ -1,0 +1,42 @@
+@import "../../mixins/pointBrakers.scss";
+
+.sort {
+  padding-inline: 16px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  z-index: 1200;
+
+  &__mobile-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 22px;
+    padding-block: 24px 16px;
+    line-height: 32px;
+    align-items: center;
+    font-weight: 500;
+  }
+
+  &__list {
+    padding-bottom: 90px;
+  }
+
+  &__item {
+    padding-bottom: 18px;
+    color: #a6a2a2;
+    transition: color .2s ease-in-out;
+    font-size: 16px;
+    line-height: 24px;
+    cursor: pointer;
+
+    &:hover {
+      color: #212121;
+    }
+
+    &--selected {
+      color: #212121;
+    }
+  }
+}
