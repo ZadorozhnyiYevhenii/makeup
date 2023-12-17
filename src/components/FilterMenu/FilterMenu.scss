@@ -1,19 +1,19 @@
 .filter-menu {
   transition: transform 0.3s ease-in-out;
-    transform: translateX(-100%);
-    overflow: auto;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-color: #fff;
-    z-index: 4;
+  transform: translateX(-100%);
+  overflow: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #fff;
+  z-index: 4;
 
-    &.open {
-      transform: translateX(0);
-      transition: transform 0.3s ease-in;
-    }
+  &.open {
+    transform: translateX(0);
+    transition: transform 0.3s ease-in;
+  }
 
   &__top {
     display: flex;
@@ -49,5 +49,43 @@
     font-size: 16px;
     line-height: 24px;
     font-weight: 500;
+  }
+
+  &__buttons {
+    position: absolute;
+    z-index: 5;
+    bottom: 0;
+    display: flex;
+    left: 0;
+    right: 0;
+    justify-content: space-between;
+    padding: 24px 16px;
+    border-top: 1px solid #ebebeb;
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 48px;
+    cursor: pointer;
+    outline: 0;     
+    font-size: 14px;
+    line-height: 24px;
+
+    &--reset {
+      margin: 0 8px 0 0;
+      color: #212121;
+      border: 1px solid #212121;
+      background: #fff;
+    }
+
+    &--apply {
+      margin: 0 0 0 8px;
+      color: #fff;
+      border: 1px solid transparent;
+      background: #212121;
+    }
   }
 }

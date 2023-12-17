@@ -45,7 +45,7 @@ export const CategoriesPage = () => {
 
   const handleBrandFilterChange = (brands: string[]) => {
     setSelectedBrand(brands);
-    
+
     setSearchParams(
       getSearchWith(searchParams, {
         brand: brands.length > 0 ? brands.join(',') : null,
@@ -55,23 +55,40 @@ export const CategoriesPage = () => {
 
   const handleTypeFilterChange = (types: string[]) => {
     setSelectedType(types);
-    
+
     setSearchParams(
       getSearchWith(searchParams, {
         types: types.length > 0 ? types.join(',') : null,
       })
     );
   };
-  
+
+  const handleClearFilter = () => {
+    setSelectedType([]);
+    setSelectedBrand([]);
+
+    setSearchParams(
+      getSearchWith(searchParams, {
+        types: null,
+        brand: null,
+        sortBy: sortOption || null,
+      })
+    );
+
+    setIsFilterMenuOpen(false);
+  }
+
   return (
     <div className="categories">
       <FilterButtons onSortOpen={handleSortMenu} onFiltersOpen={handleFilterMenu} />
-        <FilterMenu
-          isFilterMenuOpen={isFilterMenuOpen}
-          onClose={closeFilterMenu}
-          onBrandFilterChange={handleBrandFilterChange}
-          onTypeFilterChange={handleTypeFilterChange}
-        />
+      <FilterMenu
+        handleApply={() => setIsFilterMenuOpen(false)}
+        isFilterMenuOpen={isFilterMenuOpen}
+        onClose={closeFilterMenu}
+        onBrandFilterChange={handleBrandFilterChange}
+        onTypeFilterChange={handleTypeFilterChange}
+        handleClearFilter={handleClearFilter}
+      />
       {isSortMenuOpen && (
         <SortMenu
           onClose={closeSortMenu}
@@ -81,7 +98,7 @@ export const CategoriesPage = () => {
         />
       )}
       <SliderMain />
-      <ProductCardList sortOptions={sortOption} filteredBrand={selectedBrand} filteredType={selectedType}/>
+      <ProductCardList sortOptions={sortOption} filteredBrand={selectedBrand} filteredType={selectedType} />
     </div>
   );
 };

@@ -13,6 +13,8 @@ type Props = {
   onClose: () => void,
   onBrandFilterChange: (brand: string[]) => void,
   onTypeFilterChange: (prodType: string[]) => void,
+  handleClearFilter: () => void,
+  handleApply: () => void,
 }
 
 export const FilterMenu: FC<Props> = ({
@@ -20,6 +22,8 @@ export const FilterMenu: FC<Props> = ({
   onClose,
   onBrandFilterChange,
   onTypeFilterChange,
+  handleClearFilter,
+  handleApply
 }) => {
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [selectedType, setSelectedTypes] = useState<string[]>([]);
@@ -38,6 +42,12 @@ export const FilterMenu: FC<Props> = ({
   const uniqueType = uniqueArray(products, 'productType')
 
   const uniqueBrands = uniqueArray(products, 'brand');
+
+  const clearFilters = () => {
+    setSelectedBrands([]);
+    setSelectedTypes([]);
+    handleClearFilter();
+  };
 
   return (
     <div className={`filter-menu ${isFilterMenuOpen ? 'open' : ''}`}>
@@ -72,6 +82,22 @@ export const FilterMenu: FC<Props> = ({
             filterItems={uniqueType}
             selectedfilter={selectedType}
           />
+        </div>
+        <div className='filter-menu__buttons'>
+          <button 
+            type='button' 
+            onClick={clearFilters}
+            className='filter-menu__button filter-menu__button--reset'
+          >
+            Clear
+          </button>
+          <button
+            type='button'
+            className='filter-menu__button filter-menu__button--apply'
+            onClick={handleApply}
+          >
+            Apply
+          </button>
         </div>
       </div>
     </div>

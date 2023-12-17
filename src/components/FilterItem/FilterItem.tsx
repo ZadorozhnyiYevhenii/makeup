@@ -5,15 +5,16 @@ type Props = {
   isBlockOpen: boolean,
   handleFilterChange: (filter: string) => void,
   filterItems: string[],
-  selectedfilter: string[]
+  selectedfilter: string[],
 }
 
 export const FilterItem: FC<Props> = ({
   isBlockOpen,
   handleFilterChange,
   filterItems,
-  selectedfilter
+  selectedfilter,
 }) => {
+
   return (
     <>
       {isBlockOpen && (
@@ -23,7 +24,7 @@ export const FilterItem: FC<Props> = ({
               <input
                 type="checkbox"
                 value={item}
-                checked={selectedfilter.includes(item)}
+                checked={selectedfilter.length > 0 && selectedfilter.includes(item)}
                 onChange={() => handleFilterChange(item)}
                 className="filter-item__checkbox"
               />
