@@ -44,13 +44,13 @@ export const FilterMenu: FC<Props> = ({
   const uniqueBrands = uniqueArray(products, 'brand');
 
   const clearFilters = () => {
-    setSelectedBrands([]);
-    setSelectedTypes([]);
+    // setSelectedBrands([]);
+    // setSelectedTypes([]);
     handleClearFilter();
   };
 
   return (
-    <div className={`filter-menu ${isFilterMenuOpen ? 'open' : ''}`}>
+    <aside className={`filter-menu ${isFilterMenuOpen ? 'open' : ''}`}>
       <div className="filter-menu__wrapper">
         <div className='filter-menu__top'>
           <span className='filter-menu__title'>Filters</span>
@@ -84,8 +84,8 @@ export const FilterMenu: FC<Props> = ({
           />
         </div>
         <div className='filter-menu__buttons'>
-          <button 
-            type='button' 
+          <button
+            type='button'
             onClick={clearFilters}
             className='filter-menu__button filter-menu__button--reset'
           >
@@ -100,6 +100,6 @@ export const FilterMenu: FC<Props> = ({
           </button>
         </div>
       </div>
-    </div>
+    </aside>
   );
 }

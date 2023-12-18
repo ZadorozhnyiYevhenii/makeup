@@ -12,10 +12,10 @@ export const FilterButtons: FC<Props> = ({
 }) => {
   return (
     <div className="filter">
-      <div className="filter__mobile-buttons">
-        <div className="filter__mobile-button" onClick={onFiltersOpen}>Filters</div>
-        <div className="filter__mobile-button" onClick={onSortOpen}>Sort</div>
-      </div>
+        <div className="filter__mobile-buttons">
+          <div className="filter__mobile-button" onClick={onFiltersOpen}>Filters</div>
+          <div className="filter__mobile-button" onClick={onSortOpen}>Sort</div>
+        </div>
     </div>
   )
 }

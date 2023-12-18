@@ -1,3 +1,5 @@
+@import "../../mixins/pointBrakers.scss";
+
 .filter-item {
   display: flex;
   flex-direction: column;
@@ -12,5 +14,9 @@
     line-height: 24px;
     padding: 7px 8px 7px 16px;
     cursor: pointer;
+
+    @include onDesktop {
+      padding: 7px 0px 7px 0;
+    }
   }
 }
