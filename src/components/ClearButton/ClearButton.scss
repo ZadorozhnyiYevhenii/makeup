@@ -1,0 +1,23 @@
+@import "../../mixins/pointBrakers.scss";
+
+.clear-filter-button {
+  display: none;
+  @include onDesktop {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 32px;
+    padding: 12px 0;
+    color: #212121;
+    font-size: 14px;
+    line-height: 24px;
+    background: none;
+    transition: color 0.2s ease-in;
+    min-width: 76px;
+
+    &:hover {
+      color: #5b24c9;
+    }
+  }
+}

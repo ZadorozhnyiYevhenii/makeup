@@ -1,4 +1,5 @@
 import React from "react";
+import './ClearButton.scss';
 
 interface ClearFilterButtonProps {
   onClick: () => void;

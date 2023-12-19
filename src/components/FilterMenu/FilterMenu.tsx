@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { CrossIcon } from '../../assets/CrossIcon';
 import './FilterMenu.scss';
 import { useDisableScroll } from '../../hooks/useDisableScroll';
@@ -6,48 +6,42 @@ import { products } from '../../MockProducts';
 import { FilterItem } from '../FilterItem/FilterItem';
 import { useBlockVisibility } from '../../hooks/useBlockVisibility';
 import { uniqueArray } from '../../helpers/uniqueArray';
-import { handleFilterChange } from '../../helpers/handleFilterChange';
+import { useAppSelector } from '../../app/hooks';
+import { useHandleFilterChange } from '../../helpers/handleFilterChange';
+import { setBrandFilter, setTypeFilter } from '../../app/slices/filterSlice';
+import { calculateProductCountByFilter } from '../../helpers/calculateProductCountByFilter';
 
 type Props = {
   isFilterMenuOpen: boolean,
   onClose: () => void,
-  onBrandFilterChange: (brand: string[]) => void,
-  onTypeFilterChange: (prodType: string[]) => void,
-  handleClearFilter: () => void,
   handleApply: () => void,
+  clearFilters: () => void,
 }
 
 export const FilterMenu: FC<Props> = ({
   isFilterMenuOpen,
   onClose,
-  onBrandFilterChange,
-  onTypeFilterChange,
-  handleClearFilter,
-  handleApply
+  handleApply,
+  clearFilters
 }) => {
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
-  const [selectedType, setSelectedTypes] = useState<string[]>([]);
+  const { brands, types } = useAppSelector(state => state.filters);
   const { isBrandBlockOpen, isTypeBlockOpen, handleOpenBlock } = useBlockVisibility();
+  const handleFilterChange = useHandleFilterChange();
 
   useDisableScroll('no-scroll', isFilterMenuOpen);
 
-  const handleBrandFilterChange = (brand: string) => {
-    handleFilterChange(brand, selectedBrands, onBrandFilterChange, setSelectedBrands);
-  };
-
-  const handleTypeFilterChange = (type: string) => {
-    handleFilterChange(type, selectedType, onTypeFilterChange, setSelectedTypes);
-  };
-
   const uniqueType = uniqueArray(products, 'productType')
-
   const uniqueBrands = uniqueArray(products, 'brand');
 
-  const clearFilters = () => {
-    // setSelectedBrands([]);
-    // setSelectedTypes([]);
-    handleClearFilter();
-  };
+  const handleBrandChange = (brand: string) => {
+    handleFilterChange(brand, brands, setBrandFilter, 'brand')
+  }
+
+  const handleTypeChange = (type: string) => {
+    handleFilterChange(type, types, setTypeFilter, 'type')
+  }
+
+  const productCountByFilter = calculateProductCountByFilter(products, brands, types);
 
   return (
     <aside className={`filter-menu ${isFilterMenuOpen ? 'open' : ''}`}>
@@ -64,23 +58,25 @@ export const FilterMenu: FC<Props> = ({
         <div className='filter-menu__content'>
           <div className="filter-menu__name" onClick={() => handleOpenBlock('brand')}>
             <div className='filter-menu__category'>Brand</div>
-            <span className='filter-menu__after'>{isBrandBlockOpen ? '+' : '-'}</span>
+            <span className='filter-menu__after'>{isBrandBlockOpen ? '-' : '+'}</span>
           </div>
           <FilterItem
+            productCount={productCountByFilter}
             isBlockOpen={isBrandBlockOpen}
-            handleFilterChange={handleBrandFilterChange}
             filterItems={uniqueBrands}
-            selectedfilter={selectedBrands}
+            selectedfilter={brands}
+            handleFilterChange={handleBrandChange}
           />
           <div className="filter-menu__name" onClick={() => handleOpenBlock('type')}>
             <div className='filter-menu__category'>Type</div>
-            <span className='filter-menu__after'>{isTypeBlockOpen ? '+' : '-'}</span>
+            <span className='filter-menu__after'>{isTypeBlockOpen ? '-' : '+'}</span>
           </div>
           <FilterItem
+            productCount={productCountByFilter}
             isBlockOpen={isTypeBlockOpen}
-            handleFilterChange={handleTypeFilterChange}
             filterItems={uniqueType}
-            selectedfilter={selectedType}
+            selectedfilter={types}
+            handleFilterChange={handleTypeChange}
           />
         </div>
         <div className='filter-menu__buttons'>

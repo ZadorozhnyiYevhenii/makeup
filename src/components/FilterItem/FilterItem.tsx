@@ -6,6 +6,7 @@ type Props = {
   handleFilterChange: (filter: string) => void,
   filterItems: string[],
   selectedfilter: string[],
+  productCount: Record<string, number>;
 }
 
 export const FilterItem: FC<Props> = ({
@@ -13,8 +14,8 @@ export const FilterItem: FC<Props> = ({
   handleFilterChange,
   filterItems,
   selectedfilter,
+  productCount
 }) => {
-
   return (
     <>
       {isBlockOpen && (
@@ -28,7 +29,7 @@ export const FilterItem: FC<Props> = ({
                 onChange={() => handleFilterChange(item)}
                 className="filter-item__checkbox"
               />
-              {item}
+              {item} ({productCount[item] || 0})
             </label>
           ))}
         </div>

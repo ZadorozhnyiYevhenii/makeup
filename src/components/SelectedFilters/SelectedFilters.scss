@@ -1,0 +1,29 @@
+.selected-filters {
+  &__list {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  &__item {
+    background: #fafafa;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+    height: 32px;
+    padding: 0 12px;
+    color: #212121;
+    font-size: 14px;
+    line-height: 24px;
+    border-radius: 20px;
+    background: #fafafa;
+    gap: 10px;
+  }
+
+  &__button {
+    background: none;
+    font-size: 10px;
+    cursor: pointer;
+  }
+}

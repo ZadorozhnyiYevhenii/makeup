@@ -12,7 +12,6 @@ type Props = {
 }
 
 export const ProductCardList: FC<Props> = ({ sortOptions, filteredBrand, filteredType }) => {
-
   const sortedProducts = filterAndSortProducts(products, filteredBrand, filteredType, sortOptions);
 
   return (
