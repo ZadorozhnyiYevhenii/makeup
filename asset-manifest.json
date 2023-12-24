@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/makeup/static/css/main.5f615b5e.css",
-    "main.js": "/makeup/static/js/main.925f67ea.js",
+    "main.css": "/makeup/static/css/main.4ef05c76.css",
+    "main.js": "/makeup/static/js/main.5e7711b0.js",
     "static/media/tw-icon.svg": "/makeup/static/media/tw-icon.f8ed4341222ee2f28c40.svg",
     "static/media/yt-icon.svg": "/makeup/static/media/yt-icon.464c1e627ea8fcd440c2.svg",
     "index.html": "/makeup/index.html",
     "static/media/inst-icon.svg": "/makeup/static/media/inst-icon.a0943643c0d5afa017fc.svg",
     "static/media/fb-icon.svg": "/makeup/static/media/fb-icon.b88d523e574251e45119.svg",
     "static/media/box.svg": "/makeup/static/media/box.d869d0341003401b54fc.svg",
-    "main.5f615b5e.css.map": "/makeup/static/css/main.5f615b5e.css.map",
-    "main.925f67ea.js.map": "/makeup/static/js/main.925f67ea.js.map"
+    "main.4ef05c76.css.map": "/makeup/static/css/main.4ef05c76.css.map",
+    "main.5e7711b0.js.map": "/makeup/static/js/main.5e7711b0.js.map"
   },
   "entrypoints": [
-    "static/css/main.5f615b5e.css",
-    "static/js/main.925f67ea.js"
+    "static/css/main.4ef05c76.css",
+    "static/js/main.5e7711b0.js"
   ]
 }
