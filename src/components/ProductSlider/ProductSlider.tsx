@@ -58,6 +58,7 @@ export const ProductSlider: React.FC<Props> = memo(({ title }) => {
                 onClick={handlePrevSlide}
                 className="slider-top__button"
                 disabled={prevButtonDisabled}
+                data-testid="prev-slide"
               >
                 <WestIcon />
               </button>
@@ -65,6 +66,7 @@ export const ProductSlider: React.FC<Props> = memo(({ title }) => {
                 onClick={handleNextSlide}
                 disabled={nextButtonDisabled}
                 className="slider-top__button"
+                data-testid="next-slide"
               >
                 <EastIcon />
               </button>
@@ -74,9 +76,9 @@ export const ProductSlider: React.FC<Props> = memo(({ title }) => {
         </div>
       </div>
       <div className="productSlider">
-        <ul className="productSlider__list" style={{ transform: `translateX(-${slideIndex * 50}%)` }} {...handlers}>
+        <ul className="productSlider__list" data-testid="productSlider__list" style={{ transform: `translateX(-${slideIndex * 50}%)` }} {...handlers}>
           {products.map((prod) => (
-            <li className="productSlider__item" key={prod.id}>
+            <li className="productSlider__item" key={prod.id} data-testid="productSlider__item">
               <ProductCard id={prod.id} />
             </li>
           ))}

@@ -1,5 +1,7 @@
+type Direction = 'left' | 'right' | 'invalid';
+
 export const handleSwipe = (
-  direction: 'left' | 'right',
+  direction: Direction,
   nextSlide: () => void,
   prevSlide: () => void,
 ) => {
@@ -7,5 +9,7 @@ export const handleSwipe = (
     nextSlide();
   } else if (direction === 'right') {
     prevSlide();
+  } else {
+    console.warn(`Invalid direction: ${direction}`);
   }
 };

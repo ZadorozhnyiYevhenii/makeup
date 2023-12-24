@@ -16,7 +16,24 @@
   &__utils {
     @include onDesktop {
       display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+  }
+
+  &__desktop-head {
+    @include onDesktop {
+      display: flex;
+      flex-direction: row;
       justify-content: space-between;
+    }
+  }
+
+  &__sort-amount {
+    @include onDesktop {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 }

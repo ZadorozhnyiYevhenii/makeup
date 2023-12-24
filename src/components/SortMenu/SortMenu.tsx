@@ -3,6 +3,7 @@ import { CrossIcon } from "../../assets/CrossIcon"
 import { SortOptions } from "../../utils/sortOptions"
 import './SortMenu.scss';
 import { useDisableScroll } from "../../hooks/useDisableScroll";
+import { useWindowResize } from "../../hooks/useWindowResize";
 
 type Props = {
   onClose: () => void,
@@ -17,21 +18,24 @@ export const SortMenu: FC<Props> = ({
   isSortMenuOpen,
   selectedSortOption
 }) => {
-  
+
   const handleSort = (sortby: SortOptions) => {
     onSort(sortby);
   };
 
+  const isMobile = useWindowResize(1023);
+  
   useDisableScroll('no-scroll', isSortMenuOpen)
 
   return (
     <>
-      <div className="background-overlay" style={{ display: isSortMenuOpen ? 'block' : 'none' }}></div>
+      <div className="background-overlay" data-testid="background-overlay" style={{ display: isSortMenuOpen && isMobile ? 'block' : 'none' }}></div>
       <div className="sort">
         <div className="sort__mobile-header">
           <span>Sorting</span>
           <div
             onClick={onClose}
+            data-testid="onClose-button"
           >
             <CrossIcon />
           </div>

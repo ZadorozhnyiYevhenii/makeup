@@ -8,7 +8,7 @@ type Props = {
 
 export const SelectedFilters: FC<Props> = ({ onFilterRemove, filters }) => {
   return (
-    <div className="selected-filters">
+      <div className="selected-filters">
       <div className="selected-filters__list">
         {filters.map((filter) => (
           <div

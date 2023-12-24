@@ -30,7 +30,7 @@ export const PhotoSlider: FC<Props> = ({
   return (
     <div 
       className='photo-slider' 
-      style={{ transform: `translateX(-${slideIndex * 100}%)` }} 
+      style={{ transform: `translateX(-${slideIndex * 100}%)` }}
       {...handlers}
     >
       {product?.img.map((image, index) => (

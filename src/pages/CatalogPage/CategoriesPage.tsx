@@ -13,6 +13,10 @@ import { clearFilters, setBrandFilter, setTypeFilter } from "../../app/slices/fi
 import { ClearFilterButton } from "../../components/ClearButton/ClearButton";
 import { SelectedFilters } from "../../components/SelectedFilters/SelectedFilters";
 import { FilterRemove } from "../../helpers/handleFilterRemove";
+import { DesktopSortOptionsAndQuantity } from "../../components/DesktopSortOptionsAndQuantity/DesktopSortOptionsAndQuantity";
+import { TotalAmountOfProducts } from "../../components/TotalAmountOfProducts/TotalAmountOfProducts";
+import { calculateTotalProductsCount } from "../../helpers/calculateTotalProductsCount";
+import { products } from "../../MockProducts";
 
 export const CategoriesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -65,6 +69,8 @@ export const CategoriesPage = () => {
     FilterRemove(filter, brands, types, dispatch);
   };
 
+  const amountOfProducts = calculateTotalProductsCount(products, brands, types)
+
   return (
     <div className="categories">
       <FilterMenu
@@ -74,10 +80,24 @@ export const CategoriesPage = () => {
         clearFilters={handleClearFilter}
       />
       <div className="categories__content">
-        <div className="categories__utils">
-        <SelectedFilters onFilterRemove={handleFilterRemove} filters={[...brands, ...types]}/>
-          {hideSlider && <ClearFilterButton onClick={handleClearFilter} />}
-        </div>
+        {hideSlider && (
+          <div className="categories__utils">
+            <div className="categories__desktop-head">
+              <SelectedFilters onFilterRemove={handleFilterRemove} filters={[...brands, ...types]} />
+              {hideSlider && <ClearFilterButton onClick={handleClearFilter} />}
+            </div>
+            <div className="categories__sort-amount">
+              <TotalAmountOfProducts totalCount={amountOfProducts} />
+              <DesktopSortOptionsAndQuantity
+                handleSort={handleSort}
+                selectedSortOption={sortOption}
+                isSortMenuOpen={isSortMenuOpen}
+                handleOpen={handleSortMenu}
+              />
+            </div>
+
+          </div>
+        )}
         <FilterButtons
           onSortOpen={handleSortMenu}
           onFiltersOpen={handleFilterMenu}

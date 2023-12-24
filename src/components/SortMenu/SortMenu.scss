@@ -9,6 +9,10 @@
   background-color: #fff;
   z-index: 1200;
 
+  @include onDesktop {
+    display: none;
+  }
+
   &__mobile-header {
     display: flex;
     justify-content: space-between;

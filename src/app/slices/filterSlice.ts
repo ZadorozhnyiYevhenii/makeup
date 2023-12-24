@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-type FilterState = {
+export type FilterState = {
   brands: string[],
   types: string[],
 };
