@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
+import axios from 'axios';
 
 const GET_ALL_BRANDS = gql`
-  query {
+  query getAllBrands {
     getAllBrands {
       name
       id
@@ -48,7 +49,7 @@ export const BrandList: React.FC = () => {
 //   useEffect(() => {
 //     const fetchData = async () => {
 //       try {
-//         const response = await axios.get('http://51.20.137.159:8080/test');
+//         const response = await axios.get('http://13.49.76.232:8080/test');
 //         setResponseData(response.data);
 //       } catch (error) {
 //         console.error('Error fetching data:', error);

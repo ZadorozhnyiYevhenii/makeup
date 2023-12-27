@@ -25,16 +25,9 @@ export const LoginForm: React.FC<Props> = memo(({ onClose }) => {
     setEmail(e.target.value);
   };
 
-  const emailOnBlur = () => {
-    if (!email.includes('@')) {
-      setError('Enter a valid email!');
-    } else {
-      setError('');
-    }
-  };
-
   const emailOnFocus = () => {
     if (!email.includes('@')) {
+      setError('Enter a valid email!');
       setEmail('');
     }
     setError('');
@@ -76,7 +69,6 @@ export const LoginForm: React.FC<Props> = memo(({ onClose }) => {
             placeholder="E-mail"
             value={email}
             onChange={emailCheck}
-            onBlur={emailOnBlur}
             onFocus={emailOnFocus}
             ref={emailRef}
           />
