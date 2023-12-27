@@ -1,11 +1,18 @@
-import { render } from "@testing-library/react"
-import { ReactNode } from "react"
-import { MemoryRouter } from "react-router-dom"
+import { render } from "@testing-library/react";
+import { ReactNode } from "react";
+import { MemoryRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "../app/store";
 
-export const renderWithRouter = (component: ReactNode, initialRoute = '/makeup/') => {
+export const renderWithRouterAndStore = (
+  component: ReactNode,
+  initialRoute = '/makeup/'
+) => {
   return render(
-    <MemoryRouter initialEntries={[initialRoute]}>
-      {component}
-    </MemoryRouter>
+    <Provider store={store}>
+      <MemoryRouter initialEntries={[initialRoute]}>
+        {component}
+      </MemoryRouter>
+    </Provider>
   );
-}
+};

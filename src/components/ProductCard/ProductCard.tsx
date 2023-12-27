@@ -2,6 +2,7 @@ import React from "react";
 import './ProductCard.scss';
 import { products } from "../../MockProducts";
 import { ScrollTopLink } from "../../helpers/scrollTopLink";
+import { PurchaseButton } from "../PurchaseButton/PurchaseButton";
 
 type Props = {
   id: number,
@@ -9,6 +10,10 @@ type Props = {
 
 export const ProductCard: React.FC<Props> = ({ id }) => {
   const product = products.find(prod => prod.id === id);
+
+  if (!product) {
+    return null;
+  }
 
   return (
     <div className="card">
@@ -29,6 +34,7 @@ export const ProductCard: React.FC<Props> = ({ id }) => {
         <div className="card__bottom">
           <div className="card__rate">{product?.quantity} ml</div>
           <div className="card__price">{product?.price} $</div>
+          <PurchaseButton product={product} />
         </div>
       </div>
     </div>

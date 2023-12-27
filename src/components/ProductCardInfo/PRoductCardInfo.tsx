@@ -1,6 +1,7 @@
 import { FC } from "react"
 import { IProd } from "../../types/IProduct"
 import { SelectMenu } from "../SelectMenu/SelectMenu"
+import { PurchaseButton } from "../PurchaseButton/PurchaseButton"
 
 type Props = {
   product: IProd | undefined,
@@ -31,7 +32,7 @@ export const ProductCardInfo: FC<Props> = ({
               <SelectMenu />
             </div>
             <div className='product__buy'>
-              <div className='product__button'>Buy</div>
+              <PurchaseButton product={product}/>
               <div className='product__info'>
                 <div className='product__stock'>In stock!</div>
                 <div className='product__code'>code:

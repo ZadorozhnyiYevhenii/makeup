@@ -1,0 +1,149 @@
+.cart {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  background: #fff;
+  z-index: 5000;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  padding: 0 16px 160px;
+  max-height: calc(100% - 57px);
+  overflow: hidden;
+
+  &__list {
+    overflow-y: auto;
+    padding: 0 16px 160px;
+    max-height: calc(100% - 140px);
+  }
+
+  &__item {
+    display: flex;
+    padding: 16px 0;
+    align-items: center;
+    border-bottom: 1px solid #ebebeb;
+  }
+
+  &__photo-container {
+    width: 78px;
+    height: 87px;
+    margin: 0 16px 0 0;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+  }
+
+  &__name {
+    font-size: 16px;
+    line-height: 24px;
+    color: #212121;
+    text-transform: none;
+    font-weight: 400;
+    max-height: 48px;
+    overflow: hidden;
+  }
+
+  &__type {
+    color: #a6a2a2;
+    font-size: 14px;
+    line-height: 21px;
+    max-height: 21px;
+    overflow: hidden;
+    margin: 8px 0 0 0;
+  }
+
+  &__count {
+    color: #a6a2a2;
+    font-size: 14px;
+    line-height: 21px;
+    max-height: 21px;
+  }
+
+  &__price {
+    font-size: 14px;
+    line-height: 21px;
+    color: #333;
+    margin: 8px 0 0 0;
+  }
+
+  &__wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__control {
+    display: flex;
+    margin: 12px 0 0 0;
+    align-items: center;
+  }
+
+  &__button {
+    border: 1px solid #ebebeb;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__quantity {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    line-height: 32px;
+  }
+
+  &__title {
+    font-size: 18px;
+    line-height: 24px;
+    padding: 16px 0 16px 16px;
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ebebeb;
+  }
+
+  &__back {
+    background: none;
+    cursor: pointer;
+  }
+
+  &__total {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 16px;
+    border-top: 1px solid #ebebeb;
+    background: #fff;
+  }
+
+  &__total-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 24px 0;
+  }
+
+  &__checkout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 16px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 24px;
+    border: 1px solid transparent;
+    background: #212121;
+    color: #fff;
+  }
+}
