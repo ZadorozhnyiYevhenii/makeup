@@ -33,13 +33,13 @@ export const PhotoSlider: FC<Props> = ({
       style={{ transform: `translateX(-${slideIndex * 100}%)` }}
       {...handlers}
     >
-      {product?.img.map((image, index) => (
-        <div key={index} className={cn('photo-slider__item', {
+      {product?.images.map(img => (
+        <div key={img.id} className={cn('photo-slider__item', {
           'photo-slider__item--active': styleOnPopup
         })} onClick={onOpenPopup}>
             <img
-              src={image}
-              alt={`${product?.name} img`}
+              src={img.imageLink}
+              alt={`${product.name} img ${img.id}`}
             />
         </div>
       ))}

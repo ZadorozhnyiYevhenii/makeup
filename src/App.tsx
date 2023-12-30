@@ -8,7 +8,6 @@ import UnderConstructionPage from './pages/NotFoundPage.tsx/NotFoundPage';
 import { ErrorPage } from './pages/404/404';
 import { ProductCardPage } from './pages/ProductCardPage/ProductCardPage';
 import { CategoriesPage } from './pages/CatalogPage/CategoriesPage';
-import { BrandList } from './components/testComp/testComp';
 import { Cart } from './pages/Cart/Cart';
 import { RegisterPage } from './pages/RegisterPage/RegisterPage';
 
@@ -25,11 +24,9 @@ function App() {
         <Route path='/makeup/'>
           <Route index element={<HomePage />} />
           <Route path='product/:id' element={<ProductCardPage />} />
-          <Route path='categories' element={<CategoriesPage />} />
+          <Route path='category/:id' element={<CategoriesPage />} />
           <Route path='cart' element={<Cart />} />
           <Route path='register' element={<RegisterPage />} /> 
-
-          <Route path='test' element={<BrandList />} />
         
           {underConstructionRoutes.map((route, index) => (
             <Route key={index} path={route} element={<UnderConstructionPage />} />

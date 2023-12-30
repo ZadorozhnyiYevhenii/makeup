@@ -3,11 +3,13 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 export type FilterState = {
   brands: string[],
   types: string[],
+  sex: string[]
 };
 
 const initialState: FilterState = {
   brands: [],
   types: [],
+  sex: []
 };
 
 
@@ -21,6 +23,9 @@ const filterSlice = createSlice({
     setTypeFilter: (state, action: PayloadAction<string[]>) => {
       state.types = action.payload
     },
+    setSexFilter: (state, action: PayloadAction<string[]>) => {
+      state.sex = action.payload
+    },
     clearFilters: (state) => {
       state.brands = [];
       state.types = [];
@@ -28,5 +33,5 @@ const filterSlice = createSlice({
   },
 });
 
-export const { setBrandFilter, setTypeFilter, clearFilters } = filterSlice.actions;
+export const { setBrandFilter, setTypeFilter, setSexFilter,clearFilters } = filterSlice.actions;
 export const filterReducer = filterSlice.reducer;

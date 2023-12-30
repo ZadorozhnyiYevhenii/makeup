@@ -1,5 +1,6 @@
 import { FC } from "react";
 import './FilterItem.scss';
+import { normalizeName } from "../../helpers/normalizeWord";
 
 type Props = {
   isBlockOpen: boolean,
@@ -29,7 +30,7 @@ export const FilterItem: FC<Props> = ({
                 onChange={() => handleFilterChange(item)}
                 className="filter-item__checkbox"
               />
-              {item} ({productCount[item] || 0})
+              {normalizeName(item)} ({productCount[item] || 0})
             </label>
           ))}
         </div>

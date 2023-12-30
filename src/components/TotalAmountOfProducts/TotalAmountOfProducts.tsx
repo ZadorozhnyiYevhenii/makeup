@@ -2,7 +2,7 @@ import { FC } from "react";
 import './TotalAmountOfProducts.scss';
 
 type Props = {
-  totalCount: number
+  totalCount: number | undefined
 }
 
 export const TotalAmountOfProducts: FC<Props> = ({ totalCount }) => {

@@ -29,7 +29,7 @@ export const Dots: FC<Props> = ({
     <div className='dots'>
       {isMobile ? (
         <>
-          {product?.img && Array.from({ length: product?.img.length }).map((_, ind) => (
+          {product?.images.map(img => img.imageLink) && Array.from({ length: product?.images.length }).map((img, ind) => (
             <div
               key={ind}
               onClick={() => setSlideIndex(ind)}
@@ -41,33 +41,35 @@ export const Dots: FC<Props> = ({
         </>
       ) : (
         <div className={cn('dots__desktop', {'dots__desktop--popup': isPopupOpen })}>
-          <button
+          {!!product?.images.length && (
+            <button
             onClick={handlePrevSlide}
             disabled={slideIndex === 0}
             className='dots__button'
-            style={{ cursor: 'pointer' }}
           >
             <KeyboardArrowLeftIcon />
           </button>
-          {product?.img.map((ph, ind) => (
+          )}
+          {product?.images.map(img => (
             <div
-              key={ind}
-              onClick={() => setSlideIndex(ind)}
+              key={img.id}
+              onClick={() => setSlideIndex(img.id - 1)}
               className={cn('dots__photo-dot', {
-                active: ind === slideIndex,
+                active: img.id - 1 === slideIndex,
               })}
             >
-              <img src={ph} alt={`${ph} + ${ind}`} className='dots__dot-item' />
+              <img src={img.imageLink} alt={`${product.name} + ${img.id}`} className='dots__dot-item' />
             </div>
           ))}
-          <button
+          {!!product?.images.length && (
+            <button
             onClick={handleNextSlide}
-            disabled={slideIndex === (product?.img?.length || 0) - 1}
+            disabled={slideIndex === (product?.images?.length || 0) - 1}
             className='dots__button'
-            style={{ cursor: 'pointer' }}
           >
             <KeyboardArrowRightIcon />
           </button>
+          )}
         </div>
       )}
     </div>

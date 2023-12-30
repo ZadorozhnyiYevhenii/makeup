@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { FilterButtons } from "../../components/FilterButtons/FilterButtons";
 import './CategoriesPage.scss';
+import cn from 'classnames';
 import { SortMenu } from "../../components/SortMenu/SortMenu";
 import { SortOptions } from "../../utils/sortOptions";
 import { SliderMain } from "../../components/SliderMain/SLiderMain";
@@ -9,38 +10,60 @@ import { getSearchWith } from "../../helpers/getSearchWith";
 import { FilterMenu } from "../../components/FilterMenu/FilterMenu";
 import { ProductCardList } from "../../components/ProductCardList/ProductCardList";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { clearFilters, setBrandFilter, setTypeFilter } from "../../app/slices/filterSlice";
+import { clearFilters, setBrandFilter, setSexFilter, setTypeFilter } from "../../app/slices/filterSlice";
 import { ClearFilterButton } from "../../components/ClearButton/ClearButton";
 import { SelectedFilters } from "../../components/SelectedFilters/SelectedFilters";
 import { FilterRemove } from "../../helpers/handleFilterRemove";
 import { DesktopSortOptionsAndQuantity } from "../../components/DesktopSortOptionsAndQuantity/DesktopSortOptionsAndQuantity";
 import { TotalAmountOfProducts } from "../../components/TotalAmountOfProducts/TotalAmountOfProducts";
 import { calculateTotalProductsCount } from "../../helpers/calculateTotalProductsCount";
-import { products } from "../../MockProducts";
+import { IProd } from "../../types/IProduct";
+import { useQuery } from "@apollo/client";
+import { GET_PRODUCT_WITH_CATEGORY_ID } from "../../graphql/queries/getProductsWithCetgoryId";
+import { setProducts } from "../../app/slices/productSlice";
+import { CategoryTitle } from "../../components/CategoryTitle/CategoryTitle";
+
+interface QueryData {
+  getProductsByCategoryIds: IProd[]
+}
 
 export const CategoriesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isSortMenuOpen, setIsSortMenuOpen] = useState(false);
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
   const [sortOption, setSortOption] = useState<SortOptions | null>(null);
-  const { brands, types } = useAppSelector(state => state.filters);
+  const { brands, types, sex } = useAppSelector(state => state.filters);
   const dispatch = useAppDispatch();
+  const { id } = useParams();
+
+  const { data, error, loading } = useQuery<QueryData>(GET_PRODUCT_WITH_CATEGORY_ID, { variables: { categoryIds: id } });
+
+  const products = data?.getProductsByCategoryIds;
+
+  useEffect(() => {
+    if (data && products) {
+      setProducts(products);
+    }
+  }, [dispatch, products, data]);
 
   useEffect(() => {
     const typeParam = searchParams.get('type');
     const brandParam = searchParams.get('brand');
+    const sexParam = searchParams.get('sex');
 
     dispatch(setBrandFilter(brandParam ? brandParam.split(',') : []));
     dispatch(setTypeFilter(typeParam ? typeParam.split(',') : []));
+    dispatch(setSexFilter(sexParam ? sexParam.split(',') : []))
   }, [dispatch, searchParams]);
 
   useEffect(() => {
     setSearchParams(getSearchWith(searchParams, {
       type: types.length > 0 ? types.join(',') : null,
       brand: brands.length > 0 ? brands.join(',') : null,
+      sex: sex.length > 0 ? sex.join(',') : null,
       sortBy: sortOption || null,
     }));
-  }, [types, brands, sortOption, searchParams, setSearchParams]);
+  }, [types, brands, sex, sortOption, searchParams, setSearchParams]);
 
   const handleSortMenu = () => {
     setIsSortMenuOpen((prev) => !prev);
@@ -63,27 +86,28 @@ export const CategoriesPage = () => {
     setIsFilterMenuOpen(false);
   };
 
-  const hideSlider = brands.length > 0 || types.length > 0;
+  const hideSlider = brands.length > 0 || types.length > 0 || sex.length > 0;
 
   const handleFilterRemove = (filter: string) => {
-    FilterRemove(filter, brands, types, dispatch);
+    FilterRemove(filter, brands, types, sex, dispatch);
   };
 
-  const amountOfProducts = calculateTotalProductsCount(products, brands, types)
+  const amountOfProducts = calculateTotalProductsCount(products, brands, types, sex)
 
   return (
     <div className="categories">
+      <CategoryTitle products={products} />
       <FilterMenu
+        products={products}
         handleApply={() => setIsFilterMenuOpen(false)}
         isFilterMenuOpen={isFilterMenuOpen}
         onClose={closeFilterMenu}
         clearFilters={handleClearFilter}
       />
       <div className="categories__content">
-        {hideSlider && (
-          <div className="categories__utils">
+          <div className={cn("categories__utils", {'hide-slide': hideSlider })}>
             <div className="categories__desktop-head">
-              <SelectedFilters onFilterRemove={handleFilterRemove} filters={[...brands, ...types]} />
+              <SelectedFilters onFilterRemove={handleFilterRemove} filters={[...brands, ...types, ...sex]} />
               {hideSlider && <ClearFilterButton onClick={handleClearFilter} />}
             </div>
             <div className="categories__sort-amount">
@@ -95,9 +119,7 @@ export const CategoriesPage = () => {
                 handleOpen={handleSortMenu}
               />
             </div>
-
           </div>
-        )}
         <FilterButtons
           onSortOpen={handleSortMenu}
           onFiltersOpen={handleFilterMenu}
@@ -112,9 +134,13 @@ export const CategoriesPage = () => {
         )}
         {!hideSlider && <SliderMain />}
         <ProductCardList
+          products={products}
+          loading={loading}
+          error={error}
           sortOptions={sortOption}
           filteredBrand={brands}
           filteredType={types}
+          filteredSex={sex}
         />
       </div>
     </div>

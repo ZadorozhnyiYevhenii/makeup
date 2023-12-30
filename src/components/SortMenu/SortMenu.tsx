@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { CrossIcon } from "../../assets/CrossIcon"
 import { SortOptions } from "../../utils/sortOptions"
 import './SortMenu.scss';
 import { useDisableScroll } from "../../hooks/useDisableScroll";
 import { useWindowResize } from "../../hooks/useWindowResize";
+import CloseIcon from '@mui/icons-material/Close';
 
 type Props = {
   onClose: () => void,
@@ -36,8 +36,9 @@ export const SortMenu: FC<Props> = ({
           <div
             onClick={onClose}
             data-testid="onClose-button"
+            className="sort__close-button"
           >
-            <CrossIcon />
+            <CloseIcon />
           </div>
         </div>
         <ul className="sort__list">

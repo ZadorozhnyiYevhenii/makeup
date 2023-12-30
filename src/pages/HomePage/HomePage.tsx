@@ -4,7 +4,6 @@ import { ProductSlider } from "../../components/ProductSlider/ProductSlider";
 import { titles } from "../../utils/titles";
 import './HomePage.scss';
 
-
 export const HomePage: React.FC = () => {
   return (
     <div className="homePage">

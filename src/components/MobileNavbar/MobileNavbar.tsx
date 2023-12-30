@@ -1,40 +1,34 @@
 import { NavLink } from "react-router-dom";
 import './MobileNavBar.scss';
+import { ApolloError } from "@apollo/client";
+import { ICategory } from "../../types/ICategory";
+import { QueryComponent } from "../QueryComponent/QueryComponent";
+import { FC } from "react";
 
-export const MobileNavbar = () => {
+type Props = {
+  categories: ICategory[] | undefined,
+  error: ApolloError | undefined,
+  loading: boolean,
+}
+
+export const MobileNavbar:FC<Props> = ({ categories, loading, error }) => {
   return (
     <div className='navbar-mobile'>
       <div className="navbar-mobile__content">
-        <NavLink to="" className="navbar-mobile__item navbar-mobile__item--alarm">
+        <NavLink to="makeup/sale" className="navbar-mobile__item navbar-mobile__item--alarm">
           Sales
         </NavLink>
-        <NavLink to="" className="navbar-mobile__item">
-          MAKEUP Club
-        </NavLink>
-        <NavLink to="" className="navbar-mobile__item">
-          Fragrancies
-        </NavLink>
-        <NavLink to="" className="navbar-mobile__item">
-          Makeup
-        </NavLink>
-        <NavLink to="" className="navbar-mobile__item">
-          Hair
-        </NavLink>
-        <NavLink to="" className="navbar-mobile__item">
-          Face
-        </NavLink>
-        <NavLink to="" className="navbar-mobile__item">
-          Body and bath
-        </NavLink>
-        <NavLink to="" className="navbar-mobile__item">
-          Men`s
-        </NavLink>
-        <NavLink to="" className="navbar-mobile__item">
-          Gifts
-        </NavLink>
-        <NavLink to="" className="navbar-mobile__item">
-          Brands
-        </NavLink>
+        <QueryComponent isLoading={loading} error={error} errorMessage="categories">
+          {categories?.map(({ name, id }) => (
+            <NavLink
+              to={`makeup/category/${id}`}
+              className="navbar-mobile__item navbar-mobile__item"
+              key={id}
+            >
+              {name}
+            </NavLink>
+          ))}
+        </QueryComponent>
       </div>
       <div className="navbar-mobile__footer">
         <NavLink to="" className="navbar-mobile__util">

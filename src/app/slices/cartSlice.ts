@@ -3,7 +3,7 @@ import { IProd } from "../../types/IProduct"
 
 
 interface CartState {
-  cart: IProd[];
+  cart: IProd[] | undefined;
   counts: Record<number, number>;
 }
 
@@ -17,17 +17,17 @@ const cartState = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<IProd>) => {
-      const existingProduct = state.cart.find(item => item.id === action.payload.id);
+      const existingProduct = state.cart?.find(item => item.id === action.payload.id);
 
       if (existingProduct) {
         state.counts[action.payload.id] += 1;
       } else {
-        state.cart.push(action.payload);
+        state.cart?.push(action.payload);
         state.counts[action.payload.id] = 1;
       }
     },
     removeFromCart: (state, action: PayloadAction<number>) => {
-      state.cart = state.cart.filter(item => item.id !== action.payload);
+      state.cart = state.cart?.filter(item => item.id !== action.payload);
       delete state.counts[action.payload];
     },
     addCount: (state, action: PayloadAction<number>) => {

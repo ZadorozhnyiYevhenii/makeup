@@ -3,10 +3,11 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { products } from '../../MockProducts';
 import './Tabs.scss';
 import { VerticalTabs } from '../TabsDesktop/TabsDesktop';
 import { useWindowResize } from '../../hooks/useWindowResize';
+import { IProd } from '../../types/IProduct';
+import { normalizeName } from '../../helpers/normalizeWord';
 
 
 interface TabPanelProps {
@@ -17,8 +18,6 @@ interface TabPanelProps {
 
 function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
-
-
   return (
     <div
       role="tabpanel"
@@ -45,94 +44,91 @@ function a11yProps(index: number) {
 
 type Props = {
   id: number,
+  products: IProd[] | undefined,
 }
 
-export const BasicTabs: React.FC<Props> = ({ id }) => {
+export const BasicTabs: React.FC<Props> = ({ id, products }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
-  const product = products.find(prod => prod.id === +id);
+  const product = products?.find(prod => prod.id === +id);
+
+  const normalizeClassification = normalizeName(product?.classification);
 
   const isMobile = useWindowResize(1023);
 
   return (
     <div className='tabs__wrapper'>
-    {isMobile ? (
-      <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-          indicatorColor="primary"
-          textColor="inherit"
-          orientation='horizontal'
-          sx={{
-            '& .MuiTabs-indicator': {
-              backgroundColor: 'black',
-            },
-            '& .MuiTab-root': {
-              color: 'grey',
-            },
-            '& .Mui-selected': {
-              color: 'black',
-            },
-            '& .MuiTab-textColorInherit.Mui-selected:hover': {
-              color: 'black',
-            },
-          }}
-        >
-          <Tab
-            label="Characteristics"
-            {...a11yProps(0)}
-          />
-          <Tab
-            label="Description"
-            {...a11yProps(1)}
-          />
-        </Tabs>
-      </Box>
-      <Box>
-        <CustomTabPanel value={value} index={0} >
-          <div className='tabs'>
-            <ul className='tabs__list'>
-              <li className="tabs__item">
-                <strong>Counrty:</strong> {product?.country}
-              </li>
-              <li className="tabs__item">
-                <strong>Made in:</strong> {product?.country}
-              </li>
-              <li className="tabs__item">
-                <strong>Sex:</strong> {product?.sex}
-              </li>
-              <li className="tabs__item">
-                <strong>Flavor type:</strong> {product?.smellType}
-              </li>
-              <li className="tabs__item">
-                <strong>Starting note:</strong> {product?.начальнаяНота}
-              </li>
-              <li className="tabs__item">
-                <strong>Heart note:</strong> {product?.нотаСердца}
-              </li>
-              <li className="tabs__item">
-                <strong>Ending note:</strong> {product?.конечнаяНота}
-              </li>
-            </ul>
-          </div>
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
-          <div className='tabs__paragraph'>
-            {product?.description}
-          </div>
-        </CustomTabPanel>
-      </Box>
-    </Box>
-    ) : (
-      <VerticalTabs id={+id}/>
-    )}
+      {isMobile ? (
+        <Box sx={{ width: '100%' }}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider', }}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="basic tabs example"
+              indicatorColor="primary"
+              textColor="inherit"
+              orientation='horizontal'
+              sx={{
+                '& .MuiTabs-indicator': {
+                  backgroundColor: 'black',
+                },
+                '& .MuiTab-root': {
+                  color: 'grey',
+                },
+                '& .Mui-selected': {
+                  color: 'black',
+                },
+                '& .MuiTab-textColorInherit.Mui-selected:hover': {
+                  color: 'black',
+                },
+              }}
+            >
+              <Tab
+                label="Characteristics"
+                {...a11yProps(0)}
+              />
+              <Tab
+                label="Description"
+                {...a11yProps(1)}
+              />
+            </Tabs>
+          </Box>
+          <Box>
+            <CustomTabPanel value={value} index={0} >
+              <div className='tabs'>
+                <ul className='tabs__list'>
+                  <li className="tabs__item">
+                    <strong>Counrty:</strong> {product?.countryTradeMark.name}
+                  </li>
+                  <li className="tabs__item">
+                    <strong>Made in:</strong> {product?.countriesMadeIn[0]}
+                  </li>
+                  <li className="tabs__item">
+                    <strong>Sex:</strong> {product?.sex}
+                  </li>
+                  <li className="tabs__item">
+                    <strong>Liquid:</strong> {product?.isLiquid ? '+' : '-'}
+                  </li>
+                  <li className="tabs__item">
+                    <strong>Classification:</strong> {normalizeClassification}
+                  </li>
+                </ul>
+              </div>
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={1}>
+              <div className='tabs__paragraph'>
+                {product?.description}
+              </div>
+            </CustomTabPanel>
+          </Box>
+        </Box>
+      ) : (
+        <VerticalTabs id={+id} products={products} />
+      )}
     </div>
   );
 }

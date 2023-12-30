@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useRef, useState } from "react";
 import { Link } from 'react-router-dom';
 import './LoginForm.scss';
-import { CrossIcon } from "../../assets/CrossIcon";
+import CloseIcon from '@mui/icons-material/Close';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
@@ -15,6 +15,10 @@ export const LoginForm: React.FC<Props> = memo(({ onClose }) => {
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
   const emailRef = useRef<HTMLInputElement | null>(null);
+
+  const navigateToRegister = () => {
+    onClose();
+  }
 
   const togglePasswordVisibility = () => {
     setType((prevType) => prevType === 'password' ? 'text' : 'password');
@@ -53,7 +57,7 @@ export const LoginForm: React.FC<Props> = memo(({ onClose }) => {
           className="login__close"
           onClick={onClose}
         >
-          <CrossIcon />
+          <CloseIcon />
         </div>
       </div>
       <div className="login__wrapper">
@@ -95,6 +99,7 @@ export const LoginForm: React.FC<Props> = memo(({ onClose }) => {
         <Link
           to="/makeup/register"
           className="login__register"
+          onClick={navigateToRegister}
         >
           Registration
         </Link>

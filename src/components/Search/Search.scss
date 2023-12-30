@@ -30,12 +30,16 @@
     margin-left: 40px;
 
     @include onDesktop {
-      margin-left: 48px;
+      margin-left: 0;
     }
   }
 
   &__cross {
     margin-right: 48px;
     cursor: pointer;
+
+    @include onDesktop {
+      margin: 0;
+    }
   }
 }

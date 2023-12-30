@@ -3,25 +3,35 @@ import { ProductCard } from "../ProductCard/ProductCard";
 import './ProductSlider.scss';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
-import { products } from "../../MockProducts";
 import cn from 'classnames';
 import { useWindowResize } from "../../hooks/useWindowResize";
 import { useSwipeable } from "react-swipeable";
 import { handleSwipe } from "../../helpers/swipe";
+import { useQuery } from "@apollo/client";
+import { GET_PRODUCTS_ID } from "../../graphql/queries/getProductsID";
+import { IProd } from "../../types/IProduct";
+import { QueryComponent } from "../QueryComponent/QueryComponent";
 
 type Props = {
   title: string,
 }
 
+interface QueryData {
+  getAllProducts: IProd[]
+}
+
 export const ProductSlider: React.FC<Props> = memo(({ title }) => {
   const [slideIndex, setSlideIndex] = useState(0);
+  const { data, error, loading } = useQuery<QueryData>(GET_PRODUCTS_ID);
+
+  const products: IProd[] | undefined = data?.getAllProducts ?? [];
 
   const handlePrevSlide = () => {
     setSlideIndex((prevIndex) => Math.max(prevIndex - 2, 0));
   };
 
   const handleNextSlide = () => {
-    setSlideIndex((prevIndex) => Math.min(prevIndex + 2, products.length - 2));
+    setSlideIndex((prevIndex) => Math.min(prevIndex + 2, products?.length - 2));
   };
 
   const handlers = useSwipeable({
@@ -77,11 +87,13 @@ export const ProductSlider: React.FC<Props> = memo(({ title }) => {
       </div>
       <div className="productSlider">
         <ul className="productSlider__list" data-testid="productSlider__list" style={{ transform: `translateX(-${slideIndex * 50}%)` }} {...handlers}>
-          {products.map((prod) => (
-            <li className="productSlider__item" key={prod.id} data-testid="productSlider__item">
-              <ProductCard id={prod.id} />
-            </li>
-          ))}
+          <QueryComponent isLoading={loading} error={error} errorMessage="products">
+            {products.map((prod) => (
+              <li className="productSlider__item" key={prod.id} data-testid="productSlider__item">
+                <ProductCard id={prod.id} />
+              </li>
+            ))}
+          </QueryComponent>
         </ul>
       </div>
     </>

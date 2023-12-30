@@ -17,7 +17,7 @@ export const Cart: FC = () => {
     navigate(-1);
   };
 
-  if (cart.length === 0) {
+  if (cart?.length === 0) {
     setTimeout(() => {
       navigate(-1);
     }, 1000);
@@ -35,12 +35,12 @@ export const Cart: FC = () => {
     dispatch(decrementCount(productId));
   };
 
-  const totalValue = cart.reduce((total, product) => {
-    return total + product.price * counts[product.id];
+  const totalValue = cart?.reduce((total, product) => {
+    return total + product?.productVariations.map(pr => pr.variationDetails.map(p => p.price)[0])[0] * counts[product.id];
   }, 0);
 
   useEffect(() => {
-    document.body.style.overflow = cart.length > 0 ? "hidden" : "auto";
+    document.body.style.overflow = !!cart?.length ? "hidden" : "auto";
     return () => {
       document.body.style.overflow = "auto";
     };
@@ -60,13 +60,13 @@ export const Cart: FC = () => {
         </button>
       </div>
       <div className="cart__list" data-testid="cart__list">
-        {cart.map((product) => (
+        {cart?.map((product) => (
           <div key={product.id} className="cart__item">
             <div className="cart__photo-container">
               <Link to="/" className="cart__link">
                 <img
-                  src={product.img[0]}
-                  alt={`${product.name} img`}
+                  src={product.images.map(i => i.imageLink)[0]}
+                  alt={`${product.id} img`}
                   className="cart__img"
                 />
               </Link>
@@ -74,8 +74,10 @@ export const Cart: FC = () => {
             <div className="cart__container">
               <h3 className="cart__name">{product.name}</h3>
               <div className="cart__type">{product.type}</div>
-              <div className="cart__count">{product.quantity} ml</div>
-              <div className="cart__price">{product.price * counts[product.id]} $</div>
+              <div className="cart__count">{product.productVariations.map(pr => pr.amount)[0]} ml</div>
+              <div className="cart__price">
+                {product?.productVariations.map(pr => pr.variationDetails.map(p => p.price)[0])[0] * counts[product.id]} $
+              </div>
               <div className="cart__wrap">
                 <div className="cart__control">
                   <div className="cart__button" onClick={() => handleDecrementCount(product.id)}><RemoveIcon /></div>

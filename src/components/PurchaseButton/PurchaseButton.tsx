@@ -1,12 +1,12 @@
 import { FC } from "react"
-import { IProd } from "../../types/IProduct"
 import { useAppDispatch } from "../../app/hooks"
 import { addToCart } from "../../app/slices/cartSlice"
 import { useNavigate } from "react-router-dom"
 import './PurchaseButton.scss';
+import { IProd } from "../../types/IProduct";
 
 type Props = {
-  product: IProd,
+  product: IProd | undefined,
 }
 
 export const PurchaseButton: FC<Props> = ({ product }) => {
@@ -14,8 +14,10 @@ export const PurchaseButton: FC<Props> = ({ product }) => {
   const dispatch = useAppDispatch();
 
   const handleBuy = () => {
-    dispatch(addToCart(product));
-    navigate('/makeup/cart');
+    if (product) {
+      dispatch(addToCart(product));
+      navigate('/makeup/cart');
+    }
   };
 
   return (

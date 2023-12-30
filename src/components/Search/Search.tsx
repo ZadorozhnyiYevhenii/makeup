@@ -16,25 +16,27 @@ export const SearchBar: React.FC<Props> = ({ onCross }) => {
   };
 
   return (
-    <div className="search">
-      <div className="search__container">
-        <div className="search__icon">
-          <SearchIconHeader />
-        </div>
-        <input
-          type="text"
-          className="search__input"
-          value={appliedQuery}
-          onChange={(e) => handleQueryChange(e)}
-          placeholder="More than 100 000 goods"
-        />
-        <div
-          onClick={onCross}
-          className="search__cross"
-        >
-          <CrossIcon />
+    <>
+      <div className="search">
+        <div className="search__container">
+          <div className="search__icon">
+            <SearchIconHeader />
+          </div>
+          <input
+            type="text"
+            className="search__input"
+            value={appliedQuery}
+            onChange={(e) => handleQueryChange(e)}
+            placeholder="More than 100 000 goods"
+          />
+          <div
+            onClick={onCross}
+            className="search__cross"
+          >
+            <CrossIcon />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

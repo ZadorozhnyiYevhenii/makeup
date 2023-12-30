@@ -20,70 +20,88 @@
       flex-grow: 1;
       position: relative;
     }
-  
+
     &--not {
-      position: static;
+      @include onDesktop {
+        position: static;
+      }
     }
-  
+
     &--logged {
-      position: static;
+      @include onDesktop {
+        position: static;
+      }
     }
   }
-  
+
   &__item {
-    padding: 8px 0;
+    @include onDesktop {
+      padding: 8px 0;
+    }
   }
-  
+
   &__link {
-    color: #212121;
-    line-height: 24px;
-    transition: all 0.3s;
-  
-    &:hover {
-      color: #5b24c9;
+    @include onDesktop {
+
+      color: #212121;
+      line-height: 24px;
+      transition: all 0.3s;
+
+      &:hover {
+        color: #5b24c9;
+      }
     }
   }
 
   &__submenu {
-    border-top: 1px solid #5b24c9;
-    position: absolute;
-    padding-top: 32px;
-    padding-bottom: 56px;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    display: block;
-    opacity: 0;
-    background-color: #fff;
-    z-index: 1;
-  
-    transition: max-height 0.3s ease-in, opacity 0.3s ease-in;
-    visibility: hidden;
-  }
-  
-  &__item:hover &__submenu {
-    display: block;
-    max-height: 200px;
-    opacity: 1;
-    visibility: visible;
-  }
-  
-  &__submenu-link {
-    color: #212121;
-    line-height: 24px;
-    transition: all 0.3s;
-  
-    &:hover {
-      color: #5b24c9;
+    @include onDesktop {
+      border-top: 1px solid #5b24c9;
+      position: absolute;
+      padding-top: 32px;
+      padding-bottom: 56px;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      display: block;
+      opacity: 0;
+      background-color: #fff;
+      z-index: 1;
+
+      transition: max-height 0.3s ease-in, opacity 0.3s ease-in;
+      visibility: hidden;
     }
   }
-  
+
+  &__item:hover &__submenu {
+    @include onDesktop {
+      display: block;
+      max-height: 200px;
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  &__submenu-link {
+    @include onDesktop {
+
+      color: #212121;
+      line-height: 24px;
+      transition: all 0.3s;
+
+      &:hover {
+        color: #5b24c9;
+      }
+    }
+  }
+
   &__subList {
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
-    flex-wrap: wrap;
-    max-height: 200px;
-    overflow-y: auto;
+    @include onDesktop {
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+      flex-wrap: wrap;
+      max-height: 200px;
+      overflow-y: auto;
+    }
   }
 }

@@ -20,7 +20,7 @@ export const PhotoPopup: React.FC<Props> = ({ product, selectedPhotoIndex, onClo
   };
 
   const handleNextSlide = () => {
-    setSlideIndex((prevIndex) => Math.min(prevIndex + 1, (product?.img?.length || 0) - 1));
+    setSlideIndex((prevIndex) => Math.min(prevIndex + 1, (product?.images?.length || 0) - 1));
   };
 
   if (selectedPhotoIndex === null || !product) {
@@ -36,7 +36,7 @@ export const PhotoPopup: React.FC<Props> = ({ product, selectedPhotoIndex, onClo
         </div>
         <div className='popup__content'>
           <h2 className='popup__name'>{product?.name}</h2>
-          <h3 className='popup__type'>{product?.type}</h3>
+          <h3 className='popup__type'>{product?.categories.map(pr => pr.name)}</h3>
         </div>
         <div className='popup__container'>
           <div className='popup__productSlider'>

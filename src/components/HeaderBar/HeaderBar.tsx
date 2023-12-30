@@ -38,7 +38,7 @@ export const HeaderBar: FC<Props> = ({
   const { cart } = useAppSelector(state => state.cart);
   const location = useLocation();
 
-  const cartQuantity = cart.length > 0 ? cart.length : '';
+  const cartQuantity = !!cart?.length ? cart?.length : '';
   return (
     <div className="header-bar">
       <div className="header-bar__left">
@@ -89,10 +89,10 @@ export const HeaderBar: FC<Props> = ({
           </>
         )}
         <NavLink
-          to={cart.length > 0 ? '/makeup/cart' : location.pathname}
+          to={!!cart?.length ? '/makeup/cart' : location.pathname}
           className="header-bar__cart"
         >
-          <span className={classNames('header-bar__cart-quantity', { 'no-cart': !cart.length })}>
+          <span className={classNames('header-bar__cart-quantity', { 'no-cart': !cart?.length })}>
             {cartQuantity}
           </span>
           <CartIcon />

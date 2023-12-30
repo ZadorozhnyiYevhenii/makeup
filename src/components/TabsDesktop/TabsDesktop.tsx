@@ -3,7 +3,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { products } from '../../MockProducts';
+import { IProd } from '../../types/IProduct';
+import { normalizeName } from '../../helpers/normalizeWord';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -40,18 +41,19 @@ function a11yProps(index: number) {
 
 type Props = {
   id: number,
+  products: IProd[] | undefined
 }
 
-export const VerticalTabs: React.FC<Props> = ({ id }) => {
+export const VerticalTabs: React.FC<Props> = ({ id, products }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
-  const product = products.find(prod => prod.id === +id);
+  const product = products?.find(prod => prod.id === +id);
 
-
+  const normalizeClassification = normalizeName(product?.classification);
   return (
     <Box
       sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', gap: 10 }}
@@ -83,25 +85,16 @@ export const VerticalTabs: React.FC<Props> = ({ id }) => {
         <div className='tabs'>
           <ul className='tabs__list'>
             <li className="tabs__item">
-              <strong>Counrty:</strong> {product?.country}
+              <strong>Counrty:</strong> {product?.countryTradeMark.name}
             </li>
             <li className="tabs__item">
-              <strong>Made in:</strong> {product?.country}
+              <strong>Made in:</strong> {product?.countriesMadeIn[0]}
             </li>
             <li className="tabs__item">
               <strong>Sex:</strong> {product?.sex}
             </li>
             <li className="tabs__item">
-              <strong>Flavor type:</strong> {product?.smellType}
-            </li>
-            <li className="tabs__item">
-              <strong>Starting note:</strong> {product?.начальнаяНота}
-            </li>
-            <li className="tabs__item">
-              <strong>Heart note:</strong> {product?.нотаСердца}
-            </li>
-            <li className="tabs__item">
-              <strong>Ending note:</strong> {product?.конечнаяНота}
+              <strong>Classification:</strong> {normalizeClassification}
             </li>
           </ul>
         </div>
