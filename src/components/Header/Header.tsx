@@ -79,6 +79,7 @@ export const Header: React.FC = memo(() => {
         isLoginOpen={isLoginOpen}
         isMenuOpen={isMenuOpen}
         isSearchOpen={isSearchOpen}
+        onCloseMenu={close.menu}
         categories={category?.getAllCategories}
         loading={loading}
         error={error}

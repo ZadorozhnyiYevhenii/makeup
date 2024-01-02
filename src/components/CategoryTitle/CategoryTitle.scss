@@ -1,7 +1,13 @@
+@import "../../mixins/pointBrakers.scss";
+
 .category-title {
   text-align: center;
   color: #212121;
   font-size: 26px;
   line-height: 40px;
   font-weight: 600;
+
+  @include onDesktop {
+    display: none;
+  }
 }

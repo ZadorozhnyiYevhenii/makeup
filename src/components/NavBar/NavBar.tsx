@@ -13,6 +13,7 @@ type Props = {
   categories: ICategory[] | undefined,
   error: ApolloError | undefined,
   loading: boolean,
+  onCloseMenu: () => void
 }
 
 export const NavBar: FC<Props> = ({
@@ -21,10 +22,10 @@ export const NavBar: FC<Props> = ({
   categories,
   error,
   loading,
-  isLoginOpen
+  isLoginOpen,
+  onCloseMenu
 }) => {
-
-  const isMobile = useWindowResize(1023)
+  const isMobile = useWindowResize(1023);
   return (
     <>
       {isMobile ? (
@@ -35,6 +36,7 @@ export const NavBar: FC<Props> = ({
         })}
         >
           <MobileNavbar
+            onCloseMenu={onCloseMenu}
             categories={categories}
             loading={loading}
             error={error}

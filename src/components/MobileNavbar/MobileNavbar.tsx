@@ -9,13 +9,14 @@ type Props = {
   categories: ICategory[] | undefined,
   error: ApolloError | undefined,
   loading: boolean,
+  onCloseMenu: () => void,
 }
 
-export const MobileNavbar:FC<Props> = ({ categories, loading, error }) => {
+export const MobileNavbar: FC<Props> = ({ categories, loading, error, onCloseMenu }) => {
   return (
     <div className='navbar-mobile'>
       <div className="navbar-mobile__content">
-        <NavLink to="makeup/sale" className="navbar-mobile__item navbar-mobile__item--alarm">
+        <NavLink to="makeup/sale" className="navbar-mobile__item navbar-mobile__item--alarm" onClick={onCloseMenu}>
           Sales
         </NavLink>
         <QueryComponent isLoading={loading} error={error} errorMessage="categories">
@@ -24,6 +25,7 @@ export const MobileNavbar:FC<Props> = ({ categories, loading, error }) => {
               to={`makeup/category/${id}`}
               className="navbar-mobile__item navbar-mobile__item"
               key={id}
+              onClick={onCloseMenu} 
             >
               {name}
             </NavLink>
@@ -31,10 +33,10 @@ export const MobileNavbar:FC<Props> = ({ categories, loading, error }) => {
         </QueryComponent>
       </div>
       <div className="navbar-mobile__footer">
-        <NavLink to="" className="navbar-mobile__util">
+        <NavLink to="" className="navbar-mobile__util" onClick={onCloseMenu}>
           Favorites
         </NavLink>
-        <NavLink to="" className="navbar-mobile__util">
+        <NavLink to="" className="navbar-mobile__util" onClick={onCloseMenu}>
           Beauty club
         </NavLink>
       </div>

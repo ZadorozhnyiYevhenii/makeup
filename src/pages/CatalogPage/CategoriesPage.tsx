@@ -36,7 +36,7 @@ export const CategoriesPage = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
 
-  const { data, error, loading } = useQuery<QueryData>(GET_PRODUCT_WITH_CATEGORY_ID, { variables: { categoryIds: id } });
+  const { data } = useQuery<QueryData>(GET_PRODUCT_WITH_CATEGORY_ID, { variables: { categoryIds: id } });
 
   const products = data?.getProductsByCategoryIds;
 
@@ -135,8 +135,6 @@ export const CategoriesPage = () => {
         {!hideSlider && <SliderMain />}
         <ProductCardList
           products={products}
-          loading={loading}
-          error={error}
           sortOptions={sortOption}
           filteredBrand={brands}
           filteredType={types}

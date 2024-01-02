@@ -4,6 +4,7 @@ import { clearFilters, filterReducer, setBrandFilter, setTypeFilter } from "../.
 const initialState = {
   brands: [],
   types: [],
+  sex: []
 };
 
 describe('filterReducer', () => {
@@ -26,7 +27,8 @@ describe('filterReducer', () => {
   test('should clear filters correctly', () => {
     const currentState = {
       brands: ['brand'],
-      types: ['type']
+      types: ['type'],
+      sex: ['sex']
     };
 
     const action: PayloadAction<void> = clearFilters();

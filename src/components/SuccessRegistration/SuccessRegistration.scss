@@ -1,0 +1,25 @@
+.success-register {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: 150px;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+
+  &__title {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    padding-top: 30px;
+    color: #212121;
+  }
+
+  &__pretitle {
+    color: #212121;
+    line-height: 24px;
+    font-weight: 400;
+    font-size: 14px;
+  }
+}

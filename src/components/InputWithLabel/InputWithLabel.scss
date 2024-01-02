@@ -42,4 +42,12 @@
       color: red;
     }
   }
+
+  &__toggle {
+    position: absolute;
+    top: 42%;
+    right: 0;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
 }

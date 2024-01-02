@@ -1,8 +1,9 @@
 export interface IUser {
-  name: string;
-  surname: string;
-  birthDate: string;
-  phone: string;
+  firstName: string;
+  lastName: string;
+  birthdayDate: string;
+  phoneNumber: string;
   email: string;
   password: string;
+  jwtToken: string
 }

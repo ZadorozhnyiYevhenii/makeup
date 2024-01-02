@@ -36,6 +36,7 @@ export const HeaderBar: FC<Props> = ({
   onSearchClose
 }) => {
   const { cart } = useAppSelector(state => state.cart);
+  const user = useAppSelector(state => state.user.user);
   const location = useLocation();
 
   const cartQuantity = !!cart?.length ? cart?.length : '';
@@ -74,12 +75,21 @@ export const HeaderBar: FC<Props> = ({
         <Logo />
       </Link>
       <div className="header-bar__right">
-        <div
-          className="header-bar__account"
-          onClick={onLoginOpen}
-        >
-          <AccountIcon />
-        </div>
+        {!user ? (
+          <div
+            className="header-bar__account"
+            onClick={onLoginOpen}
+          >
+            <AccountIcon />
+          </div>
+        ) : (
+          <Link
+            className="header-bar__account"
+            to='makeup/user'
+          >
+            <AccountIcon />
+          </Link>
+        )}
         {isLoginOpen && (
           <>
             <div className="header-bar__login-overlay" onClick={onLoginClose}></div>

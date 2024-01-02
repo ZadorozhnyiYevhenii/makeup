@@ -1,10 +1,10 @@
 import { IUser } from "../types/IUser";
 
-export const inputLabels: IUser = {
-  name: 'Your name*',
-  surname: 'Your surname*',
-  birthDate: 'Your birth date',
-  phone: 'Your phone*',
+export const inputLabels: Omit<IUser, 'jwtToken'> = {
+  firstName: 'Your name*',
+  lastName: 'Your surname*',
+  birthdayDate: 'Your birth date',
+  phoneNumber: 'Your phone*',
   email: 'Your email*',
   password: 'Your password*',
 }

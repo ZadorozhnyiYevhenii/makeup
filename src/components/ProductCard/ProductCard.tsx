@@ -26,8 +26,6 @@ export const ProductCard: React.FC<Props> = ({ id }) => {
   const price = product?.productVariations.map(prod => prod.variationDetails.map(p => p.price)[0])[0];
   const quantity = product.productVariations.map(prod => prod.amount)[0];
 
-  console.log(product)
-  
   return (
     <>
       <QueryComponent isLoading={loading} error={error} errorMessage="product">

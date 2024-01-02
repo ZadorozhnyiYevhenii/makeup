@@ -2,6 +2,9 @@ import { FC } from "react";
 import { UseFormRegister } from "react-hook-form";
 import { IUser } from "../../types/IUser";
 import './InputWithLabel.scss';
+import { emailPattern } from "../../utils/emailPattern";
+import { usePasswordToggle } from "../../hooks/usePasswordToggle";
+import { passwordRules } from "../../utils/passwordRules";
 
 type Props = {
   label: string,
@@ -9,7 +12,7 @@ type Props = {
   register: UseFormRegister<IUser>
   errorMessage?: string,
   isEmail?: boolean,
-  typeTel?: boolean
+  isPassword?: boolean
 }
 
 export const InputWithLabel: FC<Props> = ({
@@ -18,30 +21,48 @@ export const InputWithLabel: FC<Props> = ({
   register,
   errorMessage,
   isEmail,
+  isPassword
 }) => {
-  const validateWithRules = {
-    ...(name !== "birthDate" && {
-      required: `${label} is required`,
+  const { type, toggleIcon, togglePasswordIcon } = usePasswordToggle();
+
+  const inputProps = {
+    ...register(name, {
+      ...(name !== 'birthdayDate' && {
+        required: `${label} is required`,
+      }),
+      ...(isEmail && {
+        pattern: {
+          value: emailPattern.value,
+          message: emailPattern.message,
+        },
+      }),
+      ...isPassword && {
+        minLength: {
+          value: passwordRules.minValue,
+          message: passwordRules.minMessage,
+        },
+        maxLength: {
+          value: passwordRules.maxValue,
+          message: passwordRules.maxMessage
+        }
+      }
     }),
-    ...(isEmail && {
-      pattern: {
-        value: /^((([0-9A-Za-z]{1}[-0-9A-z.]{1,}[0-9A-Za-z]{1})|([0-9А-Яа-я]{1}[-0-9А-я.]{1,}[0-9А-Яа-я]{1}))@([-A-Za-z]{1,}\.){1,2}[-A-Za-z]{2,})$/u,
-        message: 'Please enter valid email'
-      },
-    })
-  }
+    type: isPassword ? type : 'text',
+    className: 'register-input__input',
+  };
 
   return (
     <div className="register-input">
-      <input
-        type='text'
-        {...register(name, validateWithRules)}
-        className='register-input__input'
-      />
+      <input {...inputProps} />
       {errorMessage ? (
         <div className="register-input__label register-input__label--warn">{errorMessage}</div>
       ) : (
         <label className="register-input__label">{label}</label>
+      )}
+      {isPassword && (
+        <div className="register-input__toggle" onClick={togglePasswordIcon}>
+          {toggleIcon}
+        </div>
       )}
     </div>
   )

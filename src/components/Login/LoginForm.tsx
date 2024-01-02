@@ -1,58 +1,88 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useState } from "react";
 import { Link } from 'react-router-dom';
 import './LoginForm.scss';
 import CloseIcon from '@mui/icons-material/Close';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import { SubmitHandler, useForm } from "react-hook-form";
+import { IUser } from "../../types/IUser";
+import { Loader } from "../Loader/Loader";
+import { useQuery } from "@apollo/client";
+import { AUTH_USER, QueryAuth } from "../../graphql/queries/authenticateUser";
+import { client } from "../../graphql/client";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { addUser } from "../../app/slices/userSlice";
+import { GET_ALL_USERS, QueryUsers } from "../../graphql/queries/getAllUsers";
+import { emailPattern } from "../../utils/emailPattern";
+import { passwordRules } from "../../utils/passwordRules";
+import { usePasswordToggle } from "../../hooks/usePasswordToggle";
 
 type Props = {
   onClose: () => void,
 }
 
 export const LoginForm: React.FC<Props> = memo(({ onClose }) => {
-  const [type, setType] = useState('password');
-  const [toggleIcon, setToggleIcon] = useState(<VisibilityOffIcon />);
-  const [error, setError] = useState('');
-  const [email, setEmail] = useState('');
-  const emailRef = useRef<HTMLInputElement | null>(null);
+  const { type, toggleIcon, togglePasswordIcon } = usePasswordToggle();
+  const user = useAppSelector(state => state.user.user);
+  const [message, setMessage] = useState<string | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isLoading },
+    reset,
+  } = useForm<IUser>();
+  const dispatch = useAppDispatch();
+  const { data } = useQuery<QueryUsers>(GET_ALL_USERS);
+
+  const users = data?.getAllUsers;
 
   const navigateToRegister = () => {
     onClose();
   }
 
-  const togglePasswordVisibility = () => {
-    setType((prevType) => prevType === 'password' ? 'text' : 'password');
-    setToggleIcon((prevIcon) => prevIcon.type === VisibilityOffIcon ? <VisibilityIcon /> : <VisibilityOffIcon />);
-  };
+  const onSubmit: SubmitHandler<IUser> = async (data) => {
+    try {
+      const authenticationData = {
+        request: {
+          email: data.email,
+          password: data.password,
+        },
+      };
+  
+      const authResult = await client.query<QueryAuth>({
+        query: AUTH_USER,
+        variables: authenticationData,
+      });
 
-  const emailCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const emailOnFocus = () => {
-    if (!email.includes('@')) {
-      setError('Enter a valid email!');
-      setEmail('');
+      const user = users?.find(user => user.email === authenticationData.request.email);
+   
+      if (authResult.data && authResult.data.authenticateUser && authResult.data.authenticateUser.jwtToken) {
+        console.log("Authentication successful!");
+        dispatch(addUser(user))
+        setTimeout(() => {
+          setMessage('Authentication successful!')
+          onClose();
+        }, 3000);
+      } else {
+        console.error("Authentication failed");
+        setMessage('Authentication failed. Please check your credentials!')
+      }
+      reset()
+    } catch (error) {
+      console.error("Error during authentication:", error);
+      setMessage('An unexpected error occurred. Please try again later.')
     }
-    setError('');
   };
-
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
-
-  useEffect(() => {
-    const desktopWidth = window.innerWidth > 1023;
-
-    if (desktopWidth && emailRef.current) {
-      emailRef.current.focus();
-    }
-  }, [])
 
   return (
     <div className="login">
       <div className="login__top">
-        <h2 className="login__title">Login to your personal account</h2>
+        <h2 className="login__title">
+          {!!message ? (
+            <span className={user ? 'login__success-title' : 'login__warn-title'}>{message}</span>
+          ) : (
+            'Login to your personal account'
+          )}
+        </h2>
         <div
           className="login__close"
           onClick={onClose}
@@ -62,35 +92,48 @@ export const LoginForm: React.FC<Props> = memo(({ onClose }) => {
       </div>
       <div className="login__wrapper">
         <form
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           className="login__form"
         >
           <div className="login__email-container">
-          {error && <div className="login__error">{error}</div>}
-          <input 
-            type="text"
-            className="login__input"
-            placeholder="E-mail"
-            value={email}
-            onChange={emailCheck}
-            onFocus={emailOnFocus}
-            ref={emailRef}
-          />
+            {errors.email && <div className="login__error">{errors.email?.message}</div>}
+            <input
+              type="text"
+              className="login__input"
+              placeholder="E-mail"
+              {...register('email', {
+                pattern: {
+                  value: emailPattern.value,
+                  message: emailPattern.message,
+                }
+              })}
+            />
           </div>
-         <div className="login__password-container">
+          <div className="login__password-container">
+            {errors.password && <div className="login__error">{errors.password?.message}</div>}
             <input
               type={type}
               className="login__password"
               placeholder="Password"
+              {...register('password', {
+                minLength: {
+                  value: passwordRules.minValue,
+                  message: passwordRules.minMessage,
+                },
+                maxLength: {
+                  value: passwordRules.maxValue,
+                  message: passwordRules.maxMessage,
+                }
+              })}
             />
-            <div className="login__toggle" onClick={togglePasswordVisibility}>
+            <div className="login__toggle" onClick={togglePasswordIcon}>
               {toggleIcon}
             </div>
           </div>
           <button
             className="login__button"
           >
-            Log in
+            {isLoading ? <Loader /> : 'Log in'}
           </button>
         </form>
       </div>

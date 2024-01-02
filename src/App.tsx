@@ -10,11 +10,15 @@ import { ProductCardPage } from './pages/ProductCardPage/ProductCardPage';
 import { CategoriesPage } from './pages/CatalogPage/CategoriesPage';
 import { Cart } from './pages/Cart/Cart';
 import { RegisterPage } from './pages/RegisterPage/RegisterPage';
+import { useAppSelector } from './app/hooks';
+import { UserPage } from './pages/UserPage/UserPage';
 
 function App() {
   const underConstructionRoutes = [
     '/makeup/delivery',
   ];
+
+  const user = useAppSelector(state => state.user.user);
 
   return (
     <div className="App">
@@ -26,8 +30,11 @@ function App() {
           <Route path='product/:id' element={<ProductCardPage />} />
           <Route path='category/:id' element={<CategoriesPage />} />
           <Route path='cart' element={<Cart />} />
-          <Route path='register' element={<RegisterPage />} /> 
-        
+          <Route path='register' element={<RegisterPage />} />
+          {!!user && (
+            <Route path='user' element={<UserPage />} />
+          )}
+
           {underConstructionRoutes.map((route, index) => (
             <Route key={index} path={route} element={<UnderConstructionPage />} />
           ))}
