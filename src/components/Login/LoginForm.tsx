@@ -114,6 +114,7 @@ export const LoginForm: React.FC<Props> = memo(({ onClose }) => {
             <input
               type={type}
               className="login__password"
+              autoComplete='current-password'
               placeholder="Password"
               {...register('password', {
                 minLength: {

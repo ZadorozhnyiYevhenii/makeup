@@ -12,6 +12,7 @@ import { Cart } from './pages/Cart/Cart';
 import { RegisterPage } from './pages/RegisterPage/RegisterPage';
 import { useAppSelector } from './app/hooks';
 import { UserPage } from './pages/UserPage/UserPage';
+import { AdminPage } from './pages/AdminPage/AdminPage';
 
 function App() {
   const underConstructionRoutes = [
@@ -34,6 +35,7 @@ function App() {
           {!!user && (
             <Route path='user' element={<UserPage />} />
           )}
+          <Route path='admin' element={<AdminPage />} />
 
           {underConstructionRoutes.map((route, index) => (
             <Route key={index} path={route} element={<UnderConstructionPage />} />

@@ -1,0 +1,47 @@
+.user {
+  display: flex;
+  justify-content: space-evenly;
+  height: 86vh;
+  align-items: center;
+
+  &__content {
+    width: 350px;
+  }
+
+  &__submit {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+  }
+
+  &__submit-title {
+    font-weight: 600;
+    color: #212121;
+    font-size: 26px;
+    line-height: 40px
+  }
+
+  &__nav {
+    border-right: 1px solid #eee;
+  }
+
+  &__tab {
+    font-size: 16px;
+    line-height: 24px;
+    padding: 8px 16px 8px 0;
+    margin: 0 -1px 8px 0;
+    cursor: pointer;
+
+    &.active {
+      color: #5b24c9;
+      border-right-color: #212121;
+    }
+  }
+
+  &__logout {
+    color: #a6a2a2;
+    background: none;
+    cursor: pointer;
+    margin: 40px 0 0 0;
+  }
+}
