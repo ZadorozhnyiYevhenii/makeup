@@ -13,6 +13,8 @@ export const Cart: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  console.log(cart)
+
   const close = () => {
     navigate(-1);
   };
@@ -23,20 +25,20 @@ export const Cart: FC = () => {
     }, 1000);
   }
 
-  const handleRemove = (productId: number) => {
-    dispatch(removeFromCart(productId));
+  const handleRemove = (productId: number, amount: number) => {
+    dispatch(removeFromCart({ productId, amount }));
   };
 
-  const handleIncrementCount = (productId: number) => {
-    dispatch(addCount(productId));
+  const handleAddCount = (productId: number, amount: number) => {
+    dispatch(addCount({ productId, amount }));
   };
 
-  const handleDecrementCount = (productId: number) => {
-    dispatch(decrementCount(productId));
+  const handleDecrementCount = (productId: number, amount: number) => {
+    dispatch(decrementCount({ productId, amount }));
   };
 
   const totalValue = cart?.reduce((total, product) => {
-    return total + product?.productVariations.map(pr => pr.variationDetails.map(p => p.price)[0])[0] * counts[product.id];
+    return total + product.price * counts[`${product.id}_${product.amount}`];
   }, 0);
 
   useEffect(() => {
@@ -60,35 +62,39 @@ export const Cart: FC = () => {
         </button>
       </div>
       <div className="cart__list" data-testid="cart__list">
-        {cart?.map((product) => (
-          <div key={product.id} className="cart__item">
-            <div className="cart__photo-container">
-              <Link to="/" className="cart__link">
-                <img
-                  src={product.images.map(i => i.imageLink)[0]}
-                  alt={`${product.id} img`}
-                  className="cart__img"
-                />
-              </Link>
-            </div>
-            <div className="cart__container">
-              <h3 className="cart__name">{product.name}</h3>
-              <div className="cart__type">{product.type}</div>
-              <div className="cart__count">{product.productVariations.map(pr => pr.amount)[0]} ml</div>
-              <div className="cart__price">
-                {product?.productVariations.map(pr => pr.variationDetails.map(p => p.price)[0])[0] * counts[product.id]} $
-              </div>
-              <div className="cart__wrap">
-                <div className="cart__control">
-                  <div className="cart__button" onClick={() => handleDecrementCount(product.id)}><RemoveIcon /></div>
-                  <span className="cart__quantity">{counts[product.id]}</span>
-                  <div className="cart__button" onClick={() => handleIncrementCount(product.id)}><AddIcon /></div>
+        <div className="cart__items">
+          {cart?.map((product) => (
+            <div key={`${product.id}_${product.amount}`}>
+              <div className="cart__item">
+                <div className="cart__photo-container">
+                  <Link to="/" className="cart__link">
+                    <img
+                      src={product.images.map(i => i.imageLink)[0]}
+                      alt={`${product.id} img`}
+                      className="cart__img"
+                    />
+                  </Link>
                 </div>
-                <div onClick={() => handleRemove(product.id)}><DeleteOutlineIcon /></div>
+                <div className="cart__container">
+                  <h3 className="cart__name">{product.name}</h3>
+                  <div className="cart__type">{product.type}</div>
+                  <div className="cart__count">{product.amount} ml</div>
+                  <div className="cart__price">
+                    {product.price * counts[`${product.id}_${product.amount}`]} $
+                  </div>
+                  <div className="cart__wrap">
+                    <div className="cart__control">
+                      <div className="cart__button" onClick={() => handleDecrementCount(product.id, product.amount)}><RemoveIcon /></div>
+                      <span className="cart__quantity">{counts[`${product.id}_${product.amount}`]}</span>
+                      <div className="cart__button" onClick={() => handleAddCount(product.id, product.amount)}><AddIcon /></div>
+                    </div>
+                    <div onClick={() => handleRemove(product.id, product.amount)}><DeleteOutlineIcon /></div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
         <div className="cart__total">
           <div className="cart__total-wrapper">
             <div className="cart__total-value">

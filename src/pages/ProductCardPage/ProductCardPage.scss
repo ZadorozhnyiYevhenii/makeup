@@ -1,7 +1,7 @@
 @import "../../mixins/pointBrakers.scss";
 
 .product {
-  padding: 44px 16px 0;
+  padding: 0 16px 44px 16px;
 
   @include onDesktop {
     padding-inline: 0;
@@ -193,5 +193,13 @@
   &__number {
     color: #a6a2a2;
     font-size: 13px;
+  }
+}
+
+.container {
+  &__breadcrumbs {
+    @include onDesktop {
+      margin: 32px 0 60px;
+    }
   }
 }

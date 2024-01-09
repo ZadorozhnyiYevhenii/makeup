@@ -1,3 +1,5 @@
+@import "../../mixins/pointBrakers.scss";
+
 .cart {
   position: fixed;
   top: 0;
@@ -15,6 +17,20 @@
     overflow-y: auto;
     padding: 0 16px 160px;
     max-height: calc(100% - 140px);
+
+    @include onDesktop {
+      display: flex;
+      overflow-y: hidden;
+      padding: 30px 24px 0 24px;
+      justify-content: space-between;
+    }
+  }
+
+  &__items {
+    @include onDesktop {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   &__item {
@@ -26,7 +42,6 @@
 
   &__photo-container {
     width: 78px;
-    height: 87px;
     margin: 0 16px 0 0;
   }
 
@@ -34,6 +49,10 @@
     display: flex;
     flex-direction: column;
     width: 100vw;
+
+    @include onDesktop {
+      width: 55vw;
+    }
   }
 
   &__name {
@@ -102,12 +121,21 @@
     font-size: 18px;
     line-height: 24px;
     padding: 16px 0 16px 16px;
+
+    @include onDesktop {
+      font-size: 26px;
+      line-height: 40px;
+    }
   }
 
   &__wrapper {
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #ebebeb;
+
+    @include onDesktop {
+      padding: 0 24px 16px 24px;
+    }
   }
 
   &__back {
@@ -125,12 +153,30 @@
     padding: 24px 16px;
     border-top: 1px solid #ebebeb;
     background: #fff;
-  }
 
+    @include onDesktop {
+      position: static;
+      padding: 20px;
+      width: 20vw;
+      background: #fafafa;
+      border-top: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      justify-content: space-between;
+      height: 161px;
+    }
+  }
+  
   &__total-wrapper {
     display: flex;
     justify-content: space-between;
     margin: 0 0 24px 0;
+
+    @include onDesktop {
+      display: flex;
+      
+    }
   }
 
   &__checkout {

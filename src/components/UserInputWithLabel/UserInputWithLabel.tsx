@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { UseFormRegister } from "react-hook-form";
 import { IUser } from "../../types/IUser";
-import './InputWithLabel.scss';
+import './UserInputWithLabel.scss';
 import { emailPattern } from "../../utils/emailPattern";
 import { usePasswordToggle } from "../../hooks/usePasswordToggle";
 import { passwordRules } from "../../utils/passwordRules";
@@ -15,7 +15,7 @@ type Props = {
   isPassword?: boolean
 }
 
-export const InputWithLabel: FC<Props> = ({
+export const UserInputWithLabel: FC<Props> = ({
   label,
   name,
   register,

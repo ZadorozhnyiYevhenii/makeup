@@ -44,19 +44,19 @@ function a11yProps(index: number) {
 
 type Props = {
   id: number,
-  products: IProd[] | undefined,
+  product: IProd | undefined,
 }
 
-export const BasicTabs: React.FC<Props> = ({ id, products }) => {
+export const BasicTabs: React.FC<Props> = ({ id, product }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
-  const product = products?.find(prod => prod.id === +id);
-
   const normalizeClassification = normalizeName(product?.classification);
+
+  const normalizeSex = normalizeName(product?.sex);
 
   const isMobile = useWindowResize(1023);
 
@@ -105,10 +105,10 @@ export const BasicTabs: React.FC<Props> = ({ id, products }) => {
                     <strong>Counrty:</strong> {product?.countryTradeMark.name}
                   </li>
                   <li className="tabs__item">
-                    <strong>Made in:</strong> {product?.countriesMadeIn[0]}
+                    <strong>Made in:</strong> {product?.countriesMadeIn[1]}
                   </li>
                   <li className="tabs__item">
-                    <strong>Sex:</strong> {product?.sex}
+                    <strong>Sex:</strong> {normalizeSex}
                   </li>
                   <li className="tabs__item">
                     <strong>Liquid:</strong> {product?.isLiquid ? '+' : '-'}
@@ -127,7 +127,7 @@ export const BasicTabs: React.FC<Props> = ({ id, products }) => {
           </Box>
         </Box>
       ) : (
-        <VerticalTabs id={+id} products={products} />
+        <VerticalTabs id={+id} product={product} />
       )}
     </div>
   );

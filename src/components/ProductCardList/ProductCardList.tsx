@@ -1,9 +1,13 @@
-import { FC } from "react";
+import { FC, Suspense, lazy } from "react";
 import { SortOptions } from "../../utils/sortOptions";
-import { ProductCard } from "../ProductCard/ProductCard"
 import './ProductCardList.scss';
 import { filterAndSortProducts } from "../../utils/filterAndSortProducts";
 import { IProd } from "../../types/IProduct";
+import { Loader } from "../Loader/Loader";
+
+const LazyProductCard = lazy(() => 
+  import("../ProductCard/ProductCard").then((module) => ({ default: module.ProductCard }))
+);
 
 type Props = {
   sortOptions: SortOptions | null,
@@ -21,15 +25,16 @@ export const ProductCardList: FC<Props> = ({
   products,
 }) => {
   const sortedProducts = filterAndSortProducts(products, filteredBrand, filteredType, filteredSex, sortOptions);
-
   return (
     <div className="productList">
       <ul className="productList__list">
-          {sortedProducts?.map(product => (
-            <li className="productList__item" key={product.id}>
-              <ProductCard id={product.id} />
-            </li>
-          ))}
+        {sortedProducts?.map(product => (
+          <li className="productList__item" key={product.id}>
+            <Suspense fallback={<Loader />}>
+              <LazyProductCard id={product.id} />
+            </Suspense>
+          </li>
+        ))}
       </ul>
     </div>
   );

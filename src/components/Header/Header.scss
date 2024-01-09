@@ -8,6 +8,10 @@ body.no-scroll {
   position: relative;
   z-index: 2;
 
+  @include onDesktop {
+    border-bottom: 1px solid #EBEBEB;
+  }
+
   &__top {
     display: flex;
     align-items: center;

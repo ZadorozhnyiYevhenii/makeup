@@ -1,0 +1,39 @@
+.admin-input {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  width: 100%;
+
+  &__input {
+    color: #212121;
+    font-size: 16px;
+    padding: 12px 0;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #ebebeb;
+    outline: none;
+    transition: border-bottom 0.2s ease-in;
+
+    &:focus {
+      border-bottom: 1px solid #5b24c9;
+    }
+  }
+
+  &__label {
+    color: #a6a2a2;
+    font-size: 14px;
+    font-weight: 400;
+    position: absolute;
+    pointer-events: none;
+    left: 0;
+    transition: .3s ease all;
+    top: -19px;
+    font-size: 12px;
+
+    &--warn {
+      color: red;
+    }
+  }
+}

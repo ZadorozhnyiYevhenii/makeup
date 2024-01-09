@@ -50,15 +50,15 @@ export const Dots: FC<Props> = ({
             <KeyboardArrowLeftIcon />
           </button>
           )}
-          {product?.images.map(img => (
+          {product?.images.map((img, ind) => (
             <div
               key={img.id}
               onClick={() => setSlideIndex(img.id - 1)}
               className={cn('dots__photo-dot', {
-                active: img.id - 1 === slideIndex,
+                active: ind === slideIndex,
               })}
             >
-              <img src={img.imageLink} alt={`${product.name} + ${img.id}`} className='dots__dot-item' />
+              <img src={img.imageLink} alt={`${product.name} + ${ind}`} className='dots__dot-item' />
             </div>
           ))}
           {!!product?.images.length && (

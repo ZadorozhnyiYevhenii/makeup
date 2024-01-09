@@ -5,6 +5,10 @@
 }
 
 .spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   &-circle {
     border-radius: 50%;
     width: 40px;

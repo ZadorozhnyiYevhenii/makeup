@@ -1,13 +1,15 @@
-import { FC } from "react"
+import { FC, useState } from "react"
 import { IProd } from "../../types/IProduct"
 import { SelectMenu } from "../SelectMenu/SelectMenu"
 import { PurchaseButton } from "../PurchaseButton/PurchaseButton"
 import { normalizeName } from "../../helpers/normalizeWord"
 import { QueryComponent } from "../QueryComponent/QueryComponent"
 import { ApolloError } from "@apollo/client"
+import { useAppDispatch } from "../../app/hooks"
+import { addToCart } from "../../app/slices/cartSlice"
 
 type Props = {
-  product: IProd | undefined,
+  product: IProd,
   modalRef: React.MutableRefObject<HTMLDivElement | null>
   deliveryInfoOpened: () => void,
   showDeliveryInfo: boolean,
@@ -23,9 +25,27 @@ export const ProductCardInfo: FC<Props> = ({
   loading,
   error
 }) => {
+  const dispatch = useAppDispatch();
   const category = product?.categories.map(prod => prod.name);
 
-  const price = product?.productVariations.map(prod => prod.variationDetails.map(pr => pr.price)[0])[0]
+  const [selectedAmount, setSelectedAmount] = useState<number | undefined>(product?.productVariations[0].amount || 0);
+
+  const selectedVariation = product?.productVariations.find(variation => variation?.amount === selectedAmount)
+
+  const price = selectedVariation?.variationDetails[0].price;
+
+  const handleAddToCart = () => {
+    const newProduct = {
+      ...product,
+      price: price || 0,
+      amount: selectedAmount || 0,
+    };
+  
+    dispatch(addToCart(newProduct));
+  };
+  
+
+  console.log(price)
 
   const normalizeAvailability = normalizeName(product?.productStatus)
 
@@ -41,10 +61,10 @@ export const ProductCardInfo: FC<Props> = ({
             {price} $
           </div>
           <div className='product__select'>
-            <SelectMenu product={product} />
+            <SelectMenu product={product} setSelectedAmount={setSelectedAmount} />
           </div>
           <div className='product__buy'>
-            <PurchaseButton product={product} />
+            <PurchaseButton product={product} addToCart={handleAddToCart} />
             <div className='product__info'>
               <div className='product__stock'>{normalizeAvailability ? 'In stock!' : ''}</div>
               <div className='product__code'>status:

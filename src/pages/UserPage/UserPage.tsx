@@ -18,7 +18,6 @@ export const UserPage = () => {
   const navigate = useNavigate();
   const {
     register,
-    formState: { isLoading, errors },
     handleSubmit
   } = useForm<IUser>({
     defaultValues: {

@@ -1,0 +1,61 @@
+@import "../../mixins/pointBrakers.scss";
+
+.admin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-block: 80px;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 800px;
+    width: 100%;
+    
+    @include onDesktop {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__select {
+    color: #212121;
+    font-size: 16px;
+    padding: 12px 0;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #ebebeb;
+    outline: none;
+    transition: border-bottom 0.2s ease-in;
+
+    &:focus {
+      border-bottom: 1px solid #5b24c9;
+    }
+  }
+
+  &__form-addBrand {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    width: 100%;
+    gap: 36px;
+  }
+
+  &__button {
+    grid-column: span 2;
+    background-color: #5b24c9;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out;
+
+    &:hover {
+      background-color: #3f1376;
+    }
+  }
+}

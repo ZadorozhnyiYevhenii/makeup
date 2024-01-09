@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useParams, useSearchParams } from "react-router-dom";
 import { FilterButtons } from "../../components/FilterButtons/FilterButtons";
 import './CategoriesPage.scss';
 import cn from 'classnames';
@@ -22,6 +22,7 @@ import { useQuery } from "@apollo/client";
 import { GET_PRODUCT_WITH_CATEGORY_ID } from "../../graphql/queries/getProductsWithCetgoryId";
 import { setProducts } from "../../app/slices/productSlice";
 import { CategoryTitle } from "../../components/CategoryTitle/CategoryTitle";
+import { Breadcrums } from "../../components/BreadCrumbs/BreadCrumbs";
 
 interface QueryData {
   getProductsByCategoryIds: IProd[]
@@ -35,6 +36,7 @@ export const CategoriesPage = () => {
   const { brands, types, sex } = useAppSelector(state => state.filters);
   const dispatch = useAppDispatch();
   const { id } = useParams();
+  const location = useLocation()
 
   const { data } = useQuery<QueryData>(GET_PRODUCT_WITH_CATEGORY_ID, { variables: { categoryIds: id } });
 
@@ -92,20 +94,32 @@ export const CategoriesPage = () => {
     FilterRemove(filter, brands, types, sex, dispatch);
   };
 
-  const amountOfProducts = calculateTotalProductsCount(products, brands, types, sex)
+  const amountOfProducts = calculateTotalProductsCount(products, brands, types, sex);
+
+  const categoryName = products?.map(product => product.categories.map(pr => pr.name)[0])[0];
 
   return (
     <div className="categories">
-      <CategoryTitle products={products} />
-      <FilterMenu
-        products={products}
-        handleApply={() => setIsFilterMenuOpen(false)}
-        isFilterMenuOpen={isFilterMenuOpen}
-        onClose={closeFilterMenu}
-        clearFilters={handleClearFilter}
-      />
-      <div className="categories__content">
-          <div className={cn("categories__utils", {'hide-slide': hideSlider })}>
+      <div className="categories__top">
+        <Breadcrums
+          renderOptions={() =>
+            <Link className='breadcrumbs__item breadcrumbs__item--active' to={location.pathname}>
+              {categoryName}
+            </Link>
+          }
+        />
+        <CategoryTitle categoryTitle={categoryName} />
+      </div>
+      <div className="categories__container">
+        <FilterMenu
+          products={products}
+          handleApply={() => setIsFilterMenuOpen(false)}
+          isFilterMenuOpen={isFilterMenuOpen}
+          onClose={closeFilterMenu}
+          clearFilters={handleClearFilter}
+        />
+        <div className="categories__content">
+          <div className={cn("categories__utils", { 'hide-slide': hideSlider })}>
             <div className="categories__desktop-head">
               <SelectedFilters onFilterRemove={handleFilterRemove} filters={[...brands, ...types, ...sex]} />
               {hideSlider && <ClearFilterButton onClick={handleClearFilter} />}
@@ -120,26 +134,27 @@ export const CategoriesPage = () => {
               />
             </div>
           </div>
-        <FilterButtons
-          onSortOpen={handleSortMenu}
-          onFiltersOpen={handleFilterMenu}
-        />
-        {isSortMenuOpen && (
-          <SortMenu
-            onClose={closeSortMenu}
-            onSort={handleSort}
-            isSortMenuOpen={isSortMenuOpen}
-            selectedSortOption={sortOption}
+          <FilterButtons
+            onSortOpen={handleSortMenu}
+            onFiltersOpen={handleFilterMenu}
           />
-        )}
-        {!hideSlider && <SliderMain />}
-        <ProductCardList
-          products={products}
-          sortOptions={sortOption}
-          filteredBrand={brands}
-          filteredType={types}
-          filteredSex={sex}
-        />
+          {isSortMenuOpen && (
+            <SortMenu
+              onClose={closeSortMenu}
+              onSort={handleSort}
+              isSortMenuOpen={isSortMenuOpen}
+              selectedSortOption={sortOption}
+            />
+          )}
+          {!hideSlider && <SliderMain />}
+          <ProductCardList
+            products={products}
+            sortOptions={sortOption}
+            filteredBrand={brands}
+            filteredType={types}
+            filteredSex={sex}
+          />
+        </div>
       </div>
     </div>
   );

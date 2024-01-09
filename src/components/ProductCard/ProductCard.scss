@@ -1,5 +1,6 @@
 .card {
   margin-top: 20px;
+  position: relative;
 
   &__wrap {
     display: flex;
@@ -7,7 +8,7 @@
     align-items: center;
     position: relative;
     padding: 40px 32px;
-
+    transition: transform 0.3s ease, opacity 0.3s ease;
 
     &::after {
       content: '';
@@ -16,7 +17,7 @@
       right: 0;
       bottom: 0;
       left: 0;
-      opacity: .02;
+      opacity: 0.02;
       background: #000;
       pointer-events: none;
     }
@@ -30,22 +31,22 @@
     margin: 16px 20px 0 0;
   }
 
-  &__type {
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 400;
-    color: #A6A2A2;
-    margin: 6px 0 0 0;
-
-    max-width: 150px;
-    max-height: 72px;
-  }
-
   &__container {
     display: flex;
     flex-direction: column;
     gap: 30px;
     height: calc(100% - 296px);
+  }
+
+  &__group {
+    overflow: hidden;
+    max-width: 280px;
+    max-height: 48px;
+    margin: 6px 0 0 0;
+    color: #a6a2a2;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
   }
 
   &__bottom {
@@ -67,5 +68,30 @@
     font-size: 14px;
     line-height: 24px;
     margin: 4px 0 0 0;
+  }
+
+  &__purchase-button {
+      position: absolute;
+      bottom: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out, bottom 0.3s ease-in-out;
+      width: 100%;
+      z-index: 1;
+      padding-top: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      overflow: hidden;
+      visibility: hidden;
+  }
+
+  &:hover &__purchase-button {
+      opacity: 1;
+      bottom: -120px;
+      z-index: 1002;
+      visibility: visible;
+      overflow: auto;
   }
 }

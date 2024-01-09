@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { BasicTabs } from '../../components/Tabs/Tabs';
 import { useEffect, useRef, useState } from 'react';
 import { ProductSlider } from '../../components/ProductSlider/ProductSlider';
@@ -12,6 +12,7 @@ import { useQuery } from '@apollo/client';
 import { GET_ALL_PRODUCTS } from '../../graphql/queries/getAllProducts';
 import { IProd } from '../../types/IProduct';
 import { QueryComponent } from '../../components/QueryComponent/QueryComponent';
+import { Breadcrums } from '../../components/BreadCrumbs/BreadCrumbs';
 
 interface QueryData {
   getAllProducts: IProd[];
@@ -24,8 +25,7 @@ export const ProductCardPage = () => {
   const [slideIndex, setSlideIndex] = useState(0);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const { data, error, loading } = useQuery<QueryData>(GET_ALL_PRODUCTS);
-
-  const products = data?.getAllProducts;
+  const location = useLocation();
 
   const handleOpenPopup = () => {
     setIsPopupOpen(prev => !prev);
@@ -63,10 +63,38 @@ export const ProductCardPage = () => {
 
   useDisableScroll('no-scroll', isPopupOpen);
 
-  const product = data?.getAllProducts?.find(prod => prod.id === +id);
+  
+  if (data?.getAllProducts === undefined) {
+    return null;
+  }
+
+  const product = data.getAllProducts.find(prod => prod.id === +id);
+
+  if (!product) {
+    return null;
+  }
+
+  const categoryId = product?.categories.map(category => category.id)[0]
+  const categoryName = product?.categories.map(category => category.name)[0]
+
+  console.log(product)
 
   return (
-    <>
+    <div className='container'>
+      <div className='container__breadcrumbs'>
+        <Breadcrums
+          renderOptions={() =>
+            <>
+              <Link className='breadcrumbs__item' to={`/makeup/category/${categoryId}`}>
+                {categoryName}
+              </Link>
+              <Link className='breadcrumbs__item breadcrumbs__item--active' to={location.pathname}>
+                {product?.name}
+              </Link>
+            </>
+          }
+        />
+      </div>
       <div className='product'>
         <QueryComponent error={error} errorMessage='photos' isLoading={loading}>
           <PhotoPopup
@@ -111,12 +139,12 @@ export const ProductCardPage = () => {
           </QueryComponent>
         </div>
         <div className='product__tabs'>
-          <BasicTabs id={+id} products={products} />
+          <BasicTabs id={+id} product={product} />
         </div>
       </div>
       <ProductSlider title='Similar products' />
       <ProductSlider title='Other customers also bought' />
       <ProductSlider title='Especially for you' />
-    </>
+    </div>
   );
 };

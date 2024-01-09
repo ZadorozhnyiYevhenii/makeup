@@ -1,41 +1,56 @@
 import { gql } from "@apollo/client";
+import { IProd } from "../../types/IProduct";
+
+export interface QueryGetAllProducts {
+  getAllProducts: IProd[]
+}
 
 export const GET_ALL_PRODUCTS = gql`
   query MyQuery {
     getAllProducts {
-      brand {
-        id
-        name
-      }
-      categories {
-        id
-        name
-      }
-      classification
-      countriesMadeIn {
-        name
-        id
-      }
+      id
       isLiquid
       name
+      productGroup
       productStatus
+      sex
       productVariations {
+        amount
+        id
         variationDetails {
           id
           price
+          sale
+          shippingFrom
         }
-        amount
-        id
+        variationImage {
+          imageLink
+          id
+        }
       }
-      sex
-      id
+      images {
+        id
+        imageLink
+      }
+      description
       countryTradeMark {
         id
         name
       }
-      images {
-        imageLink
+      classification
+      brand {
         id
+        name
+      }
+      additionalInfo
+      categories {
+        id
+        name
+        parentCategoryId
+      }
+      countriesMadeIn {
+        id
+        name
       }
     }
   }

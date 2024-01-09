@@ -1,11 +1,19 @@
 @import "../../mixins/pointBrakers.scss";
 
 .categories {
-  margin-top: 48px;
-  @include onDesktop {
-    display: flex;
-    gap: 64px;
-    margin-top: 100px;
+  &__container {
+    @include onDesktop {
+      display: flex;
+      gap: 64px;
+      margin-top: 38px;
+    }
+  }
+
+  &__top {
+    @include onDesktop {
+      display: flex;
+      flex-direction: column-reverse;
+    }
   }
 
   &__content {

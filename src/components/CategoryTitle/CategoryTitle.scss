@@ -6,8 +6,5 @@
   font-size: 26px;
   line-height: 40px;
   font-weight: 600;
-
-  @include onDesktop {
-    display: none;
-  }
+  margin-top: 36px;
 }

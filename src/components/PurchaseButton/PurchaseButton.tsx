@@ -1,21 +1,19 @@
 import { FC } from "react"
-import { useAppDispatch } from "../../app/hooks"
-import { addToCart } from "../../app/slices/cartSlice"
 import { useNavigate } from "react-router-dom"
 import './PurchaseButton.scss';
 import { IProd } from "../../types/IProduct";
 
 type Props = {
   product: IProd | undefined,
+  addToCart: (product: IProd) => void;
 }
 
-export const PurchaseButton: FC<Props> = ({ product }) => {
+export const PurchaseButton: FC<Props> = ({ product, addToCart }) => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const handleBuy = () => {
     if (product) {
-      dispatch(addToCart(product));
+      addToCart(product);
       navigate('/makeup/cart');
     }
   };

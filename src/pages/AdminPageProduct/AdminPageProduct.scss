@@ -1,0 +1,59 @@
+@import "../../mixins/pointBrakers.scss";
+
+.adminpage {
+  margin-bottom: 80px;
+
+  &__title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 600;
+    margin: 0 auto;
+  }
+
+  &__top {
+    display: flex;
+    align-items: center;
+    margin-block: 40px 30px;
+  }
+
+  &__container {
+    display: flex;
+    gap: 60px;
+    margin-inline: 20px;
+
+    > :first-child {
+      flex: 2;
+
+      @include onDesktop {
+        flex: 1;
+      }
+    }
+
+    > :last-child {
+      flex: 4;
+    }
+  }
+
+
+  &__tabs {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 36px;
+    border-right: 1px solid #eee;
+    overflow-y: auto;
+  }
+
+  &__tab {
+    font-size: 14px;
+    padding: 10px;
+
+    @include onTablet {
+      font-size: 16px;
+    }
+
+    &.active {
+      border-right: 1px solid #5b24c9;
+    }
+  }
+}
