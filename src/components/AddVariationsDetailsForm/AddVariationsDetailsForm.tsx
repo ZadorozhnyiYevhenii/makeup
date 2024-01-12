@@ -61,7 +61,7 @@ export const AddVariationsDetailsForm = () => {
                 ?.find((prod) => prod.id === +selectedProductId)
                 ?.productVariations.map((variation) => (
                   <option key={variation.id} value={variation.id}>
-                    {variation.amount}
+                    {variation.variationName}
                   </option>
                 ))
             }

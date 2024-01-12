@@ -3,8 +3,6 @@ import { ADD_PRODUCT } from "../../graphql/mutations/addProduct";
 import { IProd } from "../../types/IProduct";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { GET_ALL_PRODUCTS } from "../../graphql/queries/getAllProducts";
-import { GET_PRODUCT_BYID } from "../../graphql/queries/getProductById";
-import { booleanOptions } from "../../utils/booleanOption";
 import { AdminInpuWithLabel } from "../AdminInputWithLabel/AdminInputWithLabel";
 import { AdminSelectWithLabel } from "../AdminSelectWithLabel/AdminSelectWithLabel";
 import './AddProductForm.scss';
@@ -13,6 +11,7 @@ import { GET_ALL_CATEGORIES, QueryGetAllCategories } from "../../graphql/queries
 import { GET_ALL_COUNTRIES, getAllCountries } from "../../graphql/queries/getAllCountries";
 import { GET_ALL_CLASSIFICATIONS, QueryAllClassifications } from "../../graphql/queries/getAllClassifications";
 import { GET_ALL_SEXES, QueryAllSexes } from "../../graphql/queries/getAllSexes";
+import { QueryGetAllProducts } from "../../graphql/queries/getAllProducts";
 
 interface MutationData {
   addProduct: IProd;
@@ -42,18 +41,32 @@ export const AddProductForm = () => {
       data.imageLinks = Array.isArray(data.imageLinks)
         ? data.imageLinks
         : data.imageLinks
-          ? [data.imageLinks]
-          : [];
-
-      data.imageLinks = data.imageLinks.map(image => image.split(', '))[0];
-
+        ? [data.imageLinks]
+        : [];
+  
+      data.imageLinks = data.imageLinks.map((image) => image.split(', '))[0];
+  
       const { data: result } = await addProduct({
         variables: {
           product: data,
         },
-        refetchQueries: [{ query: GET_ALL_PRODUCTS }, { query: GET_PRODUCT_BYID }]
+        update: (cache, { data: addProductData }) => {
+          const existingProducts = cache.readQuery<QueryGetAllProducts>({
+            query: GET_ALL_PRODUCTS,
+          });
+  
+          if (existingProducts && addProductData) {
+            const newProduct = addProductData.addProduct;
+            cache.writeQuery<QueryGetAllProducts>({
+              query: GET_ALL_PRODUCTS,
+              data: {
+                getAllProducts: [...existingProducts.getAllProducts, newProduct],
+              },
+            });
+          }
+        },
       });
-
+  
       console.log('Product added:', result?.addProduct);
       alert('Product added!');
     } catch (error) {
@@ -128,21 +141,6 @@ export const AddProductForm = () => {
         <AdminInpuWithLabel label="Description" name='description' register={register} />
         <AdminInpuWithLabel label="Product group" name='productGroup' register={register} />
         <AdminInpuWithLabel label="Links for image" name='imageLinks' register={register} />
-        <AdminSelectWithLabel
-          label="Is Liquid"
-          name='isLiquid'
-          register={register}
-          renderOptions={() =>
-            booleanOptions.map((option) => (
-              <option
-                key={option.id}
-                value={String(option.value)}
-              >
-                {option.label}
-              </option>
-            ))
-          }
-        />
         <AdminSelectWithLabel
           label="Sex"
           name='sex'

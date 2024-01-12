@@ -28,9 +28,9 @@ export const ProductCardInfo: FC<Props> = ({
   const dispatch = useAppDispatch();
   const category = product?.categories.map(prod => prod.name);
 
-  const [selectedAmount, setSelectedAmount] = useState<number | undefined>(product?.productVariations[0].amount || 0);
+  const [selectedAmount, setSelectedAmount] = useState<string | undefined>(product?.productVariations[0].variationName || '');
 
-  const selectedVariation = product?.productVariations.find(variation => variation?.amount === selectedAmount)
+  const selectedVariation = product?.productVariations.find(variation => variation?.variationName === selectedAmount)
 
   const price = selectedVariation?.variationDetails[0].price;
 

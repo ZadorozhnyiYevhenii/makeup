@@ -27,7 +27,6 @@ export const ADD_PRODUCT = gql`
         id
         imageLink
       }
-      isLiquid
       name
       productStatus
       sex

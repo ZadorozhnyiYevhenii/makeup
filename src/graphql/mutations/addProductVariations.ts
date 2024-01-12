@@ -8,7 +8,7 @@ export interface MutationAddProductVariation {
 export const ADD_PRODUCT_VARIATIONS = gql`
   mutation MyMutation($productVariation: NewProductVariation!) {
     addProductVariation(productVariation: $productVariation) {
-      amount
+      variationName
       id
       variationDetails {
         id

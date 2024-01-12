@@ -9,13 +9,12 @@ export const GET_ALL_PRODUCTS = gql`
   query MyQuery {
     getAllProducts {
       id
-      isLiquid
       name
       productGroup
       productStatus
       sex
       productVariations {
-        amount
+        variationName
         id
         variationDetails {
           id

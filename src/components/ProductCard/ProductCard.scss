@@ -1,3 +1,5 @@
+@import "../../mixins/pointBrakers.scss";
+
 .card {
   margin-top: 20px;
   position: relative;
@@ -71,11 +73,11 @@
   }
 
   &__purchase-button {
+    display: none;
+    @include onDesktop {
       position: absolute;
-      bottom: -120px;
       left: 50%;
       transform: translateX(-50%);
-      opacity: 0;
       transition: opacity 0.3s ease-in-out, bottom 0.3s ease-in-out;
       width: 100%;
       z-index: 1;
@@ -83,15 +85,17 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      overflow: hidden;
-      visibility: hidden;
-  }
-
-  &:hover &__purchase-button {
       opacity: 1;
       bottom: -120px;
       z-index: 1002;
       visibility: visible;
       overflow: auto;
+    }
+  }
+
+  &__purchase-button-mobile {
+    @include onDesktop {
+      display: none;
+    }
   }
 }

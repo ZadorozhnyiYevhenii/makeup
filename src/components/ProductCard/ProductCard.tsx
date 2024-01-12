@@ -15,6 +15,7 @@ type Props = {
 }
 
 export const ProductCard: React.FC<Props> = ({ id }) => {
+  const [isMenuVisible, setMenuVisible] = useState(false);
   const dispatch = useAppDispatch();
   const { loading, error, data } = useQuery<{ getProductById: IProd }>(
     GET_PRODUCT_BYID,
@@ -23,18 +24,19 @@ export const ProductCard: React.FC<Props> = ({ id }) => {
 
   const product: IProd | undefined = data?.getProductById;
 
-  const defaultSelectedAmount = product?.productVariations[0]?.amount;
+  const defaultSelectedAmount = product?.productVariations[0]?.variationName;
+
   const defaultSelectedVariation = product?.productVariations[0];
   const defaultPrice = defaultSelectedVariation?.variationDetails[0]?.price;
 
-  const [selectedAmount, setSelectedAmount] = useState<number | undefined>(defaultSelectedAmount);
+  const [selectedAmount, setSelectedAmount] = useState<string | undefined>(defaultSelectedAmount);
 
   if (!product) {
     return null;
   }
 
   const selectedVariation = product.productVariations.find(
-    (variation) => variation?.amount === selectedAmount
+    (variation) => variation?.variationName === selectedAmount
   );
 
   const price = selectedVariation?.variationDetails[0]?.price || defaultPrice;
@@ -44,16 +46,20 @@ export const ProductCard: React.FC<Props> = ({ id }) => {
     const productWithVariations = {
       ...product,
       price: price || 0,
-      amount: quantity || 0,
+      variationName: quantity || '',
     };
 
     dispatch(addToCart(productWithVariations));
-  }
+  };
 
   return (
     <>
       <QueryComponent isLoading={loading} error={error} errorMessage="product">
-        <div className="card">
+        <div
+          className="card"
+          onMouseEnter={() => setMenuVisible(true)}
+          onMouseLeave={() => setMenuVisible(false)}
+        >
           <div className="card__wrap">
             <ScrollTopLink to={`/makeup/product/${product?.id}`}>
               <img
@@ -69,13 +75,20 @@ export const ProductCard: React.FC<Props> = ({ id }) => {
               <h2 className="card__group">{product.productGroup}</h2>
             </div>
             <div className="card__bottom">
-              <div className="card__rate">{quantity} ml</div>
+              <div className="card__rate">{quantity}</div>
               <div className="card__price">{price} $</div>
             </div>
           </div>
-          <div className="card__purchase-button">
-            <SelectMenu product={product} setSelectedAmount={setSelectedAmount} /> 
+          <div className="card__purchase-button-mobile">
             <PurchaseButton product={product} addToCart={handleAddToCart} />
+          </div>
+          <div className="card__purchase-button">
+            {isMenuVisible && (
+              <>
+                <SelectMenu product={product} setSelectedAmount={setSelectedAmount} />
+                <PurchaseButton product={product} addToCart={handleAddToCart} />
+              </>
+            )}
           </div>
         </div>
       </QueryComponent>

@@ -8,6 +8,7 @@ type Props = {
   name: keyof IProd,
   register: UseFormRegister<IProd>
   errorMessage?: string,
+  defaultValue?: keyof IProd
 }
 
 export const AdminInpuWithLabel: FC<Props> = ({
@@ -15,6 +16,7 @@ export const AdminInpuWithLabel: FC<Props> = ({
   name,
   register,
   errorMessage,
+  defaultValue
 }) => {
   const inputProps = {
     ...register(name, {
@@ -29,7 +31,7 @@ export const AdminInpuWithLabel: FC<Props> = ({
       ) : (
         <label className="admin-input__label">{label}</label>
       )}
-      <input {...inputProps} className="admin-input__input" />
+      <input {...inputProps} className="admin-input__input" defaultValue={defaultValue} />
     </div>
   )
 }

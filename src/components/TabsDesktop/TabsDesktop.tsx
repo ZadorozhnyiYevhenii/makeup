@@ -88,7 +88,7 @@ export const VerticalTabs: React.FC<Props> = ({ id, product }) => {
               <strong>Counrty:</strong> {product?.countryTradeMark.name}
             </li>
             <li className="tabs__item">
-              <strong>Made in:</strong> {product?.countriesMadeIn[1]}
+              <strong>Made in:</strong> {product?.countriesMadeIn.map(country => country.name)}
             </li>
             <li className="tabs__item">
               <strong>Sex:</strong> {normalizeSex}

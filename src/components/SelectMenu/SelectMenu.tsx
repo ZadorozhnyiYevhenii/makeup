@@ -7,17 +7,23 @@ import { IProd } from '../../types/IProduct';
 
 type Props = {
   product: IProd | undefined;
-  setSelectedAmount: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setSelectedAmount: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
 export const SelectMenu: React.FC<Props> = ({ product, setSelectedAmount }) => {
-  const productMl = product?.productVariations.map((pr) => pr?.amount)[0];
+  const productMl = product?.productVariations.map((pr) => pr?.variationName)[0];
 
   const [ml, setMl] = React.useState(`${productMl}`);
 
   const handleChange = (event: SelectChangeEvent) => {
-    const selectedAmount = parseFloat(event.target.value as string);
+    const selectedAmount = event.target.value;
     setMl(event.target.value as string);
+    setSelectedAmount(selectedAmount);
+  };
+
+  const handleOptionHover = (pr: Pick<IProd, 'variationName' | 'id'>) => {
+    const selectedAmount = pr.variationName;
+    setMl(`${pr.variationName}`);
     setSelectedAmount(selectedAmount);
   };
 
@@ -29,6 +35,7 @@ export const SelectMenu: React.FC<Props> = ({ product, setSelectedAmount }) => {
           id="demo-simple-select"
           value={ml}
           onChange={handleChange}
+          MenuProps={{ style: { maxHeight: '180px'} }}
           sx={{
             borderColor: 'grey',
             background: 'white',
@@ -41,11 +48,16 @@ export const SelectMenu: React.FC<Props> = ({ product, setSelectedAmount }) => {
               outline: 'none',
               borderColor: 'grey',
             },
+            overflow: 'hidden',
           }}
         >
           {product?.productVariations.map((pr) => (
-            <MenuItem value={pr.amount} key={pr.id}>
-              {pr.amount} ml
+            <MenuItem
+              value={pr.variationName}
+              key={pr.id}
+              onMouseOver={() => handleOptionHover(pr)}
+            >
+              {pr.variationName}
             </MenuItem>
           ))}
         </Select>

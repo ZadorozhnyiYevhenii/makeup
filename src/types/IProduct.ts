@@ -7,8 +7,10 @@ export interface IProd {
   sex: string;
   description?: string;
   classification: typeof IClassification;
-  countriesMadeIn: string[];
-  isLiquid: boolean;
+  countriesMadeIn: Array<{
+    id: number;
+    name: string;
+  }>;
   productStatus: string;
   brandId: number;
   categoryIds: number[];
@@ -31,7 +33,11 @@ export interface IProd {
       id: number;
       price: number;
     }>;
-    amount: number;
+    variationImage: {
+      imageLink: string;
+      id: number;
+    }
+    variationName: string;
     id: number;
   }>;
   brand: {
@@ -48,6 +54,6 @@ export interface IProd {
   };
   brandName: string;
   countryName: string;
-  amount: number;
+  variationName: string;
   productId: number;
 };

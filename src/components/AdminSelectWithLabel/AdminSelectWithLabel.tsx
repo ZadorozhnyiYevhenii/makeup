@@ -9,6 +9,7 @@ type Props<T extends FieldValues> = {
   errorMessage?: string;
   renderOptions: (register: UseFormRegister<T>) => React.ReactNode;
   onChange?: (event: ChangeEvent<HTMLSelectElement>) => void;
+  value?: string;
 };
 
 export const AdminSelectWithLabel: FC<Props<any>> = ({
@@ -17,7 +18,8 @@ export const AdminSelectWithLabel: FC<Props<any>> = ({
   register,
   errorMessage,
   renderOptions,
-  onChange
+  onChange,
+  value
 }) => {
   const selectProps = {
     ...register(name, {
@@ -32,7 +34,7 @@ export const AdminSelectWithLabel: FC<Props<any>> = ({
       ) : (
         <label className="admin-input__label">{label}</label>
       )}
-      <select {...selectProps} className="admin-input__input" onChange={onChange}>
+      <select {...selectProps} className="admin-input__input" onChange={onChange} value={value}>
         {renderOptions(register)}
       </select>
     </div>

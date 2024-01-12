@@ -1,8 +1,9 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
+
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { Link } from 'react-router-dom';
 
 export const DashBoardNavigation = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -45,8 +46,13 @@ export const DashBoardNavigation = () => {
           </Link>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <Link to='makeup/admin/change-product'>
+          <Link to='/makeup/admin/changeproduct'>
             Change product
+          </Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link to='/makeup/admin/deleteproduct'>
+            Delete product
           </Link>
         </MenuItem>
       </Menu>

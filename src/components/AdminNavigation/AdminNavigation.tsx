@@ -1,13 +1,15 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
+
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ManageHistoryIcon from '@mui/icons-material/ManageHistory';
+import DeleteIcon from '@mui/icons-material/Delete';
 import PersonIcon from '@mui/icons-material/Person';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
 
 interface CustomBottomNavigationActionProps {
   to: string;
@@ -35,7 +37,7 @@ export const AdminNavigation: React.FC = () => {
   const [value, setValue] = React.useState(0);
 
   return (
-    <Box sx={{ width: 500 }}>
+    <Box sx={{ width: '100%', maxWidth: 600 }}>
       <BottomNavigation
         showLabels
         value={value}
@@ -47,6 +49,7 @@ export const AdminNavigation: React.FC = () => {
         <CustomBottomNavigationAction to='/makeup/user' label="Account" icon={<PersonIcon />} />
         <CustomBottomNavigationAction to='/makeup/admin/addproduct' label="Add product" icon={<AddCircleOutlineIcon />} />
         <CustomBottomNavigationAction to='/makeup/admin/changeproduct' label="Change product" icon={<ManageHistoryIcon />} />
+        <CustomBottomNavigationAction to='/makeup/admin/deleteproduct' label="Delete product" icon={<DeleteIcon />} />
       </BottomNavigation>
     </Box>
   );

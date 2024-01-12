@@ -10,6 +10,14 @@ export const GET_ALL_PRODUCTS_ID_NAME = gql`
     getAllProducts {
       id
       name
+      productVariations {
+        id
+        variationName
+        variationImage {
+          imageLink
+          id
+        }
+      }
     }
   }
 `;

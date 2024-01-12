@@ -1,82 +1,52 @@
 import { useState } from "react";
 import cn from 'classnames';
 import { AddProductForm } from "../../components/AddProductForm/AddProductForm";
-import './AdminPageProduct.scss';
 import { TabWrapper } from "../../components/TabWrapper/TabWrapper";
 import { AddBrandForm } from "../../components/AddBrandForm/AddBrandForm";
 import { AddCountryForm } from "../../components/AddCountryForm/AddCountryForm";
 import { AddImageToProductForm } from "../../components/AddImageToProductForm/AddImageToProductForm";
 import { AddProductVariationForm } from "../../components/AddProductVariationForm/AddProductVariationForm";
 import { AddVariationsDetailsForm } from "../../components/AddVariationsDetailsForm/AddVariationsDetailsForm";
-import { DashBoardNavigation } from "../../components/DashBoardNavigation/DashBoardNavigation";
+import { AdminTabs } from "../../utils/adminActiveTabs";
+import { AdminTabTitles } from "../../utils/enumAdminTabs";
+import { AdminHeader } from "../../components/AdminHeader/AdminHeader";
+import './AdminPageProduct.scss';
 
 export const AdminPageProduct = () => {
   const [activeTab, setActiveTab] = useState('');
 
   return (
     <div className="adminpage">
-      <div className="adminpage__top">
-        <div className="adminpage__title">
-          Dashboard
-        </div>
-        <DashBoardNavigation />
-      </div>
+      <AdminHeader />
       <div className="adminpage__container">
-        <div className="adminpage__tabs">
-          <div
-            className={cn("adminpage__tab", { 'active': activeTab === 'addProduct' })}
-            onClick={() => setActiveTab('addProduct')}
-          >
-            Add product
-          </div>
-          <div
-            className={cn("adminpage__tab", { 'active': activeTab === 'addBrand' })}
-            onClick={() => setActiveTab('addBrand')}
-          >
-            Add brand
-          </div>
-          <div
-            className={cn("adminpage__tab", { 'active': activeTab === 'addCountry' })}
-            onClick={() => setActiveTab('addCountry')}
-          >
-            Add country
-          </div>
-          <div
-            className={cn("adminpage__tab", { 'active': activeTab === 'addImage' })}
-            onClick={() => setActiveTab('addImage')}
-          >
-            Add Image to Product
-          </div>
-          <div
-            className={cn("adminpage__tab", { 'active': activeTab === 'addProductVariation' })}
-            onClick={() => setActiveTab('addProductVariation')}
-          >
-            Add product variation
-          </div>
-          <div
-            className={cn("adminpage__tab", { 'active': activeTab === 'v' })}
-            onClick={() => setActiveTab('addVariationsDetails')}
-          >
-            Add variations details
-          </div>
-        </div>
+        <ul className="adminpage__tabs">
+          {AdminTabs.add.map(tab => (
+            <li
+              className={cn("adminpage__tab", { 'active': activeTab === tab.value })}
+              onClick={() => setActiveTab(tab.value)}
+              key={tab.id}
+            >
+              {tab.name}
+            </li>
+          ))}
+        </ul>
         <div>
-          <TabWrapper activeTab={activeTab === 'addProduct'}>
+          <TabWrapper activeTab={activeTab === AdminTabTitles.Add.ADD_PRODUCT}>
             <AddProductForm />
           </TabWrapper>
-          <TabWrapper activeTab={activeTab === 'addBrand'}>
+          <TabWrapper activeTab={activeTab === AdminTabTitles.Add.ADD_BRAND}>
             <AddBrandForm />
           </TabWrapper>
-          <TabWrapper activeTab={activeTab === 'addCountry'}>
+          <TabWrapper activeTab={activeTab === AdminTabTitles.Add.ADD_COUNTRY}>
             <AddCountryForm />
           </TabWrapper>
-          <TabWrapper activeTab={activeTab === 'addImage'}>
+          <TabWrapper activeTab={activeTab === AdminTabTitles.Add.ADD_IMAGE}>
             <AddImageToProductForm />
           </TabWrapper>
-          <TabWrapper activeTab={activeTab === 'addProductVariation'}>
+          <TabWrapper activeTab={activeTab === AdminTabTitles.Add.ADD_PRODUCT_VARIATION}>
             <AddProductVariationForm />
           </TabWrapper>
-          <TabWrapper activeTab={activeTab === 'addVariationsDetails'}>
+          <TabWrapper activeTab={activeTab === AdminTabTitles.Add.ADD_VARIATION_DETAILS}>
             <AddVariationsDetailsForm />
           </TabWrapper>
         </div>

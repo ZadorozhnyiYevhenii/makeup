@@ -46,7 +46,7 @@ export const AddProductVariationForm = () => {
           }
         />
         <AdminInpuWithLabel label="Image link" name='imageLink' register={register} />
-        <AdminInpuWithLabel label="Amount of product" name='amount' register={register} />
+        <AdminInpuWithLabel label="Amount of product" name='variationName' register={register} />
         <button className="admin__button">Submit</button>
       </form>
     </div>

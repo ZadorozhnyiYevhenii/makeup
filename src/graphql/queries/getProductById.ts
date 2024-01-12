@@ -14,7 +14,7 @@ export const GET_PRODUCT_BYID = gql`
           imageLink
         }
         productVariations {
-        amount
+        variationName
         variationDetails {
           price
         }

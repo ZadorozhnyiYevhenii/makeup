@@ -4,7 +4,6 @@ import { Route, Routes } from 'react-router-dom';
 import { HomePage } from './pages/HomePage/HomePage';
 import { Footer } from './components/Footer/Footer';
 import { BackToTopButton } from './components/BackToTopButton/BackToTopButton';
-import UnderConstructionPage from './pages/NotFoundPage.tsx/NotFoundPage';
 import { ErrorPage } from './pages/404/404';
 import { ProductCardPage } from './pages/ProductCardPage/ProductCardPage';
 import { CategoriesPage } from './pages/CatalogPage/CategoriesPage';
@@ -14,11 +13,11 @@ import { useAppSelector } from './app/hooks';
 import { UserPage } from './pages/UserPage/UserPage';
 import { AdminPageProduct } from './pages/AdminPageProduct/AdminPageProduct';
 import { AdminPage } from './pages/AdminPage/AdminPage';
+import { CheckOutPage } from './pages/CheckOutPage/CheckOutPage';
+import { AdminPageChangeProduct } from './pages/AdminPageChangeProduct/AdminPageChangeProduct';
+import { AdminPageDeleteProduct } from './pages/AdminPageDeleteProduct/AdminPageDeleteProduct';
 
 function App() {
-  const underConstructionRoutes = [
-    '/makeup/delivery',
-  ];
 
   const user = useAppSelector(state => state.user.user);
 
@@ -39,17 +38,18 @@ function App() {
           <Route path='admin/'>
             <Route index element={<AdminPage />} />
             <Route path='addproduct' element={<AdminPageProduct />} />
-          </Route>
+            <Route path='changeproduct' element={<AdminPageChangeProduct />} />
+            <Route path='deleteproduct' element={<AdminPageDeleteProduct />} />
+           </Route>
 
-          {underConstructionRoutes.map((route, index) => (
-            <Route key={index} path={route} element={<UnderConstructionPage />} />
-          ))}
+          <Route path='checkout' element={<CheckOutPage />} />
 
           <Route path='*' element={<ErrorPage />} />
         </Route>
       </Routes>
       <BackToTopButton />
-      <Footer />
+
+      {window.location.pathname !== '/makeup/checkout' && <Footer />}
     </div>
   );
 }

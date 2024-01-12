@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { addCount, decrementCount, removeFromCart } from "../../app/slices/cartSlice";
+import { addCount, decrementCount, removeFromCart, setTotalAmount } from "../../app/slices/cartSlice";
 import { Link, useNavigate } from "react-router-dom";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddIcon from '@mui/icons-material/Add';
@@ -13,7 +13,11 @@ export const Cart: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  console.log(cart)
+  const handleMoveToCheckout = () => {
+    if (!!cart) {
+      navigate('/makeup/checkout');
+    }
+  };
 
   const close = () => {
     navigate(-1);
@@ -25,21 +29,25 @@ export const Cart: FC = () => {
     }, 1000);
   }
 
-  const handleRemove = (productId: number, amount: number) => {
-    dispatch(removeFromCart({ productId, amount }));
+  const handleRemove = (productId: number, variationName: string) => {
+    dispatch(removeFromCart({ productId, variationName }));
   };
 
-  const handleAddCount = (productId: number, amount: number) => {
-    dispatch(addCount({ productId, amount }));
+  const handleAddCount = (productId: number, variationName: string) => {
+    dispatch(addCount({ productId, variationName }));
   };
 
-  const handleDecrementCount = (productId: number, amount: number) => {
-    dispatch(decrementCount({ productId, amount }));
+  const handleDecrementCount = (productId: number, variationName: string) => {
+    dispatch(decrementCount({ productId, variationName }));
   };
 
   const totalValue = cart?.reduce((total, product) => {
-    return total + product.price * counts[`${product.id}_${product.amount}`];
+    return total + product.price * counts[`${product.id}_${product.variationName}`];
   }, 0);
+
+  useEffect(() => {
+    dispatch(setTotalAmount(totalValue))
+  }, [dispatch, totalValue]);
 
   useEffect(() => {
     document.body.style.overflow = !!cart?.length ? "hidden" : "auto";
@@ -64,7 +72,7 @@ export const Cart: FC = () => {
       <div className="cart__list" data-testid="cart__list">
         <div className="cart__items">
           {cart?.map((product) => (
-            <div key={`${product.id}_${product.amount}`}>
+            <div key={`${product.id}_${product.variationName}`}>
               <div className="cart__item">
                 <div className="cart__photo-container">
                   <Link to="/" className="cart__link">
@@ -78,17 +86,17 @@ export const Cart: FC = () => {
                 <div className="cart__container">
                   <h3 className="cart__name">{product.name}</h3>
                   <div className="cart__type">{product.type}</div>
-                  <div className="cart__count">{product.amount} ml</div>
+                  <div className="cart__count">{product.variationName}</div>
                   <div className="cart__price">
-                    {product.price * counts[`${product.id}_${product.amount}`]} $
+                    {product.price * counts[`${product.id}_${product.variationName}`]} $
                   </div>
                   <div className="cart__wrap">
                     <div className="cart__control">
-                      <div className="cart__button" onClick={() => handleDecrementCount(product.id, product.amount)}><RemoveIcon /></div>
-                      <span className="cart__quantity">{counts[`${product.id}_${product.amount}`]}</span>
-                      <div className="cart__button" onClick={() => handleAddCount(product.id, product.amount)}><AddIcon /></div>
+                      <div className="cart__button" onClick={() => handleDecrementCount(product.id, product.variationName)}><RemoveIcon /></div>
+                      <span className="cart__quantity">{counts[`${product.id}_${product.variationName}`]}</span>
+                      <div className="cart__button" onClick={() => handleAddCount(product.id, product.variationName)}><AddIcon /></div>
                     </div>
-                    <div onClick={() => handleRemove(product.id, product.amount)}><DeleteOutlineIcon /></div>
+                    <div onClick={() => handleRemove(product.id, product.variationName)}><DeleteOutlineIcon /></div>
                   </div>
                 </div>
               </div>
@@ -107,6 +115,7 @@ export const Cart: FC = () => {
           <button
             type="button"
             className="cart__checkout"
+            onClick={handleMoveToCheckout}
           >
             Checkout
           </button>
