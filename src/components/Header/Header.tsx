@@ -3,7 +3,7 @@ import './Header.scss';
 import { useDisableScroll } from '../../hooks/useDisableScroll';
 import { HeaderBar } from '../HeaderBar/HeaderBar';
 import { useQuery } from '@apollo/client';
-import { GET_ALL_CATEGORIES } from '../../graphql/queries/getAllCategories';
+import { GET_ALL_CATEGORIES } from '../../graphql/queries/getAll/getAllCategories';
 import { ICategory } from '../../types/ICategory';
 import { NavBar } from '../NavBar/NavBar';
 

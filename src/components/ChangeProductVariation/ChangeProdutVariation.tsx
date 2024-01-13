@@ -1,12 +1,11 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { SubmitHandler, useForm } from "react-hook-form"
-import { CHANGE_PRODUCT_VARIATION, MutationChangeProductVariation } from "../../graphql/mutations/changeProductVariation";
+import { CHANGE_PRODUCT_VARIATION, MutationChangeProductVariation } from "../../graphql/mutations/ChangeMutations/changeProductVariation";
 import { IProd } from "../../types/IProduct";
 import { AdminInpuWithLabel } from "../AdminInputWithLabel/AdminInputWithLabel";
-import { GET_ALL_PRODUCTS_ID_NAME } from "../../graphql/queries/getAllProductNameAndId";
-import { QueryGetAllProductsIdName } from "../../graphql/queries/getAllProductNameAndId";
 import { useState } from "react";
 import { AdminSelectWithLabel } from "../AdminSelectWithLabel/AdminSelectWithLabel";
+import { GET_ALL_PRODUCTS_ID_NAME, QueryGetAllProductsIdName } from "../../graphql/queries/getById/getAllProductNameAndId";
 
 export const ChangeProductVariation = () => {
   const { register, handleSubmit, setValue } = useForm<IProd>();

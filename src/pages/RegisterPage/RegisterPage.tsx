@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { IUser } from '../../types/IUser';
 import { inputLabels } from '../../utils/inputLabels';
 import { useMutation } from '@apollo/client';
-import { REGISTER_USER_MUTATION } from '../../graphql/mutations/registerUser';
+import { REGISTER_USER_MUTATION } from '../../graphql/mutations/RegisterMutations/registerUser';
 import { Loader } from '../../components/Loader/Loader';
 import { SuccessRegistration } from '../../components/SuccessRegistration/SuccessRegistration';
 import { useAppDispatch } from '../../app/hooks';

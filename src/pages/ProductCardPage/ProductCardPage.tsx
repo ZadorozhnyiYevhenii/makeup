@@ -9,7 +9,7 @@ import { useDisableScroll } from '../../hooks/useDisableScroll';
 import './ProductCardPage.scss';
 import { ProductCardInfo } from '../../components/ProductCardInfo/PRoductCardInfo';
 import { useQuery } from '@apollo/client';
-import { GET_ALL_PRODUCTS } from '../../graphql/queries/getAllProducts';
+import { GET_ALL_PRODUCTS } from '../../graphql/queries/getById/getAllProducts';
 import { IProd } from '../../types/IProduct';
 import { QueryComponent } from '../../components/QueryComponent/QueryComponent';
 import { Breadcrums } from '../../components/BreadCrumbs/BreadCrumbs';

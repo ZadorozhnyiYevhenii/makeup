@@ -1,10 +1,10 @@
 import { SubmitHandler, useForm } from "react-hook-form"
 import { IProd } from "../../types/IProduct"
 import { useMutation, useQuery } from "@apollo/client";
-import { ADD_IMAGE_TO_PRODUCT, MutationAddImage } from "../../graphql/mutations/addImageToProduct";
 import { AdminInpuWithLabel } from "../AdminInputWithLabel/AdminInputWithLabel";
-import { GET_ALL_PRODUCTS_ID_NAME, QueryGetAllProductsIdName } from "../../graphql/queries/getAllProductNameAndId";
 import { AdminSelectWithLabel } from "../AdminSelectWithLabel/AdminSelectWithLabel";
+import { GET_ALL_PRODUCTS_ID_NAME, QueryGetAllProductsIdName } from "../../graphql/queries/getById/getAllProductNameAndId";
+import { ADD_IMAGE_TO_PRODUCT, MutationAddImage } from "../../graphql/mutations/AddMutations/addImageToProduct";
 
 export const AddImageToProductForm = () => {
   const { handleSubmit, register } = useForm<IProd>();

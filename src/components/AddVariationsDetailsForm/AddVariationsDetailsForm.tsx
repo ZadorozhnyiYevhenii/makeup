@@ -1,8 +1,8 @@
 import { SubmitHandler, useForm } from "react-hook-form"
 import { IProd } from "../../types/IProduct"
 import { useMutation, useQuery } from "@apollo/client";
-import { ADD_VARIATION_DETAILS, MutationAddVariationDetails } from "../../graphql/mutations/addVariationDetails";
-import { GET_ALL_PRODUCTS, QueryGetAllProducts } from "../../graphql/queries/getAllProducts";
+import { ADD_VARIATION_DETAILS, MutationAddVariationDetails } from "../../graphql/mutations/AddMutations/addVariationDetails";
+import { GET_ALL_PRODUCTS, QueryGetAllProducts } from "../../graphql/queries/getById/getAllProducts";
 import { AdminSelectWithLabel } from "../AdminSelectWithLabel/AdminSelectWithLabel";
 import { useState } from "react";
 import { AdminInpuWithLabel } from "../AdminInputWithLabel/AdminInputWithLabel";

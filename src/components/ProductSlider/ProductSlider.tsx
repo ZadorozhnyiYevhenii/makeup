@@ -8,7 +8,7 @@ import { useWindowResize } from "../../hooks/useWindowResize";
 import { useSwipeable } from "react-swipeable";
 import { handleSwipe } from "../../helpers/swipe";
 import { useQuery } from "@apollo/client";
-import { GET_PRODUCTS_ID } from "../../graphql/queries/getProductsID";
+import { GET_PRODUCTS_ID } from "../../graphql/queries/getById/getProductsID";
 import { IProd } from "../../types/IProduct";
 import { QueryComponent } from "../QueryComponent/QueryComponent";
 import { generateRandomArray } from "../../helpers/generateRandomArray";

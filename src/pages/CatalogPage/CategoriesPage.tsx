@@ -19,7 +19,7 @@ import { TotalAmountOfProducts } from "../../components/TotalAmountOfProducts/To
 import { calculateTotalProductsCount } from "../../helpers/calculateTotalProductsCount";
 import { IProd } from "../../types/IProduct";
 import { useQuery } from "@apollo/client";
-import { GET_PRODUCT_WITH_CATEGORY_ID } from "../../graphql/queries/getProductsWithCetgoryId";
+import { GET_PRODUCT_WITH_CATEGORY_ID } from "../../graphql/queries/getById/getProductsWithCetgoryId";
 import { setProducts } from "../../app/slices/productSlice";
 import { CategoryTitle } from "../../components/CategoryTitle/CategoryTitle";
 import { Breadcrums } from "../../components/BreadCrumbs/BreadCrumbs";

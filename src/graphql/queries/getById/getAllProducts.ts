@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { IProd } from "../../types/IProduct";
+import { IProd } from "../../../types/IProduct";
 
 export interface QueryGetAllProducts {
   getAllProducts: IProd[]

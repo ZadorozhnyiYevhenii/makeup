@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { IUser } from "../../types/IUser";
+import { IUser } from "../../../types/IUser";
 
 export interface QueryAuth {
   authenticateUser: IUser;

@@ -1,17 +1,17 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { ADD_PRODUCT } from "../../graphql/mutations/addProduct";
 import { IProd } from "../../types/IProduct";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { GET_ALL_PRODUCTS } from "../../graphql/queries/getAllProducts";
+import { GET_ALL_PRODUCTS } from "../../graphql/queries/getById/getAllProducts";
 import { AdminInpuWithLabel } from "../AdminInputWithLabel/AdminInputWithLabel";
 import { AdminSelectWithLabel } from "../AdminSelectWithLabel/AdminSelectWithLabel";
+import { QueryGetAllProducts } from "../../graphql/queries/getById/getAllProducts";
+import { ADD_PRODUCT } from "../../graphql/mutations/AddMutations/addProduct";
+import { GET_ALL_SEXES, QueryAllSexes } from "../../graphql/queries/getAll/getAllSexes";
+import { GET_ALL_CLASSIFICATIONS, QueryAllClassifications } from "../../graphql/queries/getAll/getAllClassifications";
+import { GET_ALL_COUNTRIES, getAllCountries } from "../../graphql/queries/getAll/getAllCountries";
+import { GET_ALL_CATEGORIES, QueryGetAllCategories } from "../../graphql/queries/getAll/getAllCategories";
+import { GET_ALL_BRANDS, QueryAllBrands } from "../../graphql/queries/getAll/getAllBrand";
 import './AddProductForm.scss';
-import { GET_ALL_BRANDS, QueryAllBrands } from "../../graphql/queries/getAllBrand";
-import { GET_ALL_CATEGORIES, QueryGetAllCategories } from "../../graphql/queries/getAllCategories";
-import { GET_ALL_COUNTRIES, getAllCountries } from "../../graphql/queries/getAllCountries";
-import { GET_ALL_CLASSIFICATIONS, QueryAllClassifications } from "../../graphql/queries/getAllClassifications";
-import { GET_ALL_SEXES, QueryAllSexes } from "../../graphql/queries/getAllSexes";
-import { QueryGetAllProducts } from "../../graphql/queries/getAllProducts";
 
 interface MutationData {
   addProduct: IProd;

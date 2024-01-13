@@ -1,8 +1,8 @@
 import { useMutation } from "@apollo/client"
-import { ADD_BRAND, MutationAddBrand } from "../../graphql/mutations/addBrand"
+import { ADD_BRAND, MutationAddBrand } from "../../graphql/mutations/AddMutations/addBrand"
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IProd } from "../../types/IProduct";
-import { GET_ALL_BRANDS } from "../../graphql/queries/getAllBrand";
+import { GET_ALL_BRANDS } from "../../graphql/queries/getAll/getAllBrand";
 import { AdminInpuWithLabel } from "../AdminInputWithLabel/AdminInputWithLabel";
 
 export const AddBrandForm = () => {
