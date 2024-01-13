@@ -1,4 +1,4 @@
-import { AdminNavigation } from "../../components/AdminNavigation/AdminNavigation"
+import { AdminNavigation } from "../../components/AdminUI/AdminNavigation/AdminNavigation"
 import './AdminPage.scss';
 
 export const AdminPage = () => {

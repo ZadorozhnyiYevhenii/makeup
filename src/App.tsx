@@ -11,11 +11,11 @@ import { Cart } from './pages/Cart/Cart';
 import { RegisterPage } from './pages/RegisterPage/RegisterPage';
 import { useAppSelector } from './app/hooks';
 import { UserPage } from './pages/UserPage/UserPage';
-import { AdminPageProduct } from './pages/AdminPageProduct/AdminPageProduct';
+import { AdminPageProduct } from './pages/AdminPageAdd/AdminPageAdd';
 import { AdminPage } from './pages/AdminPage/AdminPage';
 import { CheckOutPage } from './pages/CheckOutPage/CheckOutPage';
-import { AdminPageChangeProduct } from './pages/AdminPageChangeProduct/AdminPageChangeProduct';
-import { AdminPageDeleteProduct } from './pages/AdminPageDeleteProduct/AdminPageDeleteProduct';
+import { AdminPageChange } from './pages/AdminPageChange/AdminPageChange';
+import { AdminPageDeleteProduct } from './pages/AdminPageDelete/AdminPageDelete';
 
 function App() {
 
@@ -38,7 +38,7 @@ function App() {
           <Route path='admin/'>
             <Route index element={<AdminPage />} />
             <Route path='addproduct' element={<AdminPageProduct />} />
-            <Route path='changeproduct' element={<AdminPageChangeProduct />} />
+            <Route path='changeproduct' element={<AdminPageChange />} />
             <Route path='deleteproduct' element={<AdminPageDeleteProduct />} />
            </Route>
 

@@ -56,4 +56,6 @@ export interface IProd {
   countryName: string;
   variationName: string;
   productId: number;
+  categoryId: number;
+  countryId: number;
 };
