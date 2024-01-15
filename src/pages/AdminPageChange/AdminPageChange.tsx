@@ -6,6 +6,7 @@ import { TabWrapper } from "../../components/TabWrapper/TabWrapper";
 import { AdminTabTitles } from "../../utils/enumAdminTabs";
 import { ChangeProductVariation } from "../../components/AdminChangeComponents/ChangeProductVariation/ChangeProdutVariation";
 import { AdminHeader } from "../../components/AdminUI/AdminHeader/AdminHeader";
+import { ChangeVariationDetailsComponent } from "../../components/AdminChangeComponents/ChangeVariationDetails/ChangeVariationDetails";
 
 export const AdminPageChange = () => {
   const [activeTab, setActiveTab] = useState('');
@@ -31,6 +32,9 @@ export const AdminPageChange = () => {
           </TabWrapper>
           <TabWrapper activeTab={activeTab === AdminTabTitles.Change.CHANGE_PRODUCT_VARIATION}>
             <ChangeProductVariation />
+          </TabWrapper>
+          <TabWrapper activeTab={activeTab === AdminTabTitles.Change.CHANGE_VARIATION_DETAILS}>
+            <ChangeVariationDetailsComponent />
           </TabWrapper>
         </div>
       </div>

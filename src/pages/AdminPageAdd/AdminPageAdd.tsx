@@ -11,6 +11,7 @@ import { AddImageToProductForm } from "../../components/AdminAddComponents/AddIm
 import { AddProductVariationForm } from "../../components/AdminAddComponents/AddProductVariationForm/AddProductVariationForm";
 import { AddVariationsDetailsForm } from "../../components/AdminAddComponents/AddVariationsDetailsForm/AddVariationsDetailsForm";
 import { AdminHeader } from "../../components/AdminUI/AdminHeader/AdminHeader";
+import { AddCategoryComponent } from "../../components/AdminAddComponents/AddCategory/AddCategoryForm";
 
 export const AdminPageProduct = () => {
   const [activeTab, setActiveTab] = useState('');
@@ -42,6 +43,9 @@ export const AdminPageProduct = () => {
           </TabWrapper>
           <TabWrapper activeTab={activeTab === AdminTabTitles.Add.ADD_IMAGE}>
             <AddImageToProductForm />
+          </TabWrapper>
+          <TabWrapper activeTab={activeTab === AdminTabTitles.Add.ADD_CATEGORY}>
+            <AddCategoryComponent />
           </TabWrapper>
           <TabWrapper activeTab={activeTab === AdminTabTitles.Add.ADD_PRODUCT_VARIATION}>
             <AddProductVariationForm />

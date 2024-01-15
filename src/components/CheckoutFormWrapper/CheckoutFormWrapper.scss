@@ -1,0 +1,39 @@
+.checkout-form {
+  &__buttons {
+    display: flex;
+    margin: 0 0 24px 0;
+    padding: 4px;
+    border-radius: 6px;
+    background: #ebebeb;
+    justify-content: space-between;
+  }
+
+  &__button-item {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 50%;
+
+    &.active {
+      background: #5b24c9;
+      border-radius: 5px;
+    }
+  }
+
+  &__button {
+    padding: 8px;
+    color: #212121;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    border-radius: 5px;
+    transition: none;
+    background: none;
+
+    &.active {
+      background: #5b24c9;
+      color: #fff;
+    }
+  }
+}

@@ -32,6 +32,8 @@ export interface IProd {
     variationDetails: Array<{
       id: number;
       price: number;
+      shippingFrom: string;
+      sale: number;
     }>;
     variationImage: {
       imageLink: string;
@@ -58,4 +60,7 @@ export interface IProd {
   productId: number;
   categoryId: number;
   countryId: number;
+  variationDetailsId: number;
+  categoryName: string;
+  parentCategoryId: number;
 };

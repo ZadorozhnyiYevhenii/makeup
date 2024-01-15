@@ -17,6 +17,12 @@ export const GET_ALL_PRODUCTS_ID_NAME = gql`
           imageLink
           id
         }
+        variationDetails {
+          id
+          price
+          sale
+          shippingFrom
+        }
       }
     }
   }

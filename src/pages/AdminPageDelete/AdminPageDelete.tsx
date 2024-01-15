@@ -9,6 +9,7 @@ import { DeleteCountryComponent } from "../../components/AdminDeleteComponents/D
 import { DeleteProductComponent } from "../../components/AdminDeleteComponents/DeleteProduct/DeleteProduct";
 import { DeleteProductVariationComponent } from "../../components/AdminDeleteComponents/DeleteProductVariation/DeleteProductVariation";
 import { AdminHeader } from "../../components/AdminUI/AdminHeader/AdminHeader";
+import { DeleteVariationDetailsComponent } from "../../components/AdminDeleteComponents/DeleteVariationsDetails/DeleteVariationsDetails";
 
 export const AdminPageDeleteProduct = () => {
   const [activeTab, setActiveTab] = useState('');
@@ -30,6 +31,9 @@ export const AdminPageDeleteProduct = () => {
         </ul>
 
         <div>
+          <TabWrapper activeTab={activeTab === AdminTabTitles.Delete.DELETE_VARIATIONS_DETAILS}>
+            <DeleteVariationDetailsComponent />
+          </TabWrapper>
           <TabWrapper activeTab={activeTab === AdminTabTitles.Delete.DELETE_PRODUCTVARIATION}>
             <DeleteProductVariationComponent />
           </TabWrapper>
