@@ -6,7 +6,7 @@ type Props = {
   isLoading: boolean,
   error: ApolloError | undefined,
   children: React.ReactNode,
-  errorMessage: string,
+  errorMessage: string | undefined,
 }
 
 export const QueryComponent: FC<Props> = ({

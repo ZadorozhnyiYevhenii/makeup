@@ -17,6 +17,7 @@ export const GET_PRODUCT_BYID = gql`
         variationName
         variationDetails {
           price
+          id
         }
       }
       }

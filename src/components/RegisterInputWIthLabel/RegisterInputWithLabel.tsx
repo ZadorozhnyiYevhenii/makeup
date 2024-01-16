@@ -1,22 +1,20 @@
 import { FC } from "react";
 import { UseFormRegister } from "react-hook-form";
 import { IUser } from "../../types/IUser";
-import './UserInputWithLabel.scss';
 import { emailPattern } from "../../utils/emailPattern";
 import { usePasswordToggle } from "../../hooks/usePasswordToggle";
 import { passwordRules } from "../../utils/passwordRules";
-import { IOrder } from "../../types/IOrder";
 
 type Props = {
-  label: string | undefined,
-  name: keyof IUser | keyof IOrder,
-  register: UseFormRegister<IUser | IOrder>,
+  label: string,
+  name: keyof IUser,
+  register: UseFormRegister<IUser>,
   errorMessage?: string,
   isEmail?: boolean,
   isPassword?: boolean
 }
 
-export const UserInputWithLabel: FC<Props> = ({
+export const RegisterInputWithLabel: FC<Props> = ({
   label,
   name,
   register,

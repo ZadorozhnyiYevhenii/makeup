@@ -1,9 +1,9 @@
 import { UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
-import { inputLabels } from "../../utils/inputLabels";
-import { UserInputWithLabel } from "../UserInputWithLabel/UserInputWithLabel";
 import { IUser } from "../../types/IUser";
 import { FC } from "react";
 import { userTabs } from "../../utils/userTabs";
+import { RegisterInputWithLabel } from "../RegisterInputWIthLabel/RegisterInputWithLabel";
+import { UserInfoTitles } from "../../utils/inputLabels";
 
 type Props = {
   register: UseFormRegister<IUser>
@@ -19,11 +19,11 @@ export const UserInformationChangingForm: FC<Props> = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="user__submit">
       <h1 className="user__submit-title">{userTabs.CONTACT}</h1>
-      <UserInputWithLabel name='firstName' label={inputLabels.firstName} register={register} />
-      <UserInputWithLabel name='lastName' label={inputLabels.lastName} register={register} />
-      <UserInputWithLabel name='email' label={inputLabels.email} register={register} />
-      <UserInputWithLabel name='phoneNumber' label={inputLabels.phoneNumber} register={register} />
-      <UserInputWithLabel name='birthdayDate' label={inputLabels.birthdayDate} register={register} />
+      <RegisterInputWithLabel name='firstName' label={UserInfoTitles.user.firstName} register={register} />
+      <RegisterInputWithLabel name='lastName' label={UserInfoTitles.user.lastName} register={register} />
+      <RegisterInputWithLabel name='email' label={UserInfoTitles.user.email} register={register} />
+      <RegisterInputWithLabel name='phoneNumber' label={UserInfoTitles.user.phoneNumber} register={register} />
+      <RegisterInputWithLabel name='birthdayDate' label={UserInfoTitles.user.birthdayDate} register={register} />
       <button
         type="button"
         className="submit__save-button"

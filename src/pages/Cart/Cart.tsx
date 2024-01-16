@@ -3,8 +3,8 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { setTotalAmount } from "../../app/slices/cartSlice";
 import { useNavigate } from "react-router-dom";
 import ClearIcon from '@mui/icons-material/Clear';
-import './Cart.scss';
 import { CartList } from "../../components/CartList/CartList";
+import './Cart.scss';
 
 export const Cart: FC = () => {
   const { cart, counts } = useAppSelector((state) => state.cart);
@@ -56,7 +56,9 @@ export const Cart: FC = () => {
         </button>
       </div>
       <div className="cart__list">
-        <CartList />
+        <div className="cart__cartlist-wrapper">
+          <CartList />
+        </div>
         <div className="cart__total">
           <div className="cart__total-wrapper">
             <div className="cart__total-value">

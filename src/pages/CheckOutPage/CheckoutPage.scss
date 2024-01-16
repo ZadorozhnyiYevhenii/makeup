@@ -1,5 +1,24 @@
+@import "../../mixins/pointBrakers.scss";
+
 .checkout {
   padding: 32px 16px 0 16px;
+
+  @include onDesktop {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 48px 0 0 0;
+  }
+
+  &__content {
+    @include onDesktop {
+      display: flex;
+      flex: 0 0 calc(((100% / 12) * 5) - 56px);
+      margin: 0 0 0 56px;
+      border: 1px solid #ebebeb;
+      background: #fff;
+      flex-direction: column-reverse;
+    }
+  }
 
   &__title-container {
     display: flex;
@@ -11,6 +30,18 @@
 
     &.active {
       border: none;
+    }
+
+    @include onDesktop {
+      display: none;
+    }
+  }
+
+  &__cards {
+    @include onDesktop {
+      max-height: 482px;
+      overflow: auto;
+      padding: 24px;
     }
   }
 
@@ -26,6 +57,10 @@
     justify-content: space-between;
     padding-block: 16px;
     border-bottom: 1px solid #ebebeb;
+
+    @include onDesktop {
+      padding: 24px;
+    }
   }
 
   &__total-value {
@@ -36,5 +71,9 @@
   &__total-title {
     font-size: 16px;
     font-weight: 600;
+  }
+
+  &__form {
+    flex: 1 1 auto;
   }
 }

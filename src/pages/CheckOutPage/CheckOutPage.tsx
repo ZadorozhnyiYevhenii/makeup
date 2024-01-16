@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import cn from 'classnames';
 import { CheckoutForm } from "../../components/CheckoutFormWrapper/CheckoutFormWrapper";
@@ -14,21 +14,40 @@ export const CheckOutPage = () => {
     setToggleTitle(prev => !prev);
   };
 
-  console.log(total)
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 1023) {
+        setToggleTitle(true);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <div className="checkout">
-      <div className="checkout__items">
-        <div className={cn('checkout__title-container', {'active': toggleTitle })} onClick={handleOpenCartList}>
-          <h3 className="checkout__title">Your order</h3>
-          <KeyboardArrowDownIcon/>
+      <div className="checkout__content">
+        <div className="checkout__cards">
+          <div className={cn('checkout__title-container', { 'active': toggleTitle })} onClick={handleOpenCartList}>
+            <h3 className="checkout__title">Your order</h3>
+            <KeyboardArrowDownIcon />
+          </div>
+          {toggleTitle && <CartList />}
         </div>
-        {toggleTitle && <CartList />}
+        <div className="checkout__total">
+          <span className="checkout__total-title">Total</span>
+          <span className="checkout__total-value">{total} $</span>
+        </div>
       </div>
-      <div className="checkout__total">
-        <span className="checkout__total-title">Total</span>
-        <span className="checkout__total-value">{total}</span>
+      <div className="checkout__form">
+        <CheckoutForm />
       </div>
-      <CheckoutForm />
     </div>
   )
 };

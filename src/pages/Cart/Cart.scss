@@ -1,7 +1,7 @@
 @import "../../mixins/pointBrakers.scss";
 
 .cart {
-  position: fixed;
+  position: absolute;
   top: 0;
   bottom: 0;
   background: #fff;
@@ -12,6 +12,7 @@
   padding: 0 16px 160px;
   max-height: calc(100% - 57px);
   overflow: hidden;
+  width: 100%;
 
   &__list {
     overflow-y: auto;
@@ -20,9 +21,9 @@
 
     @include onDesktop {
       display: flex;
-      overflow-y: hidden;
       padding: 30px 24px 0 24px;
       justify-content: space-between;
+      gap: 46px;
     }
   }
 
@@ -30,6 +31,7 @@
     @include onDesktop {
       display: flex;
       flex-direction: column;
+      width: 100%;
     }
   }
 
@@ -51,7 +53,7 @@
     width: 100vw;
 
     @include onDesktop {
-      width: 55vw;
+      width: 100%;
     }
   }
 
@@ -74,6 +76,13 @@
     margin: 8px 0 0 0;
   }
 
+  &__cartlist-wrapper {
+    @include onDesktop {
+      overflow: auto;
+      width: 100%;
+    }
+  }
+
   &__count {
     color: #a6a2a2;
     font-size: 14px;
@@ -92,6 +101,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @include onDesktop {
+      width: 100%;
+    }
   }
 
   &__control {
@@ -141,6 +154,16 @@
   &__back {
     background: none;
     cursor: pointer;
+    
+    @include onDesktop {
+      padding: 16px 16px 16px 16px;
+    }
+  }
+
+  &__delete-button {
+    @include onDesktop {
+      margin-top: 12px;
+    }
   }
 
   &__total {
@@ -164,7 +187,8 @@
       flex-direction: column;
       gap: 16px;
       justify-content: space-between;
-      height: 161px;
+      height: 100px;
+      min-width: 300px;
     }
   }
   

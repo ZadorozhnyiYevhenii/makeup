@@ -25,6 +25,7 @@ export const ProductCard: React.FC<Props> = ({ id }) => {
   const product: IProd | undefined = data?.getProductById;
 
   const defaultSelectedAmount = product?.productVariations[0]?.variationName;
+  const defaultSelectedVariationId = product?.productVariations[0]?.variationDetails[0]?.id;
 
   const defaultSelectedVariation = product?.productVariations[0];
   const defaultPrice = defaultSelectedVariation?.variationDetails[0]?.price;
@@ -41,12 +42,14 @@ export const ProductCard: React.FC<Props> = ({ id }) => {
 
   const price = selectedVariation?.variationDetails[0]?.price || defaultPrice;
   const quantity = selectedAmount || defaultSelectedAmount;
+  const variationDetailsId = selectedVariation?.variationDetails[0]?.id || defaultSelectedVariationId;
 
   const handleAddToCart = () => {
     const productWithVariations = {
       ...product,
       price: price || 0,
       variationName: quantity || '',
+      variationDetailsId: variationDetailsId || 0
     };
 
     dispatch(addToCart(productWithVariations));

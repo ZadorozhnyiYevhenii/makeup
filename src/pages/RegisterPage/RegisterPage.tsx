@@ -1,15 +1,16 @@
 import React, { FC, useState } from 'react';
-import './RegisterPage.scss';
+import { useAppDispatch } from '../../app/hooks';
+import { useMutation } from '@apollo/client';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IUser } from '../../types/IUser';
-import { inputLabels } from '../../utils/inputLabels';
-import { useMutation } from '@apollo/client';
 import { REGISTER_USER_MUTATION } from '../../graphql/mutations/RegisterMutations/registerUser';
 import { Loader } from '../../components/Loader/Loader';
 import { SuccessRegistration } from '../../components/SuccessRegistration/SuccessRegistration';
-import { useAppDispatch } from '../../app/hooks';
 import { addUser } from '../../app/slices/userSlice';
-import { UserInputWithLabel } from '../../components/UserInputWithLabel/UserInputWithLabel';
+import { IOrder } from '../../types/IOrder';
+import { UserInfoTitles } from '../../utils/inputLabels';
+import { RegisterInputWithLabel } from '../../components/RegisterInputWIthLabel/RegisterInputWithLabel';
+import './RegisterPage.scss';
 
 interface MutationData {
   registerUser: IUser;
@@ -26,10 +27,10 @@ export const RegisterPage: FC = () => {
   const [registerUser] = useMutation<MutationData>(REGISTER_USER_MUTATION);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
-  const onSubmit: SubmitHandler<IUser> = async (data) => {
+  const onSubmit: SubmitHandler<IUser | IOrder> = async (data) => {
     try {
       const { data: registrationData } = await registerUser({
-        variables: { request: data },
+        variables: { request: data as IUser },
       });
       setIsSuccess(true);
       dispatch(addUser(data))
@@ -49,39 +50,39 @@ export const RegisterPage: FC = () => {
         <>
           <h1 className='register__title'>Register new user</h1>
           <form className='register__form' onSubmit={handleSubmit(onSubmit)}>
-            <UserInputWithLabel
+            <RegisterInputWithLabel
               name='firstName'
-              label={inputLabels.firstName}
+              label={UserInfoTitles.user.firstName}
               register={register}
               errorMessage={errors.firstName?.message}
             />
-            <UserInputWithLabel
+            <RegisterInputWithLabel
               name='lastName'
-              label={inputLabels.lastName}
+              label={UserInfoTitles.user.lastName}
               register={register}
               errorMessage={errors.lastName?.message}
             />
-            <UserInputWithLabel
+            <RegisterInputWithLabel
               name='birthdayDate'
-              label={inputLabels.birthdayDate}
+              label={UserInfoTitles.user.birthdayDate}
               register={register}
             />
-            <UserInputWithLabel
+            <RegisterInputWithLabel
               name='phoneNumber'
-              label={inputLabels.phoneNumber}
+              label={UserInfoTitles.user.phoneNumber}
               register={register}
               errorMessage={errors.phoneNumber?.message}
             />
-            <UserInputWithLabel
+            <RegisterInputWithLabel
               name='email'
-              label={inputLabels.email}
+              label={UserInfoTitles.user.email}
               register={register}
               errorMessage={errors.email?.message}
               isEmail
             />
-            <UserInputWithLabel
+            <RegisterInputWithLabel
               name='password'
-              label={inputLabels.password}
+              label={UserInfoTitles.user.password}
               register={register}
               errorMessage={errors.password?.message}
               isPassword

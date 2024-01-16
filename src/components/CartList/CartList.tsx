@@ -48,7 +48,12 @@ export const CartList = () => {
                   <span className="cart__quantity">{counts[`${product.id}_${product.variationName}`]}</span>
                   <div className="cart__button" onClick={() => handleAddCount(product.id, product.variationName)}><AddIcon /></div>
                 </div>
-                <div onClick={() => handleRemove(product.id, product.variationName)}><DeleteOutlineIcon /></div>
+                <div
+                  onClick={() => handleRemove(product.id, product.variationName)}
+                  className="cart__delete-button"
+                >
+                  <DeleteOutlineIcon />
+                </div>
               </div>
             </div>
           </div>

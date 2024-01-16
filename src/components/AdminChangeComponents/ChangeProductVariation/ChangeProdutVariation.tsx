@@ -31,7 +31,7 @@ export const ChangeProductVariation = () => {
         },
       });
 
-      console.log('Updated product variation', result?.updatedProductVariation);
+      console.log('Updated product variation', result);
       alert('Updated product variation');
     } catch (error) {
       console.error(error);

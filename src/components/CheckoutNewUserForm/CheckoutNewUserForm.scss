@@ -1,3 +1,5 @@
+@import "../../mixins/pointBrakers.scss";
+
 .checkout-user-form {
   &__list {
     display: flex;
@@ -5,6 +7,12 @@
     gap: 16px;
     width: 100%;
     margin-bottom: 20px;
+
+    @include onDesktop {
+      flex-direction: row;
+      margin: 24px 80px 40px 0;
+      width: auto;
+    }
   }
 
   &__item {
@@ -20,7 +28,51 @@
     }
   }
 
+  &__container {
+    @include onDesktop {
+      display: flex;
+    }
+  }
+
+  &__container-children {
+    @include onDesktop {
+      width: 50%;
+      font-size: 14px;
+      line-height: 24px;
+      display: inline-block;
+      vertical-align: top;
+      white-space: normal;
+      padding: 0 40px 0 0;
+      color: #212121;
+    }
+  }
+
   &__number {
     margin-right: 8px;
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    min-height: 48px;
+    padding: 0 16px;
+    cursor: pointer;
+    outline: 0;
+    background: #212121;
+    color: #fff;
+    font-size: 14px;
+    line-height: 24px;
+
+    @include onDesktop {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 32px 0 0 0;
+      width: 50%;
+      margin-left: auto;
+    }
   }
 }

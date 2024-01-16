@@ -5,5 +5,5 @@ export interface IUser {
   phoneNumber: string;
   email: string;
   password: string;
-  jwtToken: string
+  jwtToken: string;
 }

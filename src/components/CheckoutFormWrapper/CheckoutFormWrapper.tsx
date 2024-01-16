@@ -1,10 +1,10 @@
 import { useState } from "react";
 import cn from 'classnames';
 import { TabWrapper } from "../TabWrapper/TabWrapper";
-import './CheckoutFormWrapper.scss';
 import { CheckoutNewUserForm } from "../CheckoutNewUserForm/CheckoutNewUserForm";
 import { CheckoutTitles } from "../../utils/checkoutTitles";
 import { CheckoutTitlesEnum } from "../../utils/checkoutTitlesEnums";
+import './CheckoutFormWrapper.scss';
 
 export const CheckoutForm = () => {
   const [activeButton, setActiveButton] = useState(CheckoutTitlesEnum.Button.NEW_CUSTOMER);
