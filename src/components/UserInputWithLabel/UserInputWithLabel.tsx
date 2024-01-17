@@ -1,17 +1,19 @@
 import { FC } from "react";
-import { UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import cn from 'classnames';
 import { IUser } from "../../types/IUser";
-import './UserInputWithLabel.scss';
 import { emailPattern } from "../../utils/emailPattern";
 import { usePasswordToggle } from "../../hooks/usePasswordToggle";
 import { passwordRules } from "../../utils/passwordRules";
 import { IOrder } from "../../types/IOrder";
+import './UserInputWithLabel.scss';
 
 type Props = {
   label: string | undefined,
   name: keyof IUser | keyof IOrder,
   register: UseFormRegister<IUser | IOrder>,
-  errorMessage?: string,
+  error?: FieldErrors,
+  errorMessage?: string;
   isEmail?: boolean,
   isPassword?: boolean
 }
@@ -21,6 +23,7 @@ export const UserInputWithLabel: FC<Props> = ({
   name,
   register,
   errorMessage,
+  error,
   isEmail,
   isPassword
 }) => {
@@ -53,7 +56,7 @@ export const UserInputWithLabel: FC<Props> = ({
   };
 
   return (
-    <div className="register-input">
+    <div className={cn("register-input", { 'register-input--warn': error })}>
       <input {...inputProps} />
       {errorMessage ? (
         <div className="register-input__label register-input__label--warn">{errorMessage}</div>

@@ -4,6 +4,7 @@ import { TabWrapper } from "../TabWrapper/TabWrapper";
 import { CheckoutNewUserForm } from "../CheckoutNewUserForm/CheckoutNewUserForm";
 import { CheckoutTitles } from "../../utils/checkoutTitles";
 import { CheckoutTitlesEnum } from "../../utils/checkoutTitlesEnums";
+import { CheckoutRegisteredUserForm } from "../CheckoutRegisteredUserForm/CheckoutRegisteredUserForm";
 import './CheckoutFormWrapper.scss';
 
 export const CheckoutForm = () => {
@@ -28,7 +29,7 @@ export const CheckoutForm = () => {
         <CheckoutNewUserForm />
       </TabWrapper>
       <TabWrapper activeTab={activeButton === CheckoutTitlesEnum.Button.REGULAR_CUSTOMER}>
-        <div>qgqgq</div>
+        <CheckoutRegisteredUserForm />
       </TabWrapper>
     </div>
   )

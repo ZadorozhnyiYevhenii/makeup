@@ -33,12 +33,15 @@ export const ProductCardInfo: FC<Props> = ({
   const selectedVariation = product?.productVariations.find(variation => variation?.variationName === selectedAmount)
 
   const price = selectedVariation?.variationDetails[0].price;
+  const variationDetailsId = selectedVariation?.variationDetails[0]?.id;
+
 
   const handleAddToCart = () => {
     const newProduct = {
       ...product,
       price: price || 0,
       amount: selectedAmount || 0,
+      variationDetailsId: variationDetailsId || 0
     };
   
     dispatch(addToCart(newProduct));

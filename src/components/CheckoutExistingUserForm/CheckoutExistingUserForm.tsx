@@ -1,37 +1,37 @@
 import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
 import cn from 'classnames';
+import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { CheckoutTitles } from "../../utils/checkoutTitles";
 import { TabWrapper } from "../TabWrapper/TabWrapper";
 import { CheckoutTitlesEnum } from "../../utils/checkoutTitlesEnums";
-import { UserInputWithLabel } from "../UserInputWithLabel/UserInputWithLabel";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { IUser } from "../../types/IUser";
 import { IOrder } from "../../types/IOrder";
-import { UserSelectWithLabel } from "../UserSelectWithLabel/UserSelectWithLabel";
-import { useMutation, useQuery } from "@apollo/client";
-import { GET_ALL_PAYMENT_METHODS, QueryGetAllPaymentMethods } from "../../graphql/queries/getAll/getAllPaymentMethods";
 import { ADD_ORDER, MutationAddOrder } from "../../graphql/mutations/AddMutations/addOrder";
-import { UserInfoTitles } from "../../utils/inputLabels";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { GET_ALL_PAYMENT_METHODS, QueryGetAllPaymentMethods } from "../../graphql/queries/getAll/getAllPaymentMethods";
+import { useMutation, useQuery } from "@apollo/client";
 import { ADD_ORDER_DETAILS, MutationAddOrderDetails } from "../../graphql/mutations/AddMutations/addOrderDetails";
-import { QueryComponent } from "../QueryComponent/QueryComponent";
-import { Link } from "react-router-dom";
+import { UserInputWithLabel } from "../UserInputWithLabel/UserInputWithLabel";
+import { UserSelectWithLabel } from "../UserSelectWithLabel/UserSelectWithLabel";
+import { UserInfoTitles } from "../../utils/inputLabels";
 import { clearCart } from "../../app/slices/cartSlice";
-import './CheckoutNewUserForm.scss';
 
-export const CheckoutNewUserForm = () => {
+export const CheckoutExistingUserForm = () => {
+  const user = useAppSelector(state => state.user.user);
   const [activePart, setActivePart] = useState(CheckoutTitlesEnum.SubTitle.PERSONAL_INFO);
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<IUser | IOrder>();
   const [successMessage, setSuccessMessage] = useState('');
-  const { register, handleSubmit, reset, formState: { errors }, watch } = useForm<IUser | IOrder>();
-  const { cart, counts } = useAppSelector(state => state.cart);
   const dispatch = useAppDispatch();
+
+  const { cart, counts } = useAppSelector(state => state.cart);
 
   const { data } = useQuery<QueryGetAllPaymentMethods>(GET_ALL_PAYMENT_METHODS);
   const paymentMethods = data?.getAllPaymentMethods;
 
   const [addOrderDetails] = useMutation<MutationAddOrderDetails>(ADD_ORDER_DETAILS)
 
-  const [addOrder, { loading, error }] = useMutation<MutationAddOrder>(ADD_ORDER);
+  const [addOrder] = useMutation<MutationAddOrder>(ADD_ORDER);
 
   const onSubmit: SubmitHandler<IUser | IOrder> = async (data) => {
     try {
@@ -44,9 +44,9 @@ export const CheckoutNewUserForm = () => {
             region: (data as IOrder).region,
           },
           orderInfo: {
-            firstName: (data as IUser).firstName,
-            lastName: (data as IUser).lastName,
-            phoneNumber: (data as IUser).phoneNumber,
+            firstName: user?.firstName,
+            lastName: user?.lastName,
+            phoneNumber: user?.phoneNumber,
             paymentMethod: (data as IOrder).paymentMethod
           },
         }
@@ -74,16 +74,14 @@ export const CheckoutNewUserForm = () => {
     }
   };
 
-  const handleNextTab = () => {
-    if (watch('firstName') && watch('lastName') && watch('phoneNumber')) {
-      setActivePart(CheckoutTitlesEnum.SubTitle.DELIVERY_INFO)
-    }
+  const handleDeliveryTab = () => {
+    setActivePart(CheckoutTitlesEnum.SubTitle.DELIVERY_INFO)
   };
 
   return (
-    <QueryComponent isLoading={loading} error={error} errorMessage={error?.message}>
+    <div className="checkout-user-form">
       {!successMessage ? (
-        <div className="checkout-user-form">
+        <>
           <ul className="checkout-user-form__list">
             {CheckoutTitles.SubTitle.map(subtitle => (
               <li
@@ -101,20 +99,26 @@ export const CheckoutNewUserForm = () => {
               <TabWrapper activeTab={activePart === CheckoutTitlesEnum.SubTitle.PERSONAL_INFO}>
                 <div className="checkout-user-form__container">
                   <div className="checkout-user-form__container-children">
-                    <UserInputWithLabel label={UserInfoTitles.user.firstName} name='firstName' register={register} error={errors} />
-                    <UserInputWithLabel label={UserInfoTitles.user.lastName} name='lastName' register={register} error={errors} />
+                    <label className="checkout-user-form__label">Your full name</label>
+                    <div className="checkout-user-form__wrapper">
+                      <div {...register('firstName')}>{user?.firstName}</div>
+                      <div {...register('lastName')}>{user?.lastName}</div>
+                    </div>
                   </div>
                   <div className="checkout-user-form__container-children">
-                    <UserInputWithLabel label={UserInfoTitles.user.phoneNumber} name='phoneNumber' register={register} error={errors} />
-                    <button
-                      type="button"
-                      className="checkout-user-form__button"
-                      onClick={handleNextTab}
-                    >
-                      Further
-                    </button>
+                    <label className="checkout-user-form__label">Your email</label>
+                    <div {...register('email')} className="checkout-user-form__existing">{user?.email}</div>
+                    <label className="checkout-user-form__label">Your phone number</label>
+                    <div {...register('phoneNumber')}>{user?.phoneNumber}</div>
                   </div>
                 </div>
+                <button
+                  type="button"
+                  className="checkout-user-form__button"
+                  onClick={handleDeliveryTab}
+                >
+                  Further
+                </button>
               </TabWrapper>
               <TabWrapper activeTab={activePart === CheckoutTitlesEnum.SubTitle.DELIVERY_INFO}>
                 <div className="checkout-user-form__container">
@@ -143,13 +147,13 @@ export const CheckoutNewUserForm = () => {
               </TabWrapper>
             </form>
           </div>
-        </div>
+        </>
       ) : (
         <div className="checkout-user-form__modal">
           <p className="checkout-user-form__modal-message">{successMessage}</p>
           <Link to={'/makeup'} className="checkout-user-form__modal-link">Shopping more</Link>
         </div>
       )}
-    </QueryComponent>
+    </div>
   )
 }

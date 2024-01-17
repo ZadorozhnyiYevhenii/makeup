@@ -5,10 +5,12 @@ import { CheckoutForm } from "../../components/CheckoutFormWrapper/CheckoutFormW
 import { CartList } from "../../components/CartList/CartList";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import './CheckoutPage.scss';
+import { CheckoutExistingUserForm } from "../../components/CheckoutExistingUserForm/CheckoutExistingUserForm";
 
 export const CheckOutPage = () => {
   const total = useAppSelector(state => state.cart.totalAmount);
   const [toggleTitle, setToggleTitle] = useState(false);
+  const user = useAppSelector(state => state.user.user);
 
   const handleOpenCartList = () => {
     setToggleTitle(prev => !prev);
@@ -46,7 +48,11 @@ export const CheckOutPage = () => {
         </div>
       </div>
       <div className="checkout__form">
-        <CheckoutForm />
+        {!user ? (
+          <CheckoutForm />
+        ) : (
+          <CheckoutExistingUserForm />
+        )}
       </div>
     </div>
   )

@@ -25,6 +25,10 @@
     &:focus {
       border-bottom: 1px solid #5b24c9;
     }
+
+    &--warn {
+      border-bottom: 1px solid red;
+    }
   }
 
   &__label {
