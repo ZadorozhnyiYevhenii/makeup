@@ -8,7 +8,7 @@ import { GET_ALL_CLASSIFICATIONS, QueryAllClassifications } from "../../../graph
 import { GET_ALL_COUNTRIES, getAllCountries } from "../../../graphql/queries/getAll/getAllCountries";
 import { GET_ALL_CATEGORIES, QueryGetAllCategories } from "../../../graphql/queries/getAll/getAllCategories";
 import { GET_ALL_BRANDS, QueryAllBrands } from "../../../graphql/queries/getAll/getAllBrand";
-import { GET_ALL_PRODUCTS, QueryGetAllProducts } from "../../../graphql/queries/getById/getAllProducts";
+import { GET_ALL_PRODUCTS, QueryGetAllProducts } from "../../../graphql/queries/getAll/getAllProducts";
 import { AdminInpuWithLabel } from "../../AdminUI/AdminInputWithLabel/AdminInputWithLabel";
 import { AdminSelectWithLabel } from "../../AdminUI/AdminSelectWithLabel/AdminSelectWithLabel";
 

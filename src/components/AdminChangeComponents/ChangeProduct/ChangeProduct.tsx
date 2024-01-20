@@ -5,7 +5,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { CHANGE_PRODUCT, MutationChangeProduct } from "../../../graphql/mutations/ChangeMutations/changeProduct";
 import { AdminInpuWithLabel } from "../../AdminUI/AdminInputWithLabel/AdminInputWithLabel";
 import { AdminSelectWithLabel } from "../../AdminUI/AdminSelectWithLabel/AdminSelectWithLabel";
-import { GET_ALL_PRODUCTS, QueryGetAllProducts } from "../../../graphql/queries/getById/getAllProducts";
+import { GET_ALL_PRODUCTS, QueryGetAllProducts } from "../../../graphql/queries/getAll/getAllProducts";
 import { GET_ALL_SEXES, QueryAllSexes } from "../../../graphql/queries/getAll/getAllSexes";
 import { GET_ALL_CLASSIFICATIONS, QueryAllClassifications } from "../../../graphql/queries/getAll/getAllClassifications";
 import { GET_ALL_COUNTRIES, getAllCountries } from "../../../graphql/queries/getAll/getAllCountries";

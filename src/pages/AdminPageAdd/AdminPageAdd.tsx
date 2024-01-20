@@ -1,6 +1,5 @@
 import { useState } from "react";
 import cn from 'classnames';
-import { TabWrapper } from "../../components/TabWrapper/TabWrapper";
 import { AddBrandForm } from "../../components/AdminAddComponents/AddBrandForm/AddBrandForm";
 import { AdminTabs } from "../../utils/adminActiveTabs";
 import { AdminTabTitles } from "../../utils/enumAdminTabs";
@@ -12,6 +11,7 @@ import { AddProductVariationForm } from "../../components/AdminAddComponents/Add
 import { AddVariationsDetailsForm } from "../../components/AdminAddComponents/AddVariationsDetailsForm/AddVariationsDetailsForm";
 import { AdminHeader } from "../../components/AdminUI/AdminHeader/AdminHeader";
 import { AddCategoryComponent } from "../../components/AdminAddComponents/AddCategory/AddCategoryForm";
+import { TabWrapper } from "../../components/TabComponents/TabWrapper/TabWrapper";
 
 export const AdminPageProduct = () => {
   const [activeTab, setActiveTab] = useState('');

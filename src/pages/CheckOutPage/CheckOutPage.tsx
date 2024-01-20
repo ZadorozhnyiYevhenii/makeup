@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import cn from 'classnames';
-import { CheckoutForm } from "../../components/CheckoutFormWrapper/CheckoutFormWrapper";
 import { CartList } from "../../components/CartList/CartList";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import './CheckoutPage.scss';
-import { CheckoutExistingUserForm } from "../../components/CheckoutExistingUserForm/CheckoutExistingUserForm";
+import { CheckoutExistingUserForm } from "../../components/CheckoutComponents/CheckoutExistingUserForm/CheckoutExistingUserForm";
+import { CheckoutForm } from "../../components/CheckoutComponents/CheckoutFormWrapper/CheckoutFormWrapper";
 
 export const CheckOutPage = () => {
   const total = useAppSelector(state => state.cart.totalAmount);

@@ -1,0 +1,7 @@
+@import "../../../mixins/pointBrakers.scss";
+
+.footer-container {
+  @include onDesktop {
+    padding-bottom: 24px;
+  }
+}

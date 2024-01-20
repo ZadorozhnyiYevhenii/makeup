@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { IProd } from "../../../types/IProduct";
 import { ADD_PRODUCT_VARIATIONS, MutationAddProductVariation } from "../../../graphql/mutations/AddMutations/addProductVariations";
 import { GET_ALL_PRODUCTS_ID_NAME, QueryGetAllProductsIdName } from "../../../graphql/queries/getById/getAllProductNameAndId";
-import { GET_ALL_PRODUCTS } from "../../../graphql/queries/getById/getAllProducts";
+import { GET_ALL_PRODUCTS } from "../../../graphql/queries/getAll/getAllProducts";
 import { AdminSelectWithLabel } from "../../AdminUI/AdminSelectWithLabel/AdminSelectWithLabel";
 import { AdminInpuWithLabel } from "../../AdminUI/AdminInputWithLabel/AdminInputWithLabel";
 

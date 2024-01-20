@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { IProd } from "../../../types/IProduct"
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_VARIATION_DETAILS, MutationAddVariationDetails } from "../../../graphql/mutations/AddMutations/addVariationDetails";
-import { GET_ALL_PRODUCTS, QueryGetAllProducts } from "../../../graphql/queries/getById/getAllProducts";
+import { GET_ALL_PRODUCTS, QueryGetAllProducts } from "../../../graphql/queries/getAll/getAllProducts";
 import { AdminSelectWithLabel } from "../../AdminUI/AdminSelectWithLabel/AdminSelectWithLabel";
 import { AdminInpuWithLabel } from "../../AdminUI/AdminInputWithLabel/AdminInputWithLabel";
 

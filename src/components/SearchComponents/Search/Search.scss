@@ -1,0 +1,97 @@
+@import "../../../mixins/pointBrakers.scss";
+
+.search {
+  display: flex;
+  flex-direction: column;
+
+  &--active {
+    @include onDesktop {
+      margin: auto;
+      background: #fff;
+      min-height: 70px;
+      max-width: 1610px;
+      position: relative;
+    }
+  }
+
+  &__container {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #EBEBEB;
+
+    @include onDesktop {
+      border: none;
+    }
+  }
+
+  &__input {
+    margin-block: 20px;
+    width: calc(100% - 60px);
+    outline: none;
+    border: none;
+    margin-left: 14px;
+    height: 32px;
+    font-size: 14px;
+
+    &::placeholder {
+      color: #EBEBEB;
+      font-size: 14px;
+    }
+  }
+
+  &__icon {
+    margin-left: 40px;
+
+    @include onDesktop {
+      margin-left: 0;
+    }
+
+    &--active {
+      @include onDesktop {
+        margin-left: 20px;
+      }
+    }
+  }
+
+  &__cross {
+    margin-right: 48px;
+    cursor: pointer;
+
+    @include onDesktop {
+      margin-right: 0;
+    }
+
+    &--active {
+      @include onDesktop {
+        margin-right: 20px;
+      }
+    }
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-inline: 16px;
+  }
+
+  &__title {
+    padding: 16px;
+    margin-bottom: 26px;
+  }
+
+  &__wrapper {
+    @include onDesktop {
+      display: none;
+    }
+
+    &--active {
+      @include onDesktop {
+        display: block;
+        padding: 55px 24px;
+        max-height: calc(100vh - 174px);
+        overflow: auto;
+      }
+    }
+  }
+}

@@ -1,7 +1,6 @@
 import { useState } from "react"
 import cn from 'classnames';
 import { AdminTabs } from "../../utils/adminActiveTabs";
-import { TabWrapper } from "../../components/TabWrapper/TabWrapper";
 import { AdminTabTitles } from "../../utils/enumAdminTabs";
 import { DeleteBrandComponent } from "../../components/AdminDeleteComponents/DeleteBrand/DeleteBrandComponent";
 import { DeleteCategoryComponent } from "../../components/AdminDeleteComponents/DeleteCategory/DeleteCategory";
@@ -10,6 +9,7 @@ import { DeleteProductComponent } from "../../components/AdminDeleteComponents/D
 import { DeleteProductVariationComponent } from "../../components/AdminDeleteComponents/DeleteProductVariation/DeleteProductVariation";
 import { AdminHeader } from "../../components/AdminUI/AdminHeader/AdminHeader";
 import { DeleteVariationDetailsComponent } from "../../components/AdminDeleteComponents/DeleteVariationsDetails/DeleteVariationsDetails";
+import { TabWrapper } from "../../components/TabComponents/TabWrapper/TabWrapper";
 
 export const AdminPageDeleteProduct = () => {
   const [activeTab, setActiveTab] = useState('');

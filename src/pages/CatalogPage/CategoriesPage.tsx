@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useParams, useSearchParams } from "react-router-dom";
 import { FilterButtons } from "../../components/FilterButtons/FilterButtons";
-import './CategoriesPage.scss';
 import cn from 'classnames';
 import { SortMenu } from "../../components/SortMenu/SortMenu";
 import { SortOptions } from "../../utils/sortOptions";
 import { SliderMain } from "../../components/SliderMain/SLiderMain";
 import { getSearchWith } from "../../helpers/getSearchWith";
 import { FilterMenu } from "../../components/FilterMenu/FilterMenu";
-import { ProductCardList } from "../../components/ProductCardList/ProductCardList";
+import { ProductCardList } from "../../components/ProductComponents/ProductCardList/ProductCardList";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { clearFilters, setBrandFilter, setSexFilter, setTypeFilter } from "../../app/slices/filterSlice";
 import { ClearFilterButton } from "../../components/ClearButton/ClearButton";
@@ -23,6 +22,7 @@ import { GET_PRODUCT_WITH_CATEGORY_ID } from "../../graphql/queries/getById/getP
 import { setProducts } from "../../app/slices/productSlice";
 import { CategoryTitle } from "../../components/CategoryTitle/CategoryTitle";
 import { Breadcrums } from "../../components/BreadCrumbs/BreadCrumbs";
+import './CategoriesPage.scss';
 
 interface QueryData {
   getProductsByCategoryIds: IProd[]
@@ -38,9 +38,11 @@ export const CategoriesPage = () => {
   const { id } = useParams();
   const location = useLocation()
 
-  const { data } = useQuery<QueryData>(GET_PRODUCT_WITH_CATEGORY_ID, { variables: { categoryIds: id } });
+  const { data, error } = useQuery<QueryData>(GET_PRODUCT_WITH_CATEGORY_ID, { variables: { categoryIds: id } });
 
   const products = data?.getProductsByCategoryIds;
+
+  console.log(error)
 
   useEffect(() => {
     if (data && products) {
@@ -97,6 +99,8 @@ export const CategoriesPage = () => {
   const amountOfProducts = calculateTotalProductsCount(products, brands, types, sex);
 
   const categoryName = products?.map(product => product.categories.map(pr => pr.name)[0])[0];
+
+  // console.log(categoryName)
 
   return (
     <div className="categories">

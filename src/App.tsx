@@ -1,52 +1,55 @@
-import './App.scss';
-import { Header } from "./components/Header/Header";
+import { Suspense, lazy } from 'react'
+import { Header } from "./components/HeaderComponents/Header/Header";
 import { Route, Routes } from 'react-router-dom';
 import { HomePage } from './pages/HomePage/HomePage';
-import { Footer } from './components/Footer/Footer';
 import { BackToTopButton } from './components/BackToTopButton/BackToTopButton';
 import { ErrorPage } from './pages/404/404';
-import { ProductCardPage } from './pages/ProductCardPage/ProductCardPage';
-import { CategoriesPage } from './pages/CatalogPage/CategoriesPage';
-import { Cart } from './pages/Cart/Cart';
-import { RegisterPage } from './pages/RegisterPage/RegisterPage';
 import { useAppSelector } from './app/hooks';
 import { UserPage } from './pages/UserPage/UserPage';
-import { AdminPageProduct } from './pages/AdminPageAdd/AdminPageAdd';
-import { AdminPage } from './pages/AdminPage/AdminPage';
-import { CheckOutPage } from './pages/CheckOutPage/CheckOutPage';
-import { AdminPageChange } from './pages/AdminPageChange/AdminPageChange';
-import { AdminPageDeleteProduct } from './pages/AdminPageDelete/AdminPageDelete';
+import { Footer } from './components/FooterComponents/Footer/Footer';
+import { Loader } from './components/Loader/Loader';
+import './App.scss';
+const ProductCardPage = lazy(() => import("./pages/ProductCardPage/ProductCardPage").then((module) => ({ default: module.ProductCardPage })));
+const CategoriesPage = lazy(() => import('./pages/CatalogPage/CategoriesPage').then((module) => ({ default: module.CategoriesPage })));
+const AdminPageProduct = lazy(() => import('./pages/AdminPageAdd/AdminPageAdd').then((module) => ({ default: module.AdminPageProduct })));
+const AdminPage = lazy(() => import('./pages/AdminPage/AdminPage').then((module) => ({ default: module.AdminPage })));
+const CheckOutPage = lazy(() => import('./pages/CheckOutPage/CheckOutPage').then((module) => ({ default: module.CheckOutPage })));
+const AdminPageChange = lazy(() => import('./pages/AdminPageChange/AdminPageChange').then((module) => ({ default: module.AdminPageChange })));
+const AdminPageDeleteProduct = lazy(() => import('./pages/AdminPageDelete/AdminPageDelete').then((module) => ({ default: module.AdminPageDeleteProduct })));
+const Cart = lazy(() => import('./pages/Cart/Cart').then((module) => ({ default: module.Cart })));
+const RegisterPage = lazy(() => import('./pages/RegisterPage/RegisterPage').then((module) => ({ default: module.RegisterPage })));
 
 function App() {
-
   const user = useAppSelector(state => state.user.user);
 
   return (
     <div className="App">
       <Header />
 
-      <Routes>
-        <Route path='/makeup/'>
-          <Route index element={<HomePage />} />
-          <Route path='product/:id' element={<ProductCardPage />} />
-          <Route path='category/:id' element={<CategoriesPage />} />
-          <Route path='cart' element={<Cart />} />
-          <Route path='register' element={<RegisterPage />} />
-          {!!user && (
-            <Route path='user' element={<UserPage />} />
-          )}
-          <Route path='admin/'>
-            <Route index element={<AdminPage />} />
-            <Route path='addproduct' element={<AdminPageProduct />} />
-            <Route path='changeproduct' element={<AdminPageChange />} />
-            <Route path='deleteproduct' element={<AdminPageDeleteProduct />} />
-           </Route>
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path='/makeup/'>
+            <Route index element={<HomePage />} />
+            <Route path='product/:id' element={<ProductCardPage />} />
+            <Route path='category/:id' element={<CategoriesPage />} />
+            <Route path='cart' element={<Cart />} />
+            <Route path='register' element={<RegisterPage />} />
+            {!!user && (
+              <Route path='user' element={<UserPage />} />
+            )}
+            <Route path='admin/'>
+              <Route index element={<AdminPage />} />
+              <Route path='addproduct' element={<AdminPageProduct />} />
+              <Route path='changeproduct' element={<AdminPageChange />} />
+              <Route path='deleteproduct' element={<AdminPageDeleteProduct />} />
+            </Route>
 
-          <Route path='checkout' element={<CheckOutPage />} />
+            <Route path='checkout' element={<CheckOutPage />} />
 
-          <Route path='*' element={<ErrorPage />} />
-        </Route>
-      </Routes>
+            <Route path='*' element={<ErrorPage />} />
+          </Route>
+        </Routes>
+      </Suspense>
       <BackToTopButton />
 
       {window.location.pathname !== '/makeup/checkout' && <Footer />}

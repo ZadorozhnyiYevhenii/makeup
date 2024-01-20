@@ -1,18 +1,18 @@
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { BasicTabs } from '../../components/Tabs/Tabs';
+import { BasicTabs } from '../../components/TabComponents/Tabs/Tabs';
 import { useEffect, useRef, useState } from 'react';
-import { ProductSlider } from '../../components/ProductSlider/ProductSlider';
+import { ProductSlider } from '../../components/ProductComponents/ProductSlider/ProductSlider';
 import { Dots } from '../../components/Dots/Dots';
 import { PhotoSlider } from '../../components/PhotoSlider/PhotoSlider';
 import { PhotoPopup } from '../../components/PhotoPopup/PhotoPopup';
 import { useDisableScroll } from '../../hooks/useDisableScroll';
-import './ProductCardPage.scss';
-import { ProductCardInfo } from '../../components/ProductCardInfo/PRoductCardInfo';
+import { ProductCardInfo } from '../../components/ProductComponents/ProductCardInfo/PRoductCardInfo';
 import { useQuery } from '@apollo/client';
-import { GET_ALL_PRODUCTS } from '../../graphql/queries/getById/getAllProducts';
+import { GET_ALL_PRODUCTS } from '../../graphql/queries/getAll/getAllProducts';
 import { IProd } from '../../types/IProduct';
 import { QueryComponent } from '../../components/QueryComponent/QueryComponent';
 import { Breadcrums } from '../../components/BreadCrumbs/BreadCrumbs';
+import './ProductCardPage.scss';
 
 interface QueryData {
   getAllProducts: IProd[];

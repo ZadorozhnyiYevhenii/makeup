@@ -1,0 +1,181 @@
+@import "../../../mixins/pointBrakers.scss";
+
+.header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 6px;
+  border-bottom: 1px solid #EBEBEB;
+  position: relative;
+  z-index: 1002;
+  background-color: #fff;
+
+  @include onDesktop {
+    padding: 18px 0;
+    border: none;
+    z-index: 0;
+    margin-inline: 0;
+  }
+
+  &__left {
+    display: flex;
+    gap: 4px;
+
+    @include onDesktop {
+      padding-block: 20px;
+      margin-right: 64px;
+    }
+  }
+
+  &__right {
+    display: flex;
+    gap: 4px;
+  }
+
+  &__menu {
+    width: 20px;
+    height: 20px;
+    padding: 10px;
+    cursor: pointer;
+
+    @include onDesktop {
+      display: none;
+    }
+  }
+
+  &__search {
+    padding: 10px;
+    cursor: pointer;
+
+    @include onDesktop {
+      padding: 0;
+    }
+  }
+
+  &__searchBar {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.6);
+    transition: opacity 0.3s ease-in, visibility 0.3s ease-in, transform 0.3s ease-in;
+
+    &.active {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+    }
+
+    @include onDesktop {
+      width: calc(100% - 96px);
+      margin-top: 46px;
+      z-index: 1004;
+      height: 74px;
+      margin-left: 48px;
+      background-color: #fff;
+    }
+  }
+
+  &__searchBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1001;
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+
+    @include onDesktop {
+      display: block;
+    }
+  }
+
+  &__logo {
+    padding-block: 5px;
+
+    @include onDesktop {
+      padding-block: 8px;
+    }
+  }
+
+  &__account {
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  &__login-overlay {
+    @include onDesktop {
+      position: absolute;
+      right: 0;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      height: 100vh;
+      width: 100vw;
+      transition: background-color 0.3s ease;
+    }
+  }
+
+  &__login {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 100vh;
+    z-index: 1050;
+    background: rgba(33, 33, 33, .2);
+
+    @include onDesktop {
+      background: none;
+      position: absolute;
+      right: 0;
+      top: 100px;
+      left: auto;
+      z-index: 1051;
+      height: 367px;
+      transition: opacity 0.5s ease-in-out;
+    }
+  }
+
+  &__cart {
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  &__cart-quantity {
+    position: absolute;
+    font-size: 10px;
+    top: 17px;
+    right: 10px;
+    color: #fff;
+    background-color: #212121;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 2px;
+    height: 12px;
+    width: 12px;
+
+    @include onDesktop {
+      right: 3px;
+      top: 29px;
+    }
+
+    &.no-cart {
+      display: none;
+    }
+  }
+}

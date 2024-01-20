@@ -1,0 +1,114 @@
+@import "../../../mixins/pointBrakers.scss";
+
+.nav {
+  display: none;
+
+  @include onDesktop {
+    display: flex;
+    align-items: center;
+  }
+
+  &--none {
+    pointer-events: none;
+  }
+
+  &__list {
+    @include onDesktop {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-grow: 1;
+      position: relative;
+    }
+
+    &--not {
+      @include onDesktop {
+        position: static;
+      }
+    }
+
+    &--logged {
+      @include onDesktop {
+        position: static;
+      }
+    }
+  }
+
+  &__item {
+    @include onDesktop {
+      padding: 8px 0;
+    }
+  }
+
+  &__link {
+    @include onDesktop {
+
+      color: #212121;
+      line-height: 24px;
+      transition: all 0.3s;
+
+      &:hover {
+        color: #5b24c9;
+      }
+    }
+  }
+
+  &__submenu-container {
+    max-width: 200px;
+    overflow: auto;
+    padding: 24px;
+  }
+
+  &__submenu {
+
+    @include onDesktop {
+      border-top: 1px solid #5b24c9;
+      position: absolute;
+      padding-top: 32px;
+      padding-bottom: 56px;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      display: block;
+      opacity: 0;
+      background-color: #fff;
+      z-index: 1;
+
+      transition: max-height 0.3s ease-in, opacity 0.3s ease-in;
+      visibility: hidden;
+    }
+  }
+
+  &__item:hover &__submenu {
+    @include onDesktop {
+      display: block;
+      max-height: 200px;
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  &__submenu-link {
+    @include onDesktop {
+
+      color: #212121;
+      line-height: 24px;
+      transition: all 0.3s;
+
+      &:hover {
+        color: #5b24c9;
+      }
+    }
+  }
+
+  &__subList {
+    @include onDesktop {
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+      flex-wrap: wrap;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+  }
+}

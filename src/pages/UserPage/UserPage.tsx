@@ -8,8 +8,8 @@ import { IUser } from "../../types/IUser";
 import { useState } from "react";
 import cn from 'classnames';
 import { userTabs } from "../../utils/userTabs";
-import { TabWrapper } from "../../components/TabWrapper/TabWrapper";
-import { UserInformationChangingForm } from "../../components/UserInformationChangingForm.tsx/UserInformationChangingForm.tsx";
+import { UserInformationChangingForm } from "../../components/UserComponents/UserInformationChangingForm.tsx/UserInformationChangingForm.tsx";
+import { TabWrapper } from "../../components/TabComponents/TabWrapper/TabWrapper";
 
 export const UserPage = () => {
   const [activeTab, setActiveTab] = useState(userTabs.CONTACT);

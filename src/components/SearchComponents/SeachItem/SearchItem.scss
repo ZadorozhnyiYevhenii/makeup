@@ -1,0 +1,55 @@
+.searchItem {
+  display: flex;
+  margin-bottom: 15px;
+  min-height: 120px;
+  width: 100%;
+  height: auto;
+
+  &__photo {
+    width: 114px;
+    height: 144px;
+    margin: 0 30px 0 0;
+    padding: 24px 12px 12px 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__img {
+    display: flex;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  &__container {
+    width: calc(100% - 144px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__name {
+    font-size: 16px;
+    line-height: 24px;
+    max-height: 48px;
+    overflow: hidden;
+    color: #212121;
+    transition: all .2s ease-in;
+
+    &:hover {
+      color: #5b24c9
+    }
+  }
+
+  &__brand {
+    width: 100%;
+    margin: 8px 0 0 0;
+    max-width: 150px;
+    max-height: 72px;
+    color: #a6a2a2;
+  }
+
+  &__status {
+    margin-bottom: 12px;
+  }
+}

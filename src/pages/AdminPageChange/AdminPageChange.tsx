@@ -2,11 +2,11 @@ import { useState } from "react";
 import cn from 'classnames';
 import { AdminTabs } from "../../utils/adminActiveTabs";
 import { ChangeProduct } from "../../components/AdminChangeComponents/ChangeProduct/ChangeProduct";
-import { TabWrapper } from "../../components/TabWrapper/TabWrapper";
 import { AdminTabTitles } from "../../utils/enumAdminTabs";
 import { ChangeProductVariation } from "../../components/AdminChangeComponents/ChangeProductVariation/ChangeProdutVariation";
 import { AdminHeader } from "../../components/AdminUI/AdminHeader/AdminHeader";
 import { ChangeVariationDetailsComponent } from "../../components/AdminChangeComponents/ChangeVariationDetails/ChangeVariationDetails";
+import { TabWrapper } from "../../components/TabComponents/TabWrapper/TabWrapper";
 
 export const AdminPageChange = () => {
   const [activeTab, setActiveTab] = useState('');
