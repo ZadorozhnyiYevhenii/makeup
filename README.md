@@ -37,10 +37,13 @@ For administrators, there is an Admin Dashboard with various operations, includi
 - Jest 🃏, React Testing Library 🧪
 
 ## Setup 🛠️
-   git clone https://github.com/your-username/your-repository.git
-   cd your-repository
-   npm install
-   npm start
-   npm test
-   npm build
+
+**Clone the repository:**
+   
+   - git clone https://github.com/your-username/your-repository.git
+   - cd your-repository
+   - npm install
+   - npm start
+   - npm test
+   - npm build
 
