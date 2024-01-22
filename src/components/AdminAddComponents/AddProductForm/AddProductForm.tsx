@@ -13,14 +13,17 @@ import { AdminInpuWithLabel } from "../../AdminUI/AdminInputWithLabel/AdminInput
 import { AdminSelectWithLabel } from "../../AdminUI/AdminSelectWithLabel/AdminSelectWithLabel";
 import { GET_PRODUCT_STATUS, QueryProductStatus } from "../../../graphql/queries/getAll/getProductStatus";
 import { normalizeName } from "../../../helpers/normalizeWord";
+import { useState } from "react";
+import { SuccessMessage } from "../../SuccessPopup/SuccessPopup";
 
 interface MutationData {
   addProduct: IProd;
 }
 
 export const AddProductForm = () => {
-  const { register, handleSubmit, reset } = useForm<IProd>()
-  const [addProduct] = useMutation<MutationData>(ADD_PRODUCT);
+  const { register, handleSubmit, reset } = useForm<IProd>();
+  const [successMessage, setSuccessMessage] = useState(false);
+  const [addProduct, { error }] = useMutation<MutationData>(ADD_PRODUCT);
 
   const { data: productStatusesData } = useQuery<QueryProductStatus>(GET_PRODUCT_STATUS);
   const productStatuses = productStatusesData?.getAllProductStatuses;
@@ -39,6 +42,13 @@ export const AddProductForm = () => {
 
   const { data } = useQuery<QueryAllBrands>(GET_ALL_BRANDS);
   const brands = data?.getAllBrands;
+
+  const handleSuccessMessage = () => {
+    setSuccessMessage(true);
+    setTimeout(() => {
+      setSuccessMessage(false);
+    }, 3000);
+  };
 
   const onSubmit: SubmitHandler<IProd> = async (data) => {
     try {
@@ -73,15 +83,17 @@ export const AddProductForm = () => {
 
       console.log('Product added:', result?.addProduct);
       reset();
-      alert('Product added!');
+      handleSuccessMessage();
     } catch (error) {
       console.error('Add product error:', error);
+      handleSuccessMessage();
     }
   };
 
   return (
     <div className="admin">
       <form onSubmit={handleSubmit(onSubmit)} className="admin__form">
+        {successMessage && <SuccessMessage message="Product added successfully" error={error} />}
         <AdminInpuWithLabel label="Product name" name='name' register={register} />
         <AdminSelectWithLabel
           label="Brand"

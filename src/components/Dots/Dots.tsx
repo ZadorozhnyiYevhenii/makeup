@@ -53,7 +53,7 @@ export const Dots: FC<Props> = ({
           {product?.images.map((img, ind) => (
             <div
               key={img.id}
-              onClick={() => setSlideIndex(img.id - 1)}
+              onClick={() => setSlideIndex(ind)}
               className={cn('dots__photo-dot', {
                 active: ind === slideIndex,
               })}

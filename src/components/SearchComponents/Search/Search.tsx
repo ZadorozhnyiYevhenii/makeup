@@ -18,7 +18,7 @@ type Props = {
 
 export const SearchBar: React.FC<Props> = ({ onCross, toggledIcon }) => {
   const { register } = useForm<ISearch>();
-  const [seachDate, setSearchData] = useState('');
+  const [searchData, setSearchData] = useState('');
   const [pageNumber, setPageNumber] = useState(0);
   const { data, error, loading, fetchMore } = useQuery<QuerySearchProducts>(SEARCH_PRODUCTS, {
     variables: {
@@ -26,7 +26,7 @@ export const SearchBar: React.FC<Props> = ({ onCross, toggledIcon }) => {
         pageNumber: 0,
         sizePerPage: 6,
       },
-      searchString: seachDate
+      searchString: searchData
     },
   });
 
@@ -34,7 +34,6 @@ export const SearchBar: React.FC<Props> = ({ onCross, toggledIcon }) => {
     const searchString = event.target.value;
     setSearchData(searchString);
     setPageNumber(0);
-    console.log(data?.searchProductsPaged)
   };
 
   const handleSearchWithDebounce = debounce(handleSearch, 500);
@@ -46,7 +45,7 @@ export const SearchBar: React.FC<Props> = ({ onCross, toggledIcon }) => {
           pageNumber: pageNumber + 1,
           sizePerPage: 6,
         },
-        searchString: seachDate
+        searchString: searchData
       },
     }).then(() => {
       setPageNumber(pageNumber + 1);
@@ -57,6 +56,7 @@ export const SearchBar: React.FC<Props> = ({ onCross, toggledIcon }) => {
     ? data.searchProductsPaged.length
     : 0
   ) > 0;
+
 
   return (
     <>

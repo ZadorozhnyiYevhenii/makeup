@@ -6,9 +6,11 @@ import { AdminInpuWithLabel } from "../../AdminUI/AdminInputWithLabel/AdminInput
 import { useState } from "react";
 import { AdminSelectWithLabel } from "../../AdminUI/AdminSelectWithLabel/AdminSelectWithLabel";
 import { GET_ALL_PRODUCTS_ID_NAME, QueryGetAllProductsIdName } from "../../../graphql/queries/getById/getAllProductNameAndId";
+import { SuccessMessage } from "../../SuccessPopup/SuccessPopup";
 
 export const ChangeProductVariation = () => {
   const { register, handleSubmit, setValue } = useForm<IProd>();
+  const [successMessage, setSuccessMessage] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState<string>('');
   const [selectedProductVariation, setSelectedProductVariation] = useState<string>('');
 
@@ -16,7 +18,14 @@ export const ChangeProductVariation = () => {
 
   const products = data?.getAllProducts;
 
-  const [updatedProductVariation] = useMutation<MutationChangeProductVariation>(CHANGE_PRODUCT_VARIATION);
+  const [updatedProductVariation, { error }] = useMutation<MutationChangeProductVariation>(CHANGE_PRODUCT_VARIATION);
+
+  const handleSuccessMessage = () => {
+    setSuccessMessage(true);
+    setTimeout(() => {
+      setSuccessMessage(false);
+    }, 3000);
+  };
 
   const onSubmit: SubmitHandler<IProd> = async (data) => {
     try {
@@ -32,9 +41,10 @@ export const ChangeProductVariation = () => {
       });
 
       console.log('Updated product variation', result);
-      alert('Updated product variation');
+      handleSuccessMessage()
     } catch (error) {
       console.error(error);
+      handleSuccessMessage();
     }
   };
 
@@ -65,11 +75,10 @@ export const ChangeProductVariation = () => {
     }
   };
 
-  console.log(selectedProductVariation)
-
   return (
     <div className="admin">
       <div className="admin-input">
+        {successMessage && <SuccessMessage message="Product variation changed successfully" error={error} />}
         <label className="admin-input__label">Product name</label>
         <select onChange={(e) => handleProductChange(e.target.value)} className="admin-input__input">
           {products?.map((prod) => (

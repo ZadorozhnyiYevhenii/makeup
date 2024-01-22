@@ -6,14 +6,24 @@ import { GET_ALL_PRODUCTS_ID_NAME, QueryGetAllProductsIdName } from "../../../gr
 import { GET_ALL_PRODUCTS } from "../../../graphql/queries/getAll/getAllProducts";
 import { AdminSelectWithLabel } from "../../AdminUI/AdminSelectWithLabel/AdminSelectWithLabel";
 import { AdminInpuWithLabel } from "../../AdminUI/AdminInputWithLabel/AdminInputWithLabel";
+import { useState } from "react";
+import { SuccessMessage } from "../../SuccessPopup/SuccessPopup";
 
 export const AddProductVariationForm = () => {
-  const { register, handleSubmit } = useForm<IProd>()
-  const [addProductVariation] = useMutation<MutationAddProductVariation>(ADD_PRODUCT_VARIATIONS);
+  const { register, handleSubmit } = useForm<IProd>();
+  const [successMessage, setSuccessMessage] = useState(false);
+  const [addProductVariation, { error }] = useMutation<MutationAddProductVariation>(ADD_PRODUCT_VARIATIONS);
 
   const { data } = useQuery<QueryGetAllProductsIdName>(GET_ALL_PRODUCTS_ID_NAME);
 
   const products = data?.getAllProducts;
+
+  const handleSuccessMessage = () => {
+    setSuccessMessage(true);
+    setTimeout(() => {
+      setSuccessMessage(false);
+    }, 3000);
+  };
 
   const onSubmit: SubmitHandler<IProd> = async (data) => {
     try {
@@ -24,15 +34,17 @@ export const AddProductVariationForm = () => {
         refetchQueries: [{ query: GET_ALL_PRODUCTS }],
       })
       console.log('Product variations added',result?.addProductVariation)
-      alert('Product variations added')
+      handleSuccessMessage();
     } catch (error) {
       console.error(error)
+      handleSuccessMessage();
     }
   };
 
   return (
     <div className="admin">
       <form className="admin__form-addBrand" onSubmit={handleSubmit(onSubmit)}>
+        {successMessage && <SuccessMessage message="Product variation added successfully" error={error} />}
         <AdminSelectWithLabel
           label="Product name"
           name='productId'

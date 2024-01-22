@@ -5,17 +5,25 @@ import { IProd } from "../../../types/IProduct"
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_CATEGORY, ADD_CATEGORY_WITH_PARENT_CATEGORY_ID, MutationAddCategory, MutationAddCategoryWithParentcategory } from "../../../graphql/mutations/AddMutations/AddCategory";
 import { GET_ALL_CATEGORIES, QueryGetAllCategories } from "../../../graphql/queries/getAll/getAllCategories";
+import { SuccessMessage } from "../../SuccessPopup/SuccessPopup";
 
 export const AddCategoryComponent = () => {
-  const { register, handleSubmit, setValue } = useForm<IProd>();
+  const { register, handleSubmit, setValue, reset } = useForm<IProd>();
   const [addCategoryWithParentCategory] = useMutation<MutationAddCategoryWithParentcategory>(ADD_CATEGORY_WITH_PARENT_CATEGORY_ID);
-  const [addCategory] = useMutation<MutationAddCategory>(ADD_CATEGORY);
+  const [addCategory, { error }] = useMutation<MutationAddCategory>(ADD_CATEGORY);
   const [selectedParentCategory, setSelectedParentCategory] = useState('');
+  const [successMessage, setSuccessMessage] = useState(false);
 
   const { data } = useQuery<QueryGetAllCategories>(GET_ALL_CATEGORIES);
 
   const categories = data?.getAllCategories;
 
+  const handleSuccessMessage = () => {
+    setSuccessMessage(true);
+    setTimeout(() => {
+      setSuccessMessage(false);
+    }, 3000);
+  };
 
   const onSubmit: SubmitHandler<IProd> = async (data) => {
     try {
@@ -29,7 +37,7 @@ export const AddCategoryComponent = () => {
         });
 
         console.log('Successfully added category with parent', result?.categoryName);
-        alert('Successfully added category with parent');
+        reset();
       } else {
         const { data: result } = await addCategory({
           variables: {
@@ -39,10 +47,12 @@ export const AddCategoryComponent = () => {
         });
 
         console.log('Successfully added category', result?.categoryName);
-        alert('Successfully added category');
+        reset();
       }
+      handleSuccessMessage();
     } catch (error) {
       console.error(error);
+      handleSuccessMessage();
     }
   };
 
@@ -59,6 +69,7 @@ export const AddCategoryComponent = () => {
   return (
     <div className="admin">
       <div className="admin-input">
+        {successMessage && <SuccessMessage message="Successfully added category" error={error} />}
         <label className="admin-input__label">Parent category name</label>
         <select onChange={(e) => handleParentCategory(e.target.value)} className="admin-input__input">
           <option value={''}></option>

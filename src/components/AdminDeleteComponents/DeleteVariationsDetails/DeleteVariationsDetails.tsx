@@ -6,9 +6,11 @@ import { IProd } from "../../../types/IProduct";
 import { MutationsDeleteVariationsDetails } from "../../../graphql/mutations/DeleteMutation/deleteVariationsDetails";
 import { DELETE_VARIATIONS_DETAILS } from "../../../graphql/mutations/DeleteMutation/deleteVariationsDetails";
 import { AdminSelectWithLabel } from "../../AdminUI/AdminSelectWithLabel/AdminSelectWithLabel";
+import { SuccessMessage } from "../../SuccessPopup/SuccessPopup";
 
 export const DeleteVariationDetailsComponent = () => {
   const { register, handleSubmit, setValue } = useForm<IProd>();
+  const [successMessage, setSuccessMessage] = useState(false);
 
   const [selectedProductId, setSelectedProductId] = useState<string>('');
   const [selectedProductVariation, setSelectedProductVariation] = useState<string>('');
@@ -17,7 +19,14 @@ export const DeleteVariationDetailsComponent = () => {
   const { data } = useQuery<QueryGetAllProductsIdName>(GET_ALL_PRODUCTS_ID_NAME);
   const products = data?.getAllProducts;
 
-  const [deleteVariationDetails] = useMutation<MutationsDeleteVariationsDetails>(DELETE_VARIATIONS_DETAILS);
+  const [deleteVariationDetails, { error }] = useMutation<MutationsDeleteVariationsDetails>(DELETE_VARIATIONS_DETAILS);
+
+  const handleSuccessMessage = () => {
+    setSuccessMessage(true);
+    setTimeout(() => {
+      setSuccessMessage(false);
+    }, 3000);
+  };
 
   const onSubmit: SubmitHandler<IProd> = async (data) => {
     try {
@@ -28,9 +37,10 @@ export const DeleteVariationDetailsComponent = () => {
       });
 
       console.log('Succesfully deleted variationDetail', result)
-      alert('Succesfully deleted variationDetail')
+      handleSuccessMessage();
     } catch (error) {
       console.error(error);
+      handleSuccessMessage();
     }
   }
 
@@ -83,6 +93,7 @@ export const DeleteVariationDetailsComponent = () => {
     <div>
       <div className="admin">
         <div className="admin-input">
+          {successMessage && <SuccessMessage message="Variation details deleted successfully" error={error} />}
           <label className="admin-input__label">Product name</label>
           <select onChange={(e) => handleProductChange(e.target.value)} className="admin-input__input">
             {products?.map(prod => (

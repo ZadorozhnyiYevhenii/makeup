@@ -7,10 +7,12 @@ import { GET_ALL_PRODUCTS, QueryGetAllProducts } from "../../../graphql/queries/
 import { AdminSelectWithLabel } from "../../AdminUI/AdminSelectWithLabel/AdminSelectWithLabel";
 import { AdminInpuWithLabel } from "../../AdminUI/AdminInputWithLabel/AdminInputWithLabel";
 import { GET_SHIPPING_METHODS, QueryShippingMethods } from "../../../graphql/queries/getAll/getShippingFrom";
+import { SuccessMessage } from "../../SuccessPopup/SuccessPopup";
 
 export const AddVariationsDetailsForm = () => {
   const { register, handleSubmit } = useForm<IProd>();
   const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState(false);
 
   const { data: shipping } = useQuery<QueryShippingMethods>(GET_SHIPPING_METHODS);
   const shippingMethods = shipping?.getAllShippingFrom;
@@ -19,7 +21,14 @@ export const AddVariationsDetailsForm = () => {
 
   const products = data?.getAllProducts;
 
-  const [addVariationDetails] = useMutation<MutationAddVariationDetails>(ADD_VARIATION_DETAILS);
+  const [addVariationDetails, { error }] = useMutation<MutationAddVariationDetails>(ADD_VARIATION_DETAILS);
+
+  const handleSuccessMessage = () => {
+    setSuccessMessage(true);
+    setTimeout(() => {
+      setSuccessMessage(false);
+    }, 3000);
+  };
 
   const onSubmit: SubmitHandler<IProd> = async (data) => {
     try {
@@ -31,9 +40,10 @@ export const AddVariationsDetailsForm = () => {
       })
 
       console.log('Variation details added:', result?.addVariationDetails);
-      alert('Variation details added')
+      handleSuccessMessage();
     } catch (error) {
       console.error(error);
+      handleSuccessMessage();
     }
   }
 
@@ -44,6 +54,7 @@ export const AddVariationsDetailsForm = () => {
   return (
     <div className="admin">
       <div className="admin-input">
+        {successMessage && <SuccessMessage message="Variation detail added successfully" error={error} />}
         <label className="admin-input__label">Product name</label>
         <select onChange={(e) => handleProductChange(e.target.value)} className="admin-input__input">
           <option value=""></option>

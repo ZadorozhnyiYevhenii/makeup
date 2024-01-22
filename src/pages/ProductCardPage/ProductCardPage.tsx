@@ -77,8 +77,6 @@ export const ProductCardPage = () => {
   const categoryId = product?.categories.map(category => category.id)[0]
   const categoryName = product?.categories.map(category => category.name)[0]
 
-  console.log(product)
-
   return (
     <div className='container'>
       <div className='container__breadcrumbs'>

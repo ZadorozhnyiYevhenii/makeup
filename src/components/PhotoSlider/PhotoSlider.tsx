@@ -40,6 +40,7 @@ export const PhotoSlider: FC<Props> = ({
             <img
               src={img.imageLink}
               alt={`${product.name} img ${img.id}`}
+              className="photo-slider__photo"
             />
         </div>
       ))}

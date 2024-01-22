@@ -9,6 +9,7 @@ import { UserPage } from './pages/UserPage/UserPage';
 import { Footer } from './components/FooterComponents/Footer/Footer';
 import { Loader } from './components/Loader/Loader';
 import './App.scss';
+import { SearchedPage } from './pages/SearchedPage/SearchedPage';
 const ProductCardPage = lazy(() => import("./pages/ProductCardPage/ProductCardPage").then((module) => ({ default: module.ProductCardPage })));
 const CategoriesPage = lazy(() => import('./pages/CatalogPage/CategoriesPage').then((module) => ({ default: module.CategoriesPage })));
 const AdminPageProduct = lazy(() => import('./pages/AdminPageAdd/AdminPageAdd').then((module) => ({ default: module.AdminPageProduct })));
@@ -32,6 +33,7 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path='product/:id' element={<ProductCardPage />} />
             <Route path='category/:id' element={<CategoriesPage />} />
+            <Route path='search' element={<SearchedPage />} />
             <Route path='cart' element={<Cart />} />
             <Route path='register' element={<RegisterPage />} />
             {!!user && (

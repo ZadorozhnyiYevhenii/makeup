@@ -17,16 +17,17 @@
 
     @include onDesktop {
       order: 2;
-      padding: 88px calc(100% / 12);
-      padding-bottom: 0;
+      width: calc(100% / 12 * 6);
+      padding: 0 calc(100% / 12);
     }
   }
 
   &__container {
+    margin-top: 60px;
+
     @include onDesktop {
       order: 2;
-      width: calc(100% / 12 * 6);
-      padding: 88px 0 0 0;
+      width: calc(100% / 12 * 3);
     }
   }
 
@@ -36,7 +37,7 @@
     align-items: center;
 
     @include onDesktop {
-      width: calc(100% / 12 * 6);
+      width: calc(100% / 12 * 3);
       padding: 120px 0 0 0;
       align-items: flex-start;
     }
@@ -136,14 +137,6 @@
     }
   }
 
-  &__photo {
-    height: 300px;
-    line-height: 300px;
-  }
-
-  &__container {
-    margin-top: 40px;
-  }
 
   &__buy {
     margin: 8px 0 0 0;

@@ -7,16 +7,25 @@ import { useState } from "react";
 import { AdminInpuWithLabel } from "../../AdminUI/AdminInputWithLabel/AdminInputWithLabel";
 import { DELETE_BRAND } from "../../../graphql/mutations/DeleteMutation/deleteBrand";
 import { MutationDeleteBrand } from "../../../graphql/mutations/DeleteMutation/deleteBrand";
+import { SuccessMessage } from "../../SuccessPopup/SuccessPopup";
 
 export const DeleteBrandComponent = () => {
   const [selectedBrand, setSelectedBrand] = useState<string>('');
+  const [successMessage, setSuccessMessage] = useState(false);
   const { register, handleSubmit, setValue } = useForm<IProd>();
 
-  const [deleteBrand] = useMutation<MutationDeleteBrand>(DELETE_BRAND)
+  const [deleteBrand, { error }] = useMutation<MutationDeleteBrand>(DELETE_BRAND)
 
   const { data } = useQuery<QueryAllBrands>(GET_ALL_BRANDS);
 
   const brands = data?.getAllBrands;
+
+  const handleSuccessMessage = () => {
+    setSuccessMessage(true);
+    setTimeout(() => {
+      setSuccessMessage(false);
+    }, 3000);
+  };
 
   const onSubmit: SubmitHandler<IProd> = async (data) => {
     try {
@@ -27,9 +36,10 @@ export const DeleteBrandComponent = () => {
       });
 
       console.log('Deleted brand:', result?.brandId);
-      alert('Brand deleted succesfully');
+      handleSuccessMessage();
     } catch (error) {
-      console.error(error)
+      console.error(error);
+      handleSuccessMessage();
     }
   };
 
@@ -46,6 +56,7 @@ export const DeleteBrandComponent = () => {
   return (
     <div className="admin">
       <div className="admin-input">
+        {successMessage && <SuccessMessage message="Brand deleted successfully" error={error} />}
         <label className="admin-input__label">Brand name</label>
         <select onChange={(e) => handleBrandChange(e.target.value)} className="admin-input__input">
           {brands?.map(prod => (

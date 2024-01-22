@@ -11,11 +11,13 @@ import { GET_ALL_CLASSIFICATIONS, QueryAllClassifications } from "../../../graph
 import { GET_ALL_COUNTRIES, getAllCountries } from "../../../graphql/queries/getAll/getAllCountries";
 import { GET_ALL_CATEGORIES, QueryGetAllCategories } from "../../../graphql/queries/getAll/getAllCategories";
 import { GET_ALL_BRANDS, QueryAllBrands } from "../../../graphql/queries/getAll/getAllBrand";
+import { SuccessMessage } from "../../SuccessPopup/SuccessPopup";
 
 export const ChangeProduct = () => {
   const { register, handleSubmit, setValue } = useForm<IProd>();
+  const [successMessage, setSuccessMessage] = useState(false);
 
-  const [updateProduct] = useMutation<MutationChangeProduct>(CHANGE_PRODUCT);
+  const [updateProduct, { error }] = useMutation<MutationChangeProduct>(CHANGE_PRODUCT);
 
   const [selectedProductId, setSelectedProductId] = useState<string>('')
 
@@ -38,6 +40,12 @@ export const ChangeProduct = () => {
   const { data } = useQuery<QueryAllBrands>(GET_ALL_BRANDS);
   const brands = data?.getAllBrands;
 
+  const handleSuccessMessage = () => {
+    setSuccessMessage(true);
+    setTimeout(() => {
+      setSuccessMessage(false);
+    }, 3000);
+  };
 
   const onSubmit: SubmitHandler<IProd> = async (data) => {
     try {
@@ -68,9 +76,10 @@ export const ChangeProduct = () => {
       });
 
       console.log('Updated Product', result?.updateProduct);
-      alert('Updated Product')
+      handleSuccessMessage();
     } catch (error) {
       console.error("Error updating product:", error)
+      handleSuccessMessage();
     }
   }
 
@@ -97,6 +106,7 @@ export const ChangeProduct = () => {
   return (
     <div className="admin">
         <div className="admin-input__container">
+          {successMessage && <SuccessMessage message="Product changed successfully" error={error} />}
           <label className="admin-input__label">Product name</label>
           <select
             className="admin-input__input"

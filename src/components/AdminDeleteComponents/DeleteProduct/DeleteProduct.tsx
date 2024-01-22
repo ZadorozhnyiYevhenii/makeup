@@ -6,16 +6,25 @@ import { IProd } from "../../../types/IProduct";
 import { GET_ALL_PRODUCTS_ID_NAME } from "../../../graphql/queries/getById/getAllProductNameAndId";
 import { QueryGetAllProductsIdName } from "../../../graphql/queries/getById/getAllProductNameAndId";
 import { DELETE_PRODUCT, MutationDeleteProduct } from "../../../graphql/mutations/DeleteMutation/deleteProduct";
+import { SuccessMessage } from "../../SuccessPopup/SuccessPopup";
 
 export const DeleteProductComponent = () => {
   const { register, handleSubmit, setValue } = useForm<IProd>();
+  const [successMessage, setSuccessMessage] = useState(false);
 
   const [selectedProduct, setSelectedProduct] = useState<string>('');
 
   const { data } = useQuery<QueryGetAllProductsIdName>(GET_ALL_PRODUCTS_ID_NAME);
   const products = data?.getAllProducts;
 
-  const [deleteProduct] = useMutation<MutationDeleteProduct>(DELETE_PRODUCT);
+  const [deleteProduct, { error }] = useMutation<MutationDeleteProduct>(DELETE_PRODUCT);
+
+  const handleSuccessMessage = () => {
+    setSuccessMessage(true);
+    setTimeout(() => {
+      setSuccessMessage(false);
+    }, 3000);
+  };
 
   const onSubmit: SubmitHandler<IProd> = async (data) => {
     try {
@@ -26,9 +35,10 @@ export const DeleteProductComponent = () => {
       });
 
       console.log('Succesfully deleted product', result)
-      alert('Succesfully deleted product')
+      handleSuccessMessage();
     } catch (error) {
       console.error(error);
+      handleSuccessMessage();
     }
   }
 
@@ -45,6 +55,7 @@ export const DeleteProductComponent = () => {
   return (
     <div className="admin">
       <div className="admin-input">
+        {successMessage && <SuccessMessage message="Product deleted successfully" error={error} />}
         <label className="admin-input__label">Product name</label>
         <select onChange={(e) => handleProductChange(e.target.value)} className="admin-input__input">
           {products?.map(prod => (

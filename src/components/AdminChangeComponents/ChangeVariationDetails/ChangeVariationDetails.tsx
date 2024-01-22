@@ -6,9 +6,11 @@ import { IProd } from "../../../types/IProduct";
 import { AdminSelectWithLabel } from "../../AdminUI/AdminSelectWithLabel/AdminSelectWithLabel";
 import { CHANGE_VARIATION_DETAILS, MutationChangeVariationDetails } from "../../../graphql/mutations/ChangeMutations/changeVariationDetails";
 import { AdminInpuWithLabel } from "../../AdminUI/AdminInputWithLabel/AdminInputWithLabel";
+import { SuccessMessage } from "../../SuccessPopup/SuccessPopup";
 
 export const ChangeVariationDetailsComponent = () => {
   const { register, handleSubmit, setValue } = useForm<IProd>();
+  const [successMessage, setSuccessMessage] = useState(false);
 
   const [selectedProductId, setSelectedProductId] = useState<string>('');
   const [selectedProductVariation, setSelectedProductVariation] = useState<string>('');
@@ -17,7 +19,14 @@ export const ChangeVariationDetailsComponent = () => {
   const { data } = useQuery<QueryGetAllProductsIdName>(GET_ALL_PRODUCTS_ID_NAME);
   const products = data?.getAllProducts;
 
-  const [changeVariationDetails] = useMutation<MutationChangeVariationDetails>(CHANGE_VARIATION_DETAILS);
+  const [changeVariationDetails, { error }] = useMutation<MutationChangeVariationDetails>(CHANGE_VARIATION_DETAILS);
+
+  const handleSuccessMessage = () => {
+    setSuccessMessage(true);
+    setTimeout(() => {
+      setSuccessMessage(false);
+    }, 3000);
+  };
 
   const onSubmit: SubmitHandler<IProd> = async (data) => {
     try {
@@ -33,10 +42,11 @@ export const ChangeVariationDetailsComponent = () => {
         }
       });
 
-      console.log('Succesfully updated variationDetail', result)
-      alert('Succesfully updated variationDetail')
+      console.log('Succesfully updated variationDetail', result);
+      handleSuccessMessage();
     } catch (error) {
       console.error(error);
+      handleSuccessMessage();
     }
   }
 
@@ -92,6 +102,7 @@ export const ChangeVariationDetailsComponent = () => {
     <div>
       <div className="admin">
         <div className="admin-input">
+          {successMessage && <SuccessMessage message="Variation details changed successfully" error={error} />}
           <label className="admin-input__label">Product name</label>
           <select onChange={(e) => handleProductChange(e.target.value)} className="admin-input__input">
             {products?.map(prod => (
