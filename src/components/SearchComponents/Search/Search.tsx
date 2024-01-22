@@ -19,26 +19,48 @@ type Props = {
 export const SearchBar: React.FC<Props> = ({ onCross, toggledIcon }) => {
   const { register } = useForm<ISearch>();
   const [seachDate, setSearchData] = useState('');
-  const { data, error, loading } = useQuery<QuerySearchProducts>(SEARCH_PRODUCTS, {
-    variables: { searchString: seachDate },
+  const [pageNumber, setPageNumber] = useState(0);
+  const { data, error, loading, fetchMore } = useQuery<QuerySearchProducts>(SEARCH_PRODUCTS, {
+    variables: {
+      pageRequestDTO: {
+        pageNumber: 0,
+        sizePerPage: 6,
+      },
+      searchString: seachDate
+    },
   });
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchString = event.target.value;
     setSearchData(searchString);
-    console.log(data?.searchProducts)
+    setPageNumber(0);
+    console.log(data?.searchProductsPaged)
   };
 
   const handleSearchWithDebounce = debounce(handleSearch, 500);
 
-  const ruleForOpening = (data?.searchProducts?.length !== undefined
-    ? data.searchProducts.length
+  const loadMore = () => {
+    fetchMore({
+      variables: {
+        pageRequestDTO: {
+          pageNumber: pageNumber + 1,
+          sizePerPage: 6,
+        },
+        searchString: seachDate
+      },
+    }).then(() => {
+      setPageNumber(pageNumber + 1);
+    });
+  };
+
+  const ruleForOpening = (data?.searchProductsPaged?.length !== undefined
+    ? data.searchProductsPaged.length
     : 0
   ) > 0;
 
   return (
     <>
-      <div className={cn('search', { 'search--active': !!data?.searchProducts })}>
+      <div className={cn('search', { 'search--active': !!data?.searchProductsPaged })}>
         <div className="search__container">
           <div className={cn("search__icon", { 'search__icon--active': toggledIcon })}>
             <SearchIconHeader />
@@ -61,7 +83,7 @@ export const SearchBar: React.FC<Props> = ({ onCross, toggledIcon }) => {
             <Loader />
           ) : (
             <ul className="search__items">
-              {data?.searchProducts?.map(product => (
+              {data?.searchProductsPaged?.map(product => (
                 <li key={product.id}>
                   <SearchItem
                     id={product.id}
@@ -71,6 +93,11 @@ export const SearchBar: React.FC<Props> = ({ onCross, toggledIcon }) => {
                 </li>
               ))}
             </ul>
+          )}
+          {data?.searchProductsPaged?.length && data.searchProductsPaged.length >= 6 && (
+            <button type="button" className="search__button" onClick={loadMore}>
+              Load more
+            </button>
           )}
         </div>
       </div>

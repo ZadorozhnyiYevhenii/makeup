@@ -60,22 +60,21 @@
     left: 0;
     background-color: #fff;
     z-index: 1001;
-    opacity: 0;
     visibility: hidden;
     transform: scale(0.6);
     transition: opacity 0.3s ease-in, visibility 0.3s ease-in, transform 0.3s ease-in;
 
     &.active {
-      opacity: 1;
       visibility: visible;
       transform: scale(1);
     }
 
     @include onDesktop {
       width: calc(100% - 96px);
-      margin-top: 46px;
+      margin-block: 46px;
       z-index: 1004;
       height: 74px;
+      max-height: calc(100vw - 66px);
       margin-left: 48px;
       background-color: #fff;
     }

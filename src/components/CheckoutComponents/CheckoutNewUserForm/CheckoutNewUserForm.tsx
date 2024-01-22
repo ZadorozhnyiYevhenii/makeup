@@ -14,10 +14,10 @@ import { ADD_ORDER_DETAILS, MutationAddOrderDetails } from "../../../graphql/mut
 import { QueryComponent } from "../../QueryComponent/QueryComponent";
 import { Link } from "react-router-dom";
 import { clearCart } from "../../../app/slices/cartSlice";
-import './CheckoutNewUserForm.scss';
 import { UserInputWithLabel } from "../../UserComponents/UserInputWithLabel/UserInputWithLabel";
 import { UserSelectWithLabel } from "../../UserComponents/UserSelectWithLabel/UserSelectWithLabel";
 import { TabWrapper } from "../../TabComponents/TabWrapper/TabWrapper";
+import './CheckoutNewUserForm.scss';
 
 export const CheckoutNewUserForm = () => {
   const [activePart, setActivePart] = useState(CheckoutTitlesEnum.SubTitle.PERSONAL_INFO);

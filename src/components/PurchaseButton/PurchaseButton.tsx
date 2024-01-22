@@ -15,6 +15,9 @@ export const PurchaseButton: FC<Props> = ({ product, addToCart }) => {
     if (product) {
       addToCart(product);
       navigate('/makeup/cart');
+      window.scrollTo({
+        top: 0,
+      })
     }
   };
 

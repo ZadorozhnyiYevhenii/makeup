@@ -100,8 +100,6 @@ export const CategoriesPage = () => {
 
   const categoryName = products?.map(product => product.categories.map(pr => pr.name)[0])[0];
 
-  // console.log(categoryName)
-
   return (
     <div className="categories">
       <div className="categories__top">

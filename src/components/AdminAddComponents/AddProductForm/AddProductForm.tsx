@@ -11,14 +11,19 @@ import { GET_ALL_BRANDS, QueryAllBrands } from "../../../graphql/queries/getAll/
 import { GET_ALL_PRODUCTS, QueryGetAllProducts } from "../../../graphql/queries/getAll/getAllProducts";
 import { AdminInpuWithLabel } from "../../AdminUI/AdminInputWithLabel/AdminInputWithLabel";
 import { AdminSelectWithLabel } from "../../AdminUI/AdminSelectWithLabel/AdminSelectWithLabel";
+import { GET_PRODUCT_STATUS, QueryProductStatus } from "../../../graphql/queries/getAll/getProductStatus";
+import { normalizeName } from "../../../helpers/normalizeWord";
 
 interface MutationData {
   addProduct: IProd;
 }
 
 export const AddProductForm = () => {
-  const { register, handleSubmit } = useForm<IProd>()
+  const { register, handleSubmit, reset } = useForm<IProd>()
   const [addProduct] = useMutation<MutationData>(ADD_PRODUCT);
+
+  const { data: productStatusesData } = useQuery<QueryProductStatus>(GET_PRODUCT_STATUS);
+  const productStatuses = productStatusesData?.getAllProductStatuses;
 
   const { data: sexesResponce } = useQuery<QueryAllSexes>(GET_ALL_SEXES);
   const sexes = sexesResponce?.getAllSexes;
@@ -40,11 +45,11 @@ export const AddProductForm = () => {
       data.imageLinks = Array.isArray(data.imageLinks)
         ? data.imageLinks
         : data.imageLinks
-        ? [data.imageLinks]
-        : [];
-  
+          ? [data.imageLinks]
+          : [];
+
       data.imageLinks = data.imageLinks.map((image) => image.split(', '))[0];
-  
+
       const { data: result } = await addProduct({
         variables: {
           product: data,
@@ -53,7 +58,7 @@ export const AddProductForm = () => {
           const existingProducts = cache.readQuery<QueryGetAllProducts>({
             query: GET_ALL_PRODUCTS,
           });
-  
+
           if (existingProducts && addProductData) {
             const newProduct = addProductData.addProduct;
             cache.writeQuery<QueryGetAllProducts>({
@@ -65,8 +70,9 @@ export const AddProductForm = () => {
           }
         },
       });
-  
+
       console.log('Product added:', result?.addProduct);
+      reset();
       alert('Product added!');
     } catch (error) {
       console.error('Add product error:', error);
@@ -96,7 +102,7 @@ export const AddProductForm = () => {
           label="Category"
           name='categoryIds'
           register={register}
-          renderOptions={() => 
+          renderOptions={() =>
             categories?.map((category) => (
               <option
                 key={category.id}
@@ -111,7 +117,7 @@ export const AddProductForm = () => {
           label="Country trade mark in"
           name='countryTradeMarkId'
           register={register}
-          renderOptions={() => 
+          renderOptions={() =>
             countries?.map((country) => (
               <option
                 key={country.id}
@@ -126,7 +132,7 @@ export const AddProductForm = () => {
           label="Countries made in"
           name='countriesMadeInIds'
           register={register}
-          renderOptions={() => 
+          renderOptions={() =>
             countries?.map((country) => (
               <option
                 key={country.id}
@@ -141,13 +147,25 @@ export const AddProductForm = () => {
         <AdminInpuWithLabel label="Product group" name='productGroup' register={register} />
         <AdminInpuWithLabel label="Links for image" name='imageLinks' register={register} />
         <AdminSelectWithLabel
+          label="Availability"
+          name='productStatus'
+          register={register}
+          renderOptions={() =>
+            productStatuses?.map(status => (
+              <option value={status} key={status}>
+                {normalizeName(status)}
+              </option>
+            ))
+          }
+        />
+        <AdminSelectWithLabel
           label="Sex"
           name='sex'
           register={register}
           renderOptions={() =>
             sexes?.map((sexType) => (
               <option key={sexType} value={sexType}>
-                {sexType}
+                {normalizeName(sexType)}
               </option>
             ))
           }
@@ -159,7 +177,7 @@ export const AddProductForm = () => {
           renderOptions={() =>
             classifications?.map((classItem) => (
               <option key={classItem} value={classItem}>
-                {classItem}
+                {normalizeName(classItem)}
               </option>
             ))
           }

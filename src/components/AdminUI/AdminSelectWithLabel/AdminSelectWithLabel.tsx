@@ -35,6 +35,7 @@ export const AdminSelectWithLabel: FC<Props<any>> = ({
         <label className="admin-input__label">{label}</label>
       )}
       <select {...selectProps} className="admin-input__input" onChange={onChange} value={value}>
+        <option value={' '}></option>
         {renderOptions(register)}
       </select>
     </div>

@@ -2,6 +2,7 @@ import { ChangeEvent, FC } from "react";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 import { IUser } from "../../../types/IUser";
 import { IOrder } from "../../../types/IOrder";
+import './UserSelectWithLabel.scss';
 
 type Props<T extends FieldValues> = {
   label: string | undefined;
@@ -29,13 +30,14 @@ export const UserSelectWithLabel: FC<Props<any>> = ({
   };
 
   return (
-    <div className="admin-input">
+    <div className="user-input">
       {errorMessage ? (
-        <div className="admin-input__label admin-input__label--warn">{errorMessage}</div>
+        <div className="user-input__label user-input__label--warn">{errorMessage}</div>
       ) : (
-        <label className="admin-input__label">{label}</label>
+        <label className="user-input__label">{label}</label>
       )}
-      <select {...selectProps} className="admin-input__input" onChange={onChange} value={value}>
+      <select {...selectProps} className="user-input__input" onChange={onChange} value={value}>
+        <option></option>
         {renderOptions(register)}
       </select>
     </div>

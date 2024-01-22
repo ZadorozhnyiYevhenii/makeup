@@ -42,17 +42,17 @@ export const DashBoardNavigation = () => {
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <Link to='/makeup/admin/addproduct'>
-            Add product
+            Add
           </Link>
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <Link to='/makeup/admin/changeproduct'>
-            Change product
+            Change
           </Link>
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <Link to='/makeup/admin/deleteproduct'>
-            Delete product
+            Delete
           </Link>
         </MenuItem>
       </Menu>

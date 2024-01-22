@@ -2,12 +2,12 @@ import { gql } from "@apollo/client";
 import { IProd } from "../../../types/IProduct";
 
 export interface QuerySearchProducts {
-  searchProducts: IProd[]
+  searchProductsPaged: IProd[]
 }
 
 export const SEARCH_PRODUCTS = gql`
-  query MyQuery($searchString: String!) {
-    searchProducts(searchString: $searchString) {
+  query MyQuery($pageRequestDTO: PageRequestDTO!, $searchString: String!) {
+    searchProductsPaged(pageRequestDTO: $pageRequestDTO, searchString: $searchString) {
       additionalInfo
       brand {
         id

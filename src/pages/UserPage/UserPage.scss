@@ -44,4 +44,15 @@
     cursor: pointer;
     margin: 40px 0 0 0;
   }
+
+  &__save-button {
+    background: #212121;
+    margin: 0 23px 0 0;
+    width: 100%;
+    height: auto;
+    min-height: 48px;
+    padding: 0 16px;
+    color: #fff;
+    font-size: 16px;
+  }
 }

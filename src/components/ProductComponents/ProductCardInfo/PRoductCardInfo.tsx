@@ -28,19 +28,32 @@ export const ProductCardInfo: FC<Props> = ({
   const dispatch = useAppDispatch();
   const category = product?.categories.map(prod => prod.name);
 
-  const [selectedAmount, setSelectedAmount] = useState<string | undefined>(product?.productVariations[0].variationName || '');
+  const defaultSelectedAmount = product?.productVariations[0]?.variationName;
+  const defaultSelectedVariationId = product?.productVariations[0]?.variationDetails[0]?.id;
 
-  const selectedVariation = product?.productVariations.find(variation => variation?.variationName === selectedAmount)
+  const defaultSelectedVariation = product?.productVariations[0];
+  const defaultPrice = defaultSelectedVariation?.variationDetails[0]?.price;
 
-  const price = selectedVariation?.variationDetails[0].price;
-  const variationDetailsId = selectedVariation?.variationDetails[0]?.id;
+  const [selectedAmount, setSelectedAmount] = useState<string | undefined>(defaultSelectedAmount);
+
+  if (!product) {
+    return null;
+  }
+
+  const selectedVariation = product.productVariations.find(
+    (variation) => variation?.variationName === selectedAmount
+  );
+
+  const price = selectedVariation?.variationDetails[0]?.price || defaultPrice;
+  const quantity = selectedAmount || defaultSelectedAmount;
+  const variationDetailsId = selectedVariation?.variationDetails[0]?.id || defaultSelectedVariationId;
 
 
   const handleAddToCart = () => {
     const newProduct = {
       ...product,
       price: price || 0,
-      amount: selectedAmount || 0,
+      variationName: quantity || '',
       variationDetailsId: variationDetailsId || 0
     };
   
@@ -72,7 +85,7 @@ export const ProductCardInfo: FC<Props> = ({
               <div className='product__stock'>{normalizeAvailability ? 'In stock!' : ''}</div>
               <div className='product__code'>status:
                 <br />
-                <span className='product__number'> {normalizeAvailability}</span>
+                <span className='product__number'>{normalizeAvailability}</span>
               </div>
             </div>
             <div

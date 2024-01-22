@@ -10,8 +10,8 @@ import { CartIcon } from "../../../assets/CartIcon"
 import { useAppSelector } from "../../../app/hooks"
 import { Menu } from "../../../assets/Menu"
 import classNames from "classnames";
-import './HeaderBar.scss';
 import { useBackgroundOverlay } from "../../../hooks/useBackgroundOverlay"
+import './HeaderBar.scss';
 
 type Props = {
   isMenuOpen: boolean,

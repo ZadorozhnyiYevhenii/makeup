@@ -6,7 +6,7 @@ import { GET_ALL_BRANDS } from "../../../graphql/queries/getAll/getAllBrand";
 import { AdminInpuWithLabel } from "../../AdminUI/AdminInputWithLabel/AdminInputWithLabel";
 
 export const AddBrandForm = () => {
-  const { register, handleSubmit } = useForm<IProd>()
+  const { register, handleSubmit, reset } = useForm<IProd>()
   const [addBrand] = useMutation<MutationAddBrand>(ADD_BRAND);
 
   const onSubmit: SubmitHandler<IProd> = async (data) => {
@@ -19,6 +19,7 @@ export const AddBrandForm = () => {
       });
 
       console.log('Brand addded:', result?.addBrand);
+      reset();
       alert('Brand added successfully')
     } catch (error) {
       console.error(error);

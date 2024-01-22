@@ -6,10 +6,14 @@ import { ADD_VARIATION_DETAILS, MutationAddVariationDetails } from "../../../gra
 import { GET_ALL_PRODUCTS, QueryGetAllProducts } from "../../../graphql/queries/getAll/getAllProducts";
 import { AdminSelectWithLabel } from "../../AdminUI/AdminSelectWithLabel/AdminSelectWithLabel";
 import { AdminInpuWithLabel } from "../../AdminUI/AdminInputWithLabel/AdminInputWithLabel";
+import { GET_SHIPPING_METHODS, QueryShippingMethods } from "../../../graphql/queries/getAll/getShippingFrom";
 
 export const AddVariationsDetailsForm = () => {
   const { register, handleSubmit } = useForm<IProd>();
-  const [selectedProductId, setSelectedProductId] = useState<string | null>(null)
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
+
+  const { data: shipping } = useQuery<QueryShippingMethods>(GET_SHIPPING_METHODS);
+  const shippingMethods = shipping?.getAllShippingFrom;
 
   const { data } = useQuery<QueryGetAllProducts>(GET_ALL_PRODUCTS);
 
@@ -42,6 +46,7 @@ export const AddVariationsDetailsForm = () => {
       <div className="admin-input">
         <label className="admin-input__label">Product name</label>
         <select onChange={(e) => handleProductChange(e.target.value)} className="admin-input__input">
+          <option value=""></option>
           {products?.map(prod => (
             <option key={prod.id} value={prod.id}>
               {prod.name}
@@ -72,7 +77,18 @@ export const AddVariationsDetailsForm = () => {
 
         <AdminInpuWithLabel label="Sale price" name='sale' register={register} />
 
-        <AdminInpuWithLabel label="Shipping from" name='shippingFrom' register={register} />
+        <AdminSelectWithLabel
+          label="Shipping from"
+          name='shippingFrom'
+          register={register}
+          renderOptions={() => 
+            shippingMethods?.map(method => (
+              <option key={method} value={method}>
+                {method}
+              </option>
+            ))
+          }
+        />
 
         <button className="admin__button">Submit</button>
       </form>

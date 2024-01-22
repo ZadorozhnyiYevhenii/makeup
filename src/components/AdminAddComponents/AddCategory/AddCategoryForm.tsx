@@ -1,13 +1,14 @@
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form"
 import { AdminInpuWithLabel } from "../../AdminUI/AdminInputWithLabel/AdminInputWithLabel"
 import { IProd } from "../../../types/IProduct"
 import { useMutation, useQuery } from "@apollo/client";
-import { ADD_CATEGORY, MutationAddCategory } from "../../../graphql/mutations/AddMutations/AddCategory";
+import { ADD_CATEGORY, ADD_CATEGORY_WITH_PARENT_CATEGORY_ID, MutationAddCategory, MutationAddCategoryWithParentcategory } from "../../../graphql/mutations/AddMutations/AddCategory";
 import { GET_ALL_CATEGORIES, QueryGetAllCategories } from "../../../graphql/queries/getAll/getAllCategories";
-import { useState } from "react";
 
 export const AddCategoryComponent = () => {
   const { register, handleSubmit, setValue } = useForm<IProd>();
+  const [addCategoryWithParentCategory] = useMutation<MutationAddCategoryWithParentcategory>(ADD_CATEGORY_WITH_PARENT_CATEGORY_ID);
   const [addCategory] = useMutation<MutationAddCategory>(ADD_CATEGORY);
   const [selectedParentCategory, setSelectedParentCategory] = useState('');
 
@@ -15,18 +16,31 @@ export const AddCategoryComponent = () => {
 
   const categories = data?.getAllCategories;
 
+
   const onSubmit: SubmitHandler<IProd> = async (data) => {
     try {
-      const { data: result } = await addCategory({
-        variables: {
-          categoryName: data.categoryName,
-          parentCategoryId: +selectedParentCategory,
-        },
-        refetchQueries: [{ query: GET_ALL_CATEGORIES }]
-      });
+      if (selectedParentCategory) {
+        const { data: result } = await addCategoryWithParentCategory({
+          variables: {
+            categoryName: data.categoryName,
+            parentCategoryId: +selectedParentCategory
+          },
+          refetchQueries: [{ query: GET_ALL_CATEGORIES }],
+        });
 
-      console.log('Succesfully added category', result?.categoryName);
-      alert('Succesfully added category');
+        console.log('Successfully added category with parent', result?.categoryName);
+        alert('Successfully added category with parent');
+      } else {
+        const { data: result } = await addCategory({
+          variables: {
+            categoryName: data.categoryName,
+          },
+          refetchQueries: [{ query: GET_ALL_CATEGORIES }],
+        });
+
+        console.log('Successfully added category', result?.categoryName);
+        alert('Successfully added category');
+      }
     } catch (error) {
       console.error(error);
     }
@@ -45,8 +59,9 @@ export const AddCategoryComponent = () => {
   return (
     <div className="admin">
       <div className="admin-input">
-        <label className="admin-input__label">Category name</label>
+        <label className="admin-input__label">Parent category name</label>
         <select onChange={(e) => handleParentCategory(e.target.value)} className="admin-input__input">
+          <option value={''}></option>
           {categories?.map(category => (
             <option key={category.id} value={category.id}>
               {category.name}
@@ -55,10 +70,12 @@ export const AddCategoryComponent = () => {
         </select>
       </div>
       <form className="admin__form-addBrand" onSubmit={handleSubmit(onSubmit)}>
-        <AdminInpuWithLabel label="Category name" name='categoryName' register={register} />
-        <div style={{ display: 'none' }}>
-          <AdminInpuWithLabel label="Parent category id" name='parentCategoryId' register={register} />
-        </div>
+        <AdminInpuWithLabel label="Category name*" name='categoryName' register={register} />
+        {selectedParentCategory && (
+          <div style={{ display: 'none' }}>
+            <AdminInpuWithLabel label="Parent category id" name='parentCategoryId' register={register} required={false} />
+          </div>
+        )}
         <button className="admin__button">Submit</button>
       </form>
     </div>

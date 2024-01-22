@@ -47,9 +47,9 @@ export const AdminNavigation: React.FC = () => {
       >
         <CustomBottomNavigationAction to='/makeup/admin' label='Admin panel' icon={<AdminPanelSettingsIcon />} iconColor="blue" />
         <CustomBottomNavigationAction to='/makeup/user' label="Account" icon={<PersonIcon />} />
-        <CustomBottomNavigationAction to='/makeup/admin/addproduct' label="Add product" icon={<AddCircleOutlineIcon />} />
-        <CustomBottomNavigationAction to='/makeup/admin/changeproduct' label="Change product" icon={<ManageHistoryIcon />} />
-        <CustomBottomNavigationAction to='/makeup/admin/deleteproduct' label="Delete product" icon={<DeleteIcon />} />
+        <CustomBottomNavigationAction to='/makeup/admin/addproduct' label="Add" icon={<AddCircleOutlineIcon />} />
+        <CustomBottomNavigationAction to='/makeup/admin/changeproduct' label="Change" icon={<ManageHistoryIcon />} />
+        <CustomBottomNavigationAction to='/makeup/admin/deleteproduct' label="Delete" icon={<DeleteIcon />} />
       </BottomNavigation>
     </Box>
   );
