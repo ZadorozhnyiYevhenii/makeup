@@ -7,10 +7,9 @@ import { IUser } from "../../../types/IUser";
 import { IOrder } from "../../../types/IOrder";
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_ALL_PAYMENT_METHODS, QueryGetAllPaymentMethods } from "../../../graphql/queries/getAll/getAllPaymentMethods";
-import { ADD_ORDER, MutationAddOrder } from "../../../graphql/mutations/AddMutations/addOrder";
+import { ADD_ORDER_NEW_USER, MutationAddOrder } from "../../../graphql/mutations/AddMutations/addOrderNewUser";
 import { UserInfoTitles } from "../../../utils/inputLabels";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { ADD_ORDER_DETAILS, MutationAddOrderDetails } from "../../../graphql/mutations/AddMutations/addOrderDetails";
 import { QueryComponent } from "../../QueryComponent/QueryComponent";
 import { Link } from "react-router-dom";
 import { clearCart } from "../../../app/slices/cartSlice";
@@ -29,53 +28,44 @@ export const CheckoutNewUserForm = () => {
   const { data } = useQuery<QueryGetAllPaymentMethods>(GET_ALL_PAYMENT_METHODS);
   const paymentMethods = data?.getAllPaymentMethods;
 
-  const [addOrderDetails] = useMutation<MutationAddOrderDetails>(ADD_ORDER_DETAILS)
-
-  const [addOrder, { loading, error }] = useMutation<MutationAddOrder>(ADD_ORDER);
+  const [addOrder, { loading, error }] = useMutation<MutationAddOrder>(ADD_ORDER_NEW_USER);
 
   const onSubmit: SubmitHandler<IUser | IOrder> = async (data) => {
     try {
+      const orderDetailsInfo = cart.map(cartItem => ({
+        variationDetailsId: cartItem.variationDetailsId,
+        quantity: counts[`${cartItem.id}_${cartItem.variationName}`],
+      }));
       const { data: result } = await addOrder({
         variables: {
-          address: {
+          newShippingInfo: {
             city: (data as IOrder).city,
             street: (data as IOrder).street,
             house: (data as IOrder).house,
             region: (data as IOrder).region,
+            recipientFirstName: (data as IOrder).recipientFirstName,
+            recipientLastName: (data as IOrder).recipientLastName,
+            recipientPhoneNumber: (data as IOrder).recipientPhoneNumber
           },
           orderInfo: {
-            firstName: (data as IUser).firstName,
-            lastName: (data as IUser).lastName,
-            phoneNumber: (data as IUser).phoneNumber,
-            paymentMethod: (data as IOrder).paymentMethod
+            paymentMethod: (data as IOrder).paymentMethod,
+            userComment: (data as IOrder).userComment
           },
+          orderDetailsInfo,
         }
       });
 
-      for (const cartItem of cart) {
-        const orderDetails = {
-          quantity: counts[`${cartItem.id}_${cartItem.variationName}`],
-          orderId: (result?.addOrder as IOrder).id,
-          variationDetailsId: cartItem.variationDetailsId
-        };
-
-        const { data: orderDetailsResult } = await addOrderDetails({
-          variables: {
-            orderDetails: orderDetails,
-          }
-        });
-        setSuccessMessage('Your order is successfully submited!')
-        console.log('Order details success', orderDetailsResult?.addOrderDetails);
-      }
+      console.log('Success', result?.addOrder)
       dispatch(clearCart())
       reset();
+      setSuccessMessage('Your order successfully added!')
     } catch (error) {
       console.error(error);
     }
   };
 
   const handleNextTab = () => {
-    if (watch('firstName') && watch('lastName') && watch('phoneNumber')) {
+    if (watch('recipientLastName') && watch('recipientLastName') && watch('recipientPhoneNumber')) {
       setActivePart(CheckoutTitlesEnum.SubTitle.DELIVERY_INFO)
     }
   };
@@ -101,11 +91,11 @@ export const CheckoutNewUserForm = () => {
               <TabWrapper activeTab={activePart === CheckoutTitlesEnum.SubTitle.PERSONAL_INFO}>
                 <div className="checkout-user-form__container">
                   <div className="checkout-user-form__container-children">
-                    <UserInputWithLabel label={UserInfoTitles.user.firstName} name='firstName' register={register} error={errors} />
-                    <UserInputWithLabel label={UserInfoTitles.user.lastName} name='lastName' register={register} error={errors} />
+                    <UserInputWithLabel label={UserInfoTitles.user?.firstName} name='recipientFirstName' register={register} error={errors} />
+                    <UserInputWithLabel label={UserInfoTitles.user?.lastName} name='recipientLastName' register={register} error={errors} />
                   </div>
                   <div className="checkout-user-form__container-children">
-                    <UserInputWithLabel label={UserInfoTitles.user.phoneNumber} name='phoneNumber' register={register} error={errors} />
+                    <UserInputWithLabel label={UserInfoTitles.user?.phoneNumber} name='recipientPhoneNumber' register={register} error={errors} />
                     <button
                       type="button"
                       className="checkout-user-form__button"

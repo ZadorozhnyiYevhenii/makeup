@@ -7,15 +7,15 @@ import { CheckoutTitlesEnum } from "../../../utils/checkoutTitlesEnums";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IUser } from "../../../types/IUser";
 import { IOrder } from "../../../types/IOrder";
-import { ADD_ORDER, MutationAddOrder } from "../../../graphql/mutations/AddMutations/addOrder";
+import { MutationAddOrder } from "../../../graphql/mutations/AddMutations/addOrderNewUser";
 import { GET_ALL_PAYMENT_METHODS, QueryGetAllPaymentMethods } from "../../../graphql/queries/getAll/getAllPaymentMethods";
 import { useMutation, useQuery } from "@apollo/client";
-import { ADD_ORDER_DETAILS, MutationAddOrderDetails } from "../../../graphql/mutations/AddMutations/addOrderDetails";
 import { UserInfoTitles } from "../../../utils/inputLabels";
 import { UserInputWithLabel } from "../../UserComponents/UserInputWithLabel/UserInputWithLabel";
 import { UserSelectWithLabel } from "../../UserComponents/UserSelectWithLabel/UserSelectWithLabel";
 import { clearCart } from "../../../app/slices/cartSlice";
 import { TabWrapper } from "../../TabComponents/TabWrapper/TabWrapper";
+import { ADD_ORDER_EXISTING_USER } from "../../../graphql/mutations/AddMutations/AddOrderExistingUser";
 
 export const CheckoutExistingUserForm = () => {
   const user = useAppSelector(state => state.user.user);
@@ -29,46 +29,38 @@ export const CheckoutExistingUserForm = () => {
   const { data } = useQuery<QueryGetAllPaymentMethods>(GET_ALL_PAYMENT_METHODS);
   const paymentMethods = data?.getAllPaymentMethods;
 
-  const [addOrderDetails] = useMutation<MutationAddOrderDetails>(ADD_ORDER_DETAILS)
-
-  const [addOrder] = useMutation<MutationAddOrder>(ADD_ORDER);
+  const [addOrder] = useMutation<MutationAddOrder>(ADD_ORDER_EXISTING_USER);
 
   const onSubmit: SubmitHandler<IUser | IOrder> = async (data) => {
     try {
+      const orderDetailsInfo = cart.map(cartItem => ({
+        variationDetailsId: cartItem.variationDetailsId,
+        quantity: counts[`${cartItem.id}_${cartItem.variationName}`],
+      }));
       const { data: result } = await addOrder({
         variables: {
-          address: {
+          newShippingInfo: {
             city: (data as IOrder).city,
             street: (data as IOrder).street,
             house: (data as IOrder).house,
             region: (data as IOrder).region,
+            recipientFirstName: (user as IUser).firstName,
+            recipientLastName: (user as IUser).lastName,
+            recipientPhoneNumber: (user as IUser).phoneNumber
           },
           orderInfo: {
-            firstName: user?.firstName,
-            lastName: user?.lastName,
-            phoneNumber: user?.phoneNumber,
-            paymentMethod: (data as IOrder).paymentMethod
+            paymentMethod: (data as IOrder).paymentMethod,
+            userComment: (data as IOrder).userComment
           },
+          orderDetailsInfo,
         }
       });
 
-      for (const cartItem of cart) {
-        const orderDetails = {
-          quantity: counts[`${cartItem.id}_${cartItem.variationName}`],
-          orderId: (result?.addOrder as IOrder).id,
-          variationDetailsId: cartItem.variationDetailsId
-        };
+      console.log(result?.addOrder, 'Add order existed user');
 
-        const { data: orderDetailsResult } = await addOrderDetails({
-          variables: {
-            orderDetails: orderDetails,
-          }
-        });
-        setSuccessMessage('Your order is successfully submited!')
-        console.log('Order details success', orderDetailsResult?.addOrderDetails);
-      }
-      dispatch(clearCart())
+      dispatch(clearCart());
       reset();
+      setSuccessMessage('Your order successfully added!');
     } catch (error) {
       console.error(error);
     }
@@ -101,15 +93,15 @@ export const CheckoutExistingUserForm = () => {
                   <div className="checkout-user-form__container-children">
                     <label className="checkout-user-form__label">Your full name</label>
                     <div className="checkout-user-form__wrapper">
-                      <div {...register('firstName')}>{user?.firstName}</div>
-                      <div {...register('lastName')}>{user?.lastName}</div>
+                      <div {...register('recipientFirstName')}>{user?.firstName}</div>
+                      <div {...register('recipientLastName')}>{user?.lastName}</div>
                     </div>
                   </div>
                   <div className="checkout-user-form__container-children">
                     <label className="checkout-user-form__label">Your email</label>
                     <div {...register('email')} className="checkout-user-form__existing">{user?.email}</div>
                     <label className="checkout-user-form__label">Your phone number</label>
-                    <div {...register('phoneNumber')}>{user?.phoneNumber}</div>
+                    <div {...register('recipientPhoneNumber')}>{user?.phoneNumber}</div>
                   </div>
                 </div>
                 <button

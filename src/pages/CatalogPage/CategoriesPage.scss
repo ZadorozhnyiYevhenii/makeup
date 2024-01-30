@@ -49,4 +49,15 @@
       margin-bottom: 16px;
     }
   }
+
+  &__pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 28px;
+
+    @include onDesktop {
+      margin-top: 80px;
+    }
+  }
 }

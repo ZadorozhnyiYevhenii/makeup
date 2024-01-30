@@ -18,14 +18,15 @@ import { TotalAmountOfProducts } from "../../components/TotalAmountOfProducts/To
 import { calculateTotalProductsCount } from "../../helpers/calculateTotalProductsCount";
 import { IProd } from "../../types/IProduct";
 import { useQuery } from "@apollo/client";
-import { GET_PRODUCT_WITH_CATEGORY_ID } from "../../graphql/queries/getById/getProductsWithCetgoryId";
+import { GET_PRODUCT_WITH_CATEGORY_IDS_PAGED } from "../../graphql/queries/getById/getProductsWithCetgoryId";
 import { setProducts } from "../../app/slices/productSlice";
 import { CategoryTitle } from "../../components/CategoryTitle/CategoryTitle";
 import { Breadcrums } from "../../components/BreadCrumbs/BreadCrumbs";
+import { PaginationRounded } from "../../components/Pagination/Pagination";
 import './CategoriesPage.scss';
 
 interface QueryData {
-  getProductsByCategoryIds: IProd[]
+  getProductsByCategoryIdsPaged: IProd[]
 }
 
 export const CategoriesPage = () => {
@@ -33,22 +34,33 @@ export const CategoriesPage = () => {
   const [isSortMenuOpen, setIsSortMenuOpen] = useState(false);
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
   const [sortOption, setSortOption] = useState<SortOptions | null>(null);
+  const [pageCounts, setPageCounts] = useState(0);
   const { brands, types, sex } = useAppSelector(state => state.filters);
   const dispatch = useAppDispatch();
   const { id } = useParams();
-  const location = useLocation()
+  const location = useLocation();
 
-  const { data, error } = useQuery<QueryData>(GET_PRODUCT_WITH_CATEGORY_ID, { variables: { categoryIds: id } });
+  const { data } = useQuery<QueryData>(GET_PRODUCT_WITH_CATEGORY_IDS_PAGED, {
+    variables: {
+      categoryIds: id,
+      pageRequestDTO: {
+        pageNumber: pageCounts,
+        sizePerPage: 6,
+      },
+    }
+  });
 
-  const products = data?.getProductsByCategoryIds;
+  const handlePageChange = (page: number) => {
+    setPageCounts(page - 1);
+  };
 
-  console.log(error)
+  const products = data?.getProductsByCategoryIdsPaged;
 
   useEffect(() => {
-    if (data && products) {
-      setProducts(products);
+    if (data && data.getProductsByCategoryIdsPaged) {
+      setProducts(data.getProductsByCategoryIdsPaged);
     }
-  }, [dispatch, products, data]);
+  }, [data]);
 
   useEffect(() => {
     const typeParam = searchParams.get('type');
@@ -156,6 +168,9 @@ export const CategoriesPage = () => {
             filteredType={types}
             filteredSex={sex}
           />
+          <div className="categories__pagination">
+            <PaginationRounded pageNumber={6} onPageChange={handlePageChange} />
+          </div>
         </div>
       </div>
     </div>

@@ -12,9 +12,11 @@ import { GET_ALL_COUNTRIES, getAllCountries } from "../../../graphql/queries/get
 import { GET_ALL_CATEGORIES, QueryGetAllCategories } from "../../../graphql/queries/getAll/getAllCategories";
 import { GET_ALL_BRANDS, QueryAllBrands } from "../../../graphql/queries/getAll/getAllBrand";
 import { SuccessMessage } from "../../SuccessPopup/SuccessPopup";
+import { GET_PRODUCT_STATUS, QueryProductStatus } from "../../../graphql/queries/getAll/getProductStatus";
+import { normalizeName } from "../../../helpers/normalizeWord";
 
 export const ChangeProduct = () => {
-  const { register, handleSubmit, setValue } = useForm<IProd>();
+  const { register, handleSubmit, setValue, reset } = useForm<IProd>();
   const [successMessage, setSuccessMessage] = useState(false);
 
   const [updateProduct, { error }] = useMutation<MutationChangeProduct>(CHANGE_PRODUCT);
@@ -40,11 +42,14 @@ export const ChangeProduct = () => {
   const { data } = useQuery<QueryAllBrands>(GET_ALL_BRANDS);
   const brands = data?.getAllBrands;
 
+  const { data: productStatusesData } = useQuery<QueryProductStatus>(GET_PRODUCT_STATUS);
+  const productStatuses = productStatusesData?.getAllProductStatuses;
+
   const handleSuccessMessage = () => {
     setSuccessMessage(true);
-    setTimeout(() => {
-      setSuccessMessage(false);
-    }, 3000);
+    // setTimeout(() => {
+    //   setSuccessMessage(false);
+    // }, 3000);
   };
 
   const onSubmit: SubmitHandler<IProd> = async (data) => {
@@ -62,7 +67,7 @@ export const ChangeProduct = () => {
           productId: +selectedProductId,
           updatedProduct: {
             brandId: data.brandId,
-            categoryIds: data.categoryIds,
+            categoryId: data.categoryIds,
             countryTradeMarkId: data.countryTradeMarkId,
             countriesMadeInIds: data.countriesMadeInIds,
             classification: data.classification,
@@ -71,11 +76,13 @@ export const ChangeProduct = () => {
             name: data.name,
             productGroup: data.productGroup,
             sex: data.sex,
+            productStatus: data.productStatus
           },
         },
       });
 
       console.log('Updated Product', result?.updateProduct);
+      reset();
       handleSuccessMessage();
     } catch (error) {
       console.error("Error updating product:", error)
@@ -99,26 +106,27 @@ export const ChangeProduct = () => {
       setValue('imageLinks', selectedProduct.images.map(image => image.imageLink));
       setValue('sex', selectedProduct.sex);
       setValue('classification', selectedProduct.classification);
-      setValue('name', selectedProduct.name)
+      setValue('name', selectedProduct.name);
+      setValue('productStatus', selectedProduct.productStatus)
     }
   };
 
   return (
     <div className="admin">
-        <div className="admin-input__container">
-          {successMessage && <SuccessMessage message="Product changed successfully" error={error} />}
-          <label className="admin-input__label">Product name</label>
-          <select
-            className="admin-input__input"
-            onChange={(e) => handleProductChange(e.target.value)}
-          >
-            {products?.map(prod => (
-              <option key={prod.id} value={prod.id}>
-                {prod.name}
-              </option>
-            ))}
-          </select>
-        </div>
+      {successMessage && <SuccessMessage message="Product changed successfully" error={error} />}
+      <div className="admin-input">
+        <label className="admin-input__label">Product name</label>
+        <select
+          className="admin-input__input"
+          onChange={(e) => handleProductChange(e.target.value)}
+        >
+          {products?.map(prod => (
+            <option key={prod.id} value={prod.id}>
+              {prod.name}
+            </option>
+          ))}
+        </select>
+      </div>
       {selectedProductId && (
         <form className="admin__form" onSubmit={handleSubmit(onSubmit)}>
           <div style={{ display: 'none' }}>
@@ -170,6 +178,19 @@ export const ChangeProduct = () => {
               ))
             }
           />
+          <AdminSelectWithLabel
+            label="Availability"
+            name='productStatus'
+            register={register}
+            renderOptions={() =>
+              productStatuses?.map(status => (
+                <option value={status} key={status}>
+                  {normalizeName(status)}
+                </option>
+              ))
+            }
+          />
+
           <AdminSelectWithLabel
             label="Countries made in"
             name='countriesMadeInIds'

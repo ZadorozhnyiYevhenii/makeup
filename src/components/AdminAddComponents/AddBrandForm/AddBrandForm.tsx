@@ -12,6 +12,13 @@ export const AddBrandForm = () => {
   const [addBrand, { error }] = useMutation<MutationAddBrand>(ADD_BRAND);
   const [successMessage, setSuccessMessage] = useState(false);
 
+  const handleSuccessMessage = () => {
+    setSuccessMessage(true);
+    setTimeout(() => {
+      setSuccessMessage(false);
+    }, 3000);
+  };
+
   const onSubmit: SubmitHandler<IProd> = async (data) => {
     try {
       const { data: result } = await addBrand({
@@ -23,16 +30,13 @@ export const AddBrandForm = () => {
   
       if (result) {
         reset();
-        setSuccessMessage(true);
-  
-        setTimeout(() => {
-          setSuccessMessage(false);
-        }, 3000);
+        handleSuccessMessage();
       } else {
         console.error("Error adding brand");
       }
     } catch (error) {
       console.error(error);
+      handleSuccessMessage();
     }
   }
   

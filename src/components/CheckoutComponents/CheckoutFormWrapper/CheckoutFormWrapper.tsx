@@ -4,8 +4,8 @@ import { CheckoutNewUserForm } from "../CheckoutNewUserForm/CheckoutNewUserForm"
 import { CheckoutTitles } from "../../../utils/checkoutTitles";
 import { CheckoutTitlesEnum } from "../../../utils/checkoutTitlesEnums";
 import { CheckoutRegisteredUserForm } from "../CheckoutRegisteredUserForm/CheckoutRegisteredUserForm";
-import './CheckoutFormWrapper.scss';
 import { TabWrapper } from "../../TabComponents/TabWrapper/TabWrapper";
+import './CheckoutFormWrapper.scss';
 
 export const CheckoutForm = () => {
   const [activeButton, setActiveButton] = useState(CheckoutTitlesEnum.Button.NEW_CUSTOMER);

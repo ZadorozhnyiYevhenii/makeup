@@ -52,37 +52,37 @@ export const RegisterPage: FC = () => {
           <form className='register__form' onSubmit={handleSubmit(onSubmit)}>
             <RegisterInputWithLabel
               name='firstName'
-              label={UserInfoTitles.user.firstName}
+              label={UserInfoTitles.user?.firstName}
               register={register}
               errorMessage={errors.firstName?.message}
             />
             <RegisterInputWithLabel
               name='lastName'
-              label={UserInfoTitles.user.lastName}
+              label={UserInfoTitles.user?.lastName}
               register={register}
               errorMessage={errors.lastName?.message}
             />
             <RegisterInputWithLabel
               name='birthdayDate'
-              label={UserInfoTitles.user.birthdayDate}
+              label={UserInfoTitles.user?.birthdayDate}
               register={register}
             />
             <RegisterInputWithLabel
               name='phoneNumber'
-              label={UserInfoTitles.user.phoneNumber}
+              label={UserInfoTitles.user?.phoneNumber}
               register={register}
               errorMessage={errors.phoneNumber?.message}
             />
             <RegisterInputWithLabel
               name='email'
-              label={UserInfoTitles.user.email}
+              label={UserInfoTitles.user?.email}
               register={register}
               errorMessage={errors.email?.message}
               isEmail
             />
             <RegisterInputWithLabel
               name='password'
-              label={UserInfoTitles.user.password}
+              label={UserInfoTitles.user?.password}
               register={register}
               errorMessage={errors.password?.message}
               isPassword

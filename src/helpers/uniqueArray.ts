@@ -1,5 +1,4 @@
 import { IProd } from "../types/IProduct";
-// <T extends keyof IProd>
 
 export const uniqueArray = (
   arr: IProd[] | undefined,

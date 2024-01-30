@@ -3,7 +3,6 @@ import cn from 'classnames';
 import { AddBrandForm } from "../../components/AdminAddComponents/AddBrandForm/AddBrandForm";
 import { AdminTabs } from "../../utils/adminActiveTabs";
 import { AdminTabTitles } from "../../utils/enumAdminTabs";
-import './AdminPageAdd.scss';
 import { AddProductForm } from "../../components/AdminAddComponents/AddProductForm/AddProductForm";
 import { AddCountryForm } from "../../components/AdminAddComponents/AddCountryForm/AddCountryForm";
 import { AddImageToProductForm } from "../../components/AdminAddComponents/AddImageToProductForm/AddImageToProductForm";
@@ -12,6 +11,7 @@ import { AddVariationsDetailsForm } from "../../components/AdminAddComponents/Ad
 import { AdminHeader } from "../../components/AdminUI/AdminHeader/AdminHeader";
 import { AddCategoryComponent } from "../../components/AdminAddComponents/AddCategory/AddCategoryForm";
 import { TabWrapper } from "../../components/TabComponents/TabWrapper/TabWrapper";
+import './AdminPageAdd.scss';
 
 export const AdminPageProduct = () => {
   const [activeTab, setActiveTab] = useState('');

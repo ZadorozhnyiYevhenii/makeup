@@ -10,7 +10,7 @@ import { useState } from "react";
 import { SuccessMessage } from "../../SuccessPopup/SuccessPopup";
 
 export const AddProductVariationForm = () => {
-  const { register, handleSubmit } = useForm<IProd>();
+  const { register, handleSubmit, reset } = useForm<IProd>();
   const [successMessage, setSuccessMessage] = useState(false);
   const [addProductVariation, { error }] = useMutation<MutationAddProductVariation>(ADD_PRODUCT_VARIATIONS);
 
@@ -34,6 +34,7 @@ export const AddProductVariationForm = () => {
         refetchQueries: [{ query: GET_ALL_PRODUCTS }],
       })
       console.log('Product variations added',result?.addProductVariation)
+      reset();
       handleSuccessMessage();
     } catch (error) {
       console.error(error)

@@ -12,6 +12,8 @@ import { GET_ALL_PRODUCTS } from '../../graphql/queries/getAll/getAllProducts';
 import { IProd } from '../../types/IProduct';
 import { QueryComponent } from '../../components/QueryComponent/QueryComponent';
 import { Breadcrums } from '../../components/BreadCrumbs/BreadCrumbs';
+import { getProductsForSlider } from '../../helpers/getProductsForSlider';
+import { Titles } from '../../utils/titles';
 import './ProductCardPage.scss';
 
 interface QueryData {
@@ -26,6 +28,11 @@ export const ProductCardPage = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const { data, error, loading } = useQuery<QueryData>(GET_ALL_PRODUCTS);
   const location = useLocation();
+
+  const products = data?.getAllProducts ?? [];
+
+  const productsDermatological = getProductsForSlider(products, 'classification', 'DERMATOLOGICAL')
+  const productsByGroup = getProductsForSlider(products, 'productGroup', 'Parfum water')
 
   const handleOpenPopup = () => {
     setIsPopupOpen(prev => !prev);
@@ -62,7 +69,6 @@ export const ProductCardPage = () => {
   }
 
   useDisableScroll('no-scroll', isPopupOpen);
-
   
   if (data?.getAllProducts === undefined) {
     return null;
@@ -140,9 +146,8 @@ export const ProductCardPage = () => {
           <BasicTabs id={+id} product={product} />
         </div>
       </div>
-      <ProductSlider title='Similar products' />
-      <ProductSlider title='Other customers also bought' />
-      <ProductSlider title='Especially for you' />
+      <ProductSlider title={Titles.CLASSIFICATION_DERMATOLOGICAL} products={productsDermatological} error={error} loading={loading} />
+      <ProductSlider title={Titles.PARFUME_WATER} products={productsByGroup} error={error} loading={loading} />
     </div>
   );
 };

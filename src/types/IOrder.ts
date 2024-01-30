@@ -5,4 +5,8 @@ export interface IOrder {
   house: string;
   region: string;
   id: number;
+  recipientFirstName: string;
+  recipientLastName: string;
+  recipientPhoneNumber: string;
+  userComment: string;
 };

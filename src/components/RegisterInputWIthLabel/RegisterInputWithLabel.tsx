@@ -6,7 +6,7 @@ import { usePasswordToggle } from "../../hooks/usePasswordToggle";
 import { passwordRules } from "../../utils/passwordRules";
 
 type Props = {
-  label: string,
+  label: string | undefined,
   name: keyof IUser,
   register: UseFormRegister<IUser>,
   errorMessage?: string,

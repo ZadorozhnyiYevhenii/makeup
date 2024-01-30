@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { useState } from "react";
 import { ProductCard } from "../ProductCard/ProductCard";
 import './ProductSlider.scss';
 import WestIcon from '@mui/icons-material/West';
@@ -7,34 +7,31 @@ import cn from 'classnames';
 import { useWindowResize } from "../../../hooks/useWindowResize";
 import { useSwipeable } from "react-swipeable";
 import { handleSwipe } from "../../../helpers/swipe";
-import { useQuery } from "@apollo/client";
-import { GET_PRODUCTS_ID } from "../../../graphql/queries/getById/getProductsID";
+import { ApolloError,  } from "@apollo/client";
 import { IProd } from "../../../types/IProduct";
 import { QueryComponent } from "../../QueryComponent/QueryComponent";
-import { generateRandomArray } from "../../../helpers/generateRandomArray";
 
 type Props = {
   title: string,
+  products: IProd[],
+  error: ApolloError | undefined,
+  loading: boolean
 }
 
-interface QueryData {
-  getAllProducts: IProd[]
-}
-
-export const ProductSlider: React.FC<Props> = memo(({ title }) => {
+export const ProductSlider: React.FC<Props> = ({
+  title,
+  products,
+  error,
+  loading 
+}) => {
   const [slideIndex, setSlideIndex] = useState(0);
-  const { data, error, loading } = useQuery<QueryData>(GET_PRODUCTS_ID);
-
-  const products: IProd[] | undefined = data?.getAllProducts ?? [];
-
-  const productsForSlider = generateRandomArray(products);
 
   const handlePrevSlide = () => {
     setSlideIndex((prevIndex) => Math.max(prevIndex - 2, 0));
   };
 
   const handleNextSlide = () => {
-    setSlideIndex((prevIndex) => Math.min(prevIndex + 2, productsForSlider?.length - 2));
+    setSlideIndex((prevIndex) => Math.min(prevIndex + 2, products?.length - 2));
   };
 
   const handlers = useSwipeable({
@@ -44,7 +41,7 @@ export const ProductSlider: React.FC<Props> = memo(({ title }) => {
 
   const isMobile = useWindowResize(1023);
 
-  const nextButtonDisabled = isMobile ? slideIndex === productsForSlider.length - 2 : slideIndex === productsForSlider.length - 6;
+  const nextButtonDisabled = isMobile ? slideIndex === products.length - 2 : slideIndex === products.length - 5;
 
   const prevButtonDisabled = slideIndex === 0;
 
@@ -55,7 +52,7 @@ export const ProductSlider: React.FC<Props> = memo(({ title }) => {
         <div className="slider-top__content">
           {isMobile ? (
             <div className="slider-top__dots">
-              {Array.from({ length: Math.ceil(productsForSlider.length / 2) }).map((_, ind) => (
+              {Array.from({ length: Math.ceil(products.length / 2) }).map((_, ind) => (
                 <div
                   key={ind}
                   onClick={() => setSlideIndex(ind * 2)}
@@ -91,7 +88,7 @@ export const ProductSlider: React.FC<Props> = memo(({ title }) => {
       <div className="productSlider">
         <ul className="productSlider__list" data-testid="productSlider__list" style={{ transform: `translateX(-${slideIndex * 50}%)` }} {...handlers}>
           <QueryComponent isLoading={loading} error={error} errorMessage="products">
-            {productsForSlider.map((prod) => (
+            {products.map((prod) => (
               <li className="productSlider__item" key={prod.id} data-testid="productSlider__item">
                 <ProductCard id={prod.id} />
               </li>
@@ -101,4 +98,4 @@ export const ProductSlider: React.FC<Props> = memo(({ title }) => {
       </div>
     </>
   );
-});
+};

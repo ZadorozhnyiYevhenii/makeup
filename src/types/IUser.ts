@@ -1,4 +1,5 @@
 export interface IUser {
+  id: number;
   firstName: string;
   lastName: string;
   birthdayDate: string;
@@ -6,4 +7,4 @@ export interface IUser {
   email: string;
   password: string;
   jwtToken: string;
-}
+};

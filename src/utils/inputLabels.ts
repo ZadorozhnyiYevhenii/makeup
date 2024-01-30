@@ -2,7 +2,7 @@ import { IOrder } from "../types/IOrder";
 import { IUser } from "../types/IUser";
 
 export namespace UserInfoTitles {
-  export const user: Omit<IUser, 'jwtToken'> = {
+  export const user: Partial<IUser | undefined> = {
     firstName: 'Your name*',
     lastName: 'Your surname*',
     birthdayDate: 'Your birth date',

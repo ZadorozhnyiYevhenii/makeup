@@ -45,9 +45,9 @@ export const AddProductForm = () => {
 
   const handleSuccessMessage = () => {
     setSuccessMessage(true);
-    setTimeout(() => {
-      setSuccessMessage(false);
-    }, 3000);
+    // setTimeout(() => {
+    //   setSuccessMessage(false);
+    // }, 3000);
   };
 
   const onSubmit: SubmitHandler<IProd> = async (data) => {
@@ -112,7 +112,7 @@ export const AddProductForm = () => {
         />
         <AdminSelectWithLabel
           label="Category"
-          name='categoryIds'
+          name='categoryId'
           register={register}
           renderOptions={() =>
             categories?.map((category) => (

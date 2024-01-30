@@ -10,7 +10,7 @@ import { GET_SHIPPING_METHODS, QueryShippingMethods } from "../../../graphql/que
 import { SuccessMessage } from "../../SuccessPopup/SuccessPopup";
 
 export const AddVariationsDetailsForm = () => {
-  const { register, handleSubmit } = useForm<IProd>();
+  const { register, handleSubmit, reset } = useForm<IProd>();
   const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState(false);
 
@@ -39,6 +39,7 @@ export const AddVariationsDetailsForm = () => {
         refetchQueries: [{ query: GET_ALL_PRODUCTS }]
       })
 
+      reset();
       console.log('Variation details added:', result?.addVariationDetails);
       handleSuccessMessage();
     } catch (error) {
@@ -53,8 +54,8 @@ export const AddVariationsDetailsForm = () => {
 
   return (
     <div className="admin">
+      {successMessage && <SuccessMessage message="Variation detail added successfully" error={error} />}
       <div className="admin-input">
-        {successMessage && <SuccessMessage message="Variation detail added successfully" error={error} />}
         <label className="admin-input__label">Product name</label>
         <select onChange={(e) => handleProductChange(e.target.value)} className="admin-input__input">
           <option value=""></option>
@@ -92,7 +93,7 @@ export const AddVariationsDetailsForm = () => {
           label="Shipping from"
           name='shippingFrom'
           register={register}
-          renderOptions={() => 
+          renderOptions={() =>
             shippingMethods?.map(method => (
               <option key={method} value={method}>
                 {method}

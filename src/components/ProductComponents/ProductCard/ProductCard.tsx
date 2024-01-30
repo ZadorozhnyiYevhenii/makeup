@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './ProductCard.scss';
+import cn from 'classnames';
 import { ScrollTopLink } from "../../../helpers/scrollTopLink";
 import { PurchaseButton } from "../../PurchaseButton/PurchaseButton";
 import { useQuery } from "@apollo/client";
@@ -9,6 +9,7 @@ import { IProd } from "../../../types/IProduct";
 import { SelectMenu } from "../../SelectMenu/SelectMenu";
 import { useAppDispatch } from "../../../app/hooks";
 import { addToCart } from "../../../app/slices/cartSlice";
+import './ProductCard.scss';
 
 type Props = {
   id: number,
@@ -85,7 +86,7 @@ export const ProductCard: React.FC<Props> = ({ id }) => {
           <div className="card__purchase-button-mobile">
             <PurchaseButton product={product} addToCart={handleAddToCart} />
           </div>
-          <div className="card__purchase-button">
+          <div className={cn("card__purchase-button", {'card__purchase-button--active': isMenuVisible })}>
             {isMenuVisible && (
               <>
                 <SelectMenu product={product} setSelectedAmount={setSelectedAmount} />

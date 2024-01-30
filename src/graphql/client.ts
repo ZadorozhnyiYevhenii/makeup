@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 
 const httpLink = createHttpLink({
-  uri: 'http://13.53.198.85:8080/graphql',
+  uri: 'http://51.20.106.181:8080/graphql',
 });
 
 export const client = new ApolloClient({

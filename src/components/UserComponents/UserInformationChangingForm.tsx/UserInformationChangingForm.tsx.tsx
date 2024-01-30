@@ -21,11 +21,11 @@ export const UserInformationChangingForm: FC<Props> = ({
     <div style={{ marginTop: '80px' }}>
       <form onSubmit={handleSubmit(onSubmit)} className="user__submit">
         <h1 className="user__submit-title">{userTabs.CONTACT}</h1>
-        <RegisterInputWithLabel name='firstName' label={UserInfoTitles.user.firstName} register={register} />
-        <RegisterInputWithLabel name='lastName' label={UserInfoTitles.user.lastName} register={register} />
-        <RegisterInputWithLabel name='email' label={UserInfoTitles.user.email} register={register} />
-        <RegisterInputWithLabel name='phoneNumber' label={UserInfoTitles.user.phoneNumber} register={register} />
-        <RegisterInputWithLabel name='birthdayDate' label={UserInfoTitles.user.birthdayDate} register={register} />
+        <RegisterInputWithLabel name='firstName' label={UserInfoTitles.user?.firstName} register={register} />
+        <RegisterInputWithLabel name='lastName' label={UserInfoTitles.user?.lastName} register={register} />
+        <RegisterInputWithLabel name='email' label={UserInfoTitles.user?.email} register={register} />
+        <RegisterInputWithLabel name='phoneNumber' label={UserInfoTitles.user?.phoneNumber} register={register} />
+        <RegisterInputWithLabel name='birthdayDate' label={UserInfoTitles.user?.birthdayDate} register={register} />
         <button
           type="button"
           className="user__save-button"
