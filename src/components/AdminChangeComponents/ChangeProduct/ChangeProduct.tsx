@@ -98,7 +98,7 @@ export const ChangeProduct = () => {
     if (selectedProduct) {
       setValue('productId', selectedProduct.id);
       setValue('brandId', selectedProduct.brand.id);
-      setValue('categoryIds', selectedProduct.categories.map(category => category.id));
+      setValue('categoryId', selectedProduct.categoryId);
       setValue('countryTradeMarkId', selectedProduct.countryTradeMark.id);
       setValue('countriesMadeInIds', selectedProduct.countriesMadeIn.map(p => p.id));
       setValue('description', selectedProduct.description);

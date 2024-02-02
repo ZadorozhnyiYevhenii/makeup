@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import cn from 'classnames';
 import { SearchIconHeader } from "../../../assets/SearchIcon";
@@ -9,6 +9,9 @@ import { ISearch } from "../../../types/ISearch";
 import { SearchItem } from "../SeachItem/SearchItem";
 import { debounce } from "../../../helpers/debounce";
 import { Loader } from "../../Loader/Loader";
+import { useAppDispatch } from "../../../app/hooks";
+import { setSearchString } from "../../../app/slices/searchSlice";
+import { useLocation, useNavigate } from "react-router-dom";
 import './Search.scss';
 
 type Props = {
@@ -17,18 +20,27 @@ type Props = {
 }
 
 export const SearchBar: React.FC<Props> = ({ onCross, toggledIcon }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const { register } = useForm<ISearch>();
+
   const [searchData, setSearchData] = useState('');
   const [pageNumber, setPageNumber] = useState(0);
-  const { data, error, loading, fetchMore } = useQuery<QuerySearchProducts>(SEARCH_PRODUCTS, {
+
+  const dispatch = useAppDispatch();
+
+  const { data, error, loading } = useQuery<QuerySearchProducts>(SEARCH_PRODUCTS, {
     variables: {
       pageRequestDTO: {
-        pageNumber: 0,
+        pageNumber: pageNumber,
         sizePerPage: 6,
       },
       searchString: searchData
     },
   });
+
+  const totalPages = data?.searchProductsPaged?.total;
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchString = event.target.value;
@@ -36,27 +48,34 @@ export const SearchBar: React.FC<Props> = ({ onCross, toggledIcon }) => {
     setPageNumber(0);
   };
 
-  const handleSearchWithDebounce = debounce(handleSearch, 500);
+  const onBtnClick = () => {
+    const queryParams = new URLSearchParams(location.search);
+    queryParams.set('query', searchData);
 
-  const loadMore = () => {
-    fetchMore({
-      variables: {
-        pageRequestDTO: {
-          pageNumber: pageNumber + 1,
-          sizePerPage: 6,
-        },
-        searchString: searchData
-      },
-    }).then(() => {
-      setPageNumber(pageNumber + 1);
+    navigate({
+      pathname: '/makeup/search',
+      search: queryParams.toString(),
     });
+
+    onCross();
   };
 
-  const ruleForOpening = (data?.searchProductsPaged?.length !== undefined
-    ? data.searchProductsPaged.length
+  useEffect(() => {
+    const urlSearchParams = new URLSearchParams(location.search);
+    const queryParam = urlSearchParams.get('query');
+  
+    if (queryParam) {
+      setSearchData(queryParam);
+      dispatch(setSearchString(queryParam));
+    }
+  }, [location.search]);  
+
+  const handleSearchWithDebounce = debounce(handleSearch, 500);
+
+  const ruleForOpening = (data?.searchProductsPaged?.content.length !== undefined
+    ? data.searchProductsPaged.content.length
     : 0
   ) > 0;
-
 
   return (
     <>
@@ -75,15 +94,15 @@ export const SearchBar: React.FC<Props> = ({ onCross, toggledIcon }) => {
           <div onClick={onCross} className={cn("search__cross", { "search__cross--active": toggledIcon })}>
             <CrossIcon />
           </div>
-          {error && (<div>{error.message}</div>)}
         </div>
         <div className={cn('search__wrapper', { 'search__wrapper--active': ruleForOpening })}>
           <h3 className="search__title">Products</h3>
+          {error && (<div>{error.message}</div>)}
           {loading ? (
             <Loader />
           ) : (
             <ul className="search__items">
-              {data?.searchProductsPaged?.map(product => (
+              {data?.searchProductsPaged?.content.map(product => (
                 <li key={product.id}>
                   <SearchItem
                     id={product.id}
@@ -94,8 +113,8 @@ export const SearchBar: React.FC<Props> = ({ onCross, toggledIcon }) => {
               ))}
             </ul>
           )}
-          {data?.searchProductsPaged?.length && data.searchProductsPaged.length >= 6 && (
-            <button type="button" className="search__button" onClick={loadMore}>
+          {totalPages && totalPages > 6 && (
+            <button type="button" className="search__button" onClick={onBtnClick}>
               Load more
             </button>
           )}

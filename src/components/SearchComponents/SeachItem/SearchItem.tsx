@@ -18,7 +18,7 @@ export const SearchItem: FC<Props> = ({ id, product, onClose }) => {
       <ScrollTopLink to={`/makeup/product/${id}`} onClose={onClose}>
         <div className="searchItem__photo" onClick={onClose}>
           <img
-            src={product.productVariations[0].variationImage.imageLink}
+            src={product.productVariations[0]?.variationImage.imageLink}
             alt={product.name}
             className="searchItem__img"
           />
@@ -33,7 +33,7 @@ export const SearchItem: FC<Props> = ({ id, product, onClose }) => {
         </div>
         <div>
           <div className="searchItem__status">{normalizeStatus}</div>
-          <div>{product.productVariations[0].variationDetails[0].price} $</div>
+          <div>{product.productVariations[0]?.variationDetails[0]?.price} $</div>
         </div>
       </div>
     </div>

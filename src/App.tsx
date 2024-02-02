@@ -11,7 +11,7 @@ import { Loader } from './components/Loader/Loader';
 import { SearchedPage } from './pages/SearchedPage/SearchedPage';
 import './App.scss';
 const ProductCardPage = lazy(() => import("./pages/ProductCardPage/ProductCardPage").then((module) => ({ default: module.ProductCardPage })));
-const CategoriesPage = lazy(() => import('./pages/CatalogPage/CategoriesPage').then((module) => ({ default: module.CategoriesPage })));
+const CategoriesPage = lazy(() => import('./pages/CategoriesPage/CategoriesPage').then((module) => ({ default: module.CategoriesPage })));
 const AdminPageProduct = lazy(() => import('./pages/AdminPageAdd/AdminPageAdd').then((module) => ({ default: module.AdminPageProduct })));
 const AdminPage = lazy(() => import('./pages/AdminPage/AdminPage').then((module) => ({ default: module.AdminPage })));
 const CheckOutPage = lazy(() => import('./pages/CheckOutPage/CheckOutPage').then((module) => ({ default: module.CheckOutPage })));

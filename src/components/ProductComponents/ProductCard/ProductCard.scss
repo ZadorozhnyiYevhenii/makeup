@@ -3,11 +3,11 @@
 .card {
   margin-top: 20px;
   position: relative;
-
+  
   @include onDesktop {
     min-height: fit-content;
   }
-
+  
   &__wrap {
     display: flex;
     justify-content: center;
@@ -15,7 +15,8 @@
     position: relative;
     padding: 40px 32px;
     transition: transform 0.3s ease, opacity 0.3s ease;
-
+    height: 352px;
+    
     &::after {
       content: '';
       position: absolute;
@@ -27,6 +28,10 @@
       background: #000;
       pointer-events: none;
     }
+  }
+
+  &__photo {
+    max-height: 340px;
   }
 
   &__name {

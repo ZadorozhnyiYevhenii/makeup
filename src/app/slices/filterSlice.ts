@@ -33,5 +33,11 @@ const filterSlice = createSlice({
   },
 });
 
-export const { setBrandFilter, setTypeFilter, setSexFilter,clearFilters } = filterSlice.actions;
+export const { 
+  setBrandFilter, 
+  setTypeFilter, 
+  setSexFilter,
+  clearFilters
+} = filterSlice.actions;
+
 export const filterReducer = filterSlice.reducer;

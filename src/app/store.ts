@@ -1,10 +1,11 @@
+import storage from 'redux-persist/lib/storage';
 import { configureStore } from "@reduxjs/toolkit";
 import { filterReducer } from "./slices/filterSlice";
 import { cartReducer } from "./slices/cartSlice";
 import { persistReducer, persistStore } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 import { productsReducer } from "./slices/productSlice";
 import { userReducer } from "./slices/userSlice";
+import { searchReducer } from "./slices/searchSlice";
 
 const persistConfig = {
   key: 'root',
@@ -15,6 +16,7 @@ const cartPersistedReducer = persistReducer(persistConfig, cartReducer);
 const filterPersistedReducer = persistReducer(persistConfig, filterReducer);
 const productsPersistedReducer = persistReducer(persistConfig, productsReducer);
 const userPersistedReducer = persistReducer(persistConfig, userReducer);
+const searchPersistedReducer = persistReducer(persistConfig, searchReducer);
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +24,7 @@ export const store = configureStore({
     cart: cartPersistedReducer,
     products: productsPersistedReducer,
     user: userPersistedReducer,
+    search: searchPersistedReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

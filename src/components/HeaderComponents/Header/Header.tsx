@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDisableScroll } from '../../../hooks/useDisableScroll';
 import { HeaderBar } from '../HeaderBar/HeaderBar';
 import { useQuery } from '@apollo/client';
@@ -52,6 +52,20 @@ export const Header = () => {
       setIsMenuOpen(false);
     },
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        close.search();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [close])
 
   useDisableScroll('no-scroll', isMenuOpen);
 

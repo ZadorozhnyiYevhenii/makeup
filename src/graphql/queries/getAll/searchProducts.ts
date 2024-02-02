@@ -2,55 +2,43 @@ import { gql } from "@apollo/client";
 import { IProd } from "../../../types/IProduct";
 
 export interface QuerySearchProducts {
-  searchProductsPaged: IProd[]
+  searchProductsPaged: {
+    content: IProd[],
+    total: number;
+  }
 }
 
 export const SEARCH_PRODUCTS = gql`
   query MyQuery($pageRequestDTO: PageRequestDTO!, $searchString: String!) {
     searchProductsPaged(pageRequestDTO: $pageRequestDTO, searchString: $searchString) {
-      additionalInfo
-      brand {
-        id
-        name
-      }
-      categories {
-        id
-        name
-        parentCategoryId
-      }
-      classification
-      countriesMadeIn {
-        id
-        name
-      }
-      countryTradeMark {
-        id
-        name
-      }
-      description
-      id
-      images {
-        id
-        imageLink
-      }
-      name
-      productGroup
-      productStatus
-      productVariations {
-        id
-        variationDetails {
+      content {
+        brand {
           id
-          price
-          sale
-          shippingFrom
+          name
         }
-        variationImage {
+        categories {
           id
-          imageLink
+          name
         }
-        variationName
+        id
+        name
+        productGroup
+        productVariations {
+          id
+          variationDetails {
+            shippingFrom
+            sale
+            price
+            id
+          }
+          variationImage {
+            imageLink
+            id
+          }
+          variationName
+        }
       }
-      sex
+      total
     }
   }
-`
+`;

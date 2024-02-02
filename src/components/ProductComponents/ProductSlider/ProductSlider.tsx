@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { ProductCard } from "../ProductCard/ProductCard";
-import './ProductSlider.scss';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
 import cn from 'classnames';
@@ -10,6 +9,7 @@ import { handleSwipe } from "../../../helpers/swipe";
 import { ApolloError,  } from "@apollo/client";
 import { IProd } from "../../../types/IProduct";
 import { QueryComponent } from "../../QueryComponent/QueryComponent";
+import './ProductSlider.scss';
 
 type Props = {
   title: string,

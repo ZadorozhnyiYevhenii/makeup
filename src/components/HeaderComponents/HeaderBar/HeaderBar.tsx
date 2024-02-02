@@ -21,7 +21,7 @@ type Props = {
   onSearchOpen: () => void,
   onLoginOpen: () => void,
   onLoginClose: () => void,
-  onSearchClose: () => void,
+  onSearchClose: () => void
   onMenuClose: () => void,
 }
 

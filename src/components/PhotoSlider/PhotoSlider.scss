@@ -3,7 +3,6 @@
 .photo-slider {
   display: flex;
   transition: all 0.6s ease-in-out;
-  height: 300px;
 
   @include onDesktop {
     height: auto;
@@ -16,6 +15,7 @@
     pointer-events: auto;
     align-items: center;
     justify-content: center;
+    height: 450px;
     
     &--active {
       transition: all 0.3s ease-in;
@@ -23,9 +23,10 @@
         transform: scale(1.6);
       }
     }
-  
+    
     @include onDesktop {
       flex: 0 0 calc(100% - 10px);
+      height: 500px;
     }
   }
 
