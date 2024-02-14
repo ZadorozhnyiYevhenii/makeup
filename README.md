@@ -6,8 +6,6 @@
   <a href="#technologies">Technologies</a> •
   <a href="#setup">Setup</a> •
   <a href="#getting-started">Getting Started</a> •
-  <a href="#contributing">Contributing</a> •
-  <a href="#license">License</a>
 </p>
 
 ## Demo
@@ -40,7 +38,7 @@ For administrators, there is an Admin Dashboard with various operations, includi
 
 **Clone the repository:**
    
-   - git clone https://github.com/your-username/your-repository.git
+   - git clone https://github.com/ZadorozhnyiYevhenii/makeup.git
    - cd your-repository
    - npm install
    - npm start

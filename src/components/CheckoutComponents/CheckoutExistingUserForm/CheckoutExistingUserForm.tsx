@@ -1,6 +1,5 @@
 import { useState } from "react";
 import cn from 'classnames';
-import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { CheckoutTitles } from "../../../utils/checkoutTitles";
 import { CheckoutTitlesEnum } from "../../../utils/checkoutTitlesEnums";
@@ -16,9 +15,20 @@ import { UserSelectWithLabel } from "../../UserComponents/UserSelectWithLabel/Us
 import { clearCart } from "../../../app/slices/cartSlice";
 import { TabWrapper } from "../../TabComponents/TabWrapper/TabWrapper";
 import { ADD_ORDER_EXISTING_USER } from "../../../graphql/mutations/AddMutations/AddOrderExistingUser";
+import { GET_USER_BY_JWT_TOKEN, QueryUserByJWT } from "../../../graphql/queries/getAuth/getUserByJWTtoken";
+import { CheckoutSuccessMessage } from "../CheckoutSuccessMessage/CheckoutSuccessMessage";
 
 export const CheckoutExistingUserForm = () => {
-  const user = useAppSelector(state => state.user.user);
+  const userJWT = useAppSelector(state => state.user.userJWT);
+
+  const { data: userData } = useQuery<QueryUserByJWT>(GET_USER_BY_JWT_TOKEN, {
+    variables: {
+      jwtToken: userJWT
+    }
+  });
+
+  const user = userData?.getUserByJwtToken;
+
   const [activePart, setActivePart] = useState(CheckoutTitlesEnum.SubTitle.PERSONAL_INFO);
   const { register, handleSubmit, reset, formState: { errors } } = useForm<IUser | IOrder>();
   const [successMessage, setSuccessMessage] = useState('');
@@ -56,6 +66,28 @@ export const CheckoutExistingUserForm = () => {
         }
       });
 
+      try {
+        const response = await fetch('http://13.53.125.181:8080/payment/create-checkout-session', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            orderId: result?.addOrder?.id
+          }),
+        });
+
+        if (response.ok) {
+          const responseData = await response.text();
+
+          window.location.href = responseData;
+        } else {
+          console.error('Failed to create checkout session:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error creating checkout session:', error);
+      }
+
       console.log(result?.addOrder, 'Add order existed user');
 
       dispatch(clearCart());
@@ -69,6 +101,8 @@ export const CheckoutExistingUserForm = () => {
   const handleDeliveryTab = () => {
     setActivePart(CheckoutTitlesEnum.SubTitle.DELIVERY_INFO)
   };
+
+  console.log(userData?.getUserByJwtToken)
 
   return (
     <div className="checkout-user-form">
@@ -114,13 +148,31 @@ export const CheckoutExistingUserForm = () => {
               </TabWrapper>
               <TabWrapper activeTab={activePart === CheckoutTitlesEnum.SubTitle.DELIVERY_INFO}>
                 <div className="checkout-user-form__container">
+                  {!user?.shippingInfos[0] ? (
+                    <div className="checkout-user-form__container-children">
+                      <UserInputWithLabel label={UserInfoTitles.address.city} name='city' register={register} error={errors} />
+                      <UserInputWithLabel label={UserInfoTitles.address.region} name='region' register={register} error={errors} />
+                      <UserInputWithLabel label={UserInfoTitles.address.street} name='street' register={register} error={errors} />
+                    </div>
+                  ) : (
+                    <div className="checkout-user-form__container-children">
+                      <label className="checkout-user-form__label">Your city</label>
+                      <div {...register('city')} className="checkout-user-form__existing">{user?.shippingInfos[0].city}</div>
+                      <label className="checkout-user-form__label">Your region</label>
+                      <div {...register('region')} className="checkout-user-form__existing">{user?.shippingInfos[0].region}</div>
+                      <label className="checkout-user-form__label">Your street</label>
+                      <div {...register('street')} className="checkout-user-form__existing">{user?.shippingInfos[0].street}</div>
+                    </div>
+                  )}
                   <div className="checkout-user-form__container-children">
-                    <UserInputWithLabel label={UserInfoTitles.address.city} name='city' register={register} error={errors} />
-                    <UserInputWithLabel label={UserInfoTitles.address.region} name='region' register={register} error={errors} />
-                    <UserInputWithLabel label={UserInfoTitles.address.street} name='street' register={register} error={errors} />
-                  </div>
-                  <div className="checkout-user-form__container-children">
-                    <UserInputWithLabel label={UserInfoTitles.address.house} name='house' register={register} error={errors} />
+                    {!user?.shippingInfos[0] ? (
+                      <UserInputWithLabel label={UserInfoTitles.address.house} name='house' register={register} error={errors} />
+                    ) : (
+                      <>
+                        <label className="checkout-user-form__label">Your house</label>
+                        <div {...register('house')} className="checkout-user-form__existing">{user?.shippingInfos[0].house}</div>
+                      </>
+                    )}
                     <UserSelectWithLabel
                       name='paymentMethod'
                       label={UserInfoTitles.address.paymentMethod}
@@ -141,10 +193,7 @@ export const CheckoutExistingUserForm = () => {
           </div>
         </>
       ) : (
-        <div className="checkout-user-form__modal">
-          <p className="checkout-user-form__modal-message">{successMessage}</p>
-          <Link to={'/makeup'} className="checkout-user-form__modal-link">Shopping more</Link>
-        </div>
+        <CheckoutSuccessMessage message={successMessage} />
       )}
     </div>
   )

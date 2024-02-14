@@ -2,6 +2,7 @@
 
 .checkout {
   padding: 32px 16px 0 16px;
+  height: 60vh;
 
   @include onDesktop {
     display: flex;

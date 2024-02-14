@@ -4,11 +4,12 @@ import { IUser } from "../../types/IUser";
 import { emailPattern } from "../../utils/emailPattern";
 import { usePasswordToggle } from "../../hooks/usePasswordToggle";
 import { passwordRules } from "../../utils/passwordRules";
+import { IOrder } from "../../types/IOrder";
 
 type Props = {
   label: string | undefined,
-  name: keyof IUser,
-  register: UseFormRegister<IUser>,
+  name: keyof IUser | keyof IOrder,
+  register: UseFormRegister<IUser | IOrder>,
   errorMessage?: string,
   isEmail?: boolean,
   isPassword?: boolean

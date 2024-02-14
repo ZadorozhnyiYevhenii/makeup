@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/client';
 import { GET_ALL_CATEGORIES } from '../../../graphql/queries/getAll/getAllCategories';
 import { ICategory } from '../../../types/ICategory';
 import { NavBar } from '../../NavBarComponents/NavBar/NavBar';
+import { useKeyDown } from '../../../hooks/useKeyDown';
 import './Header.scss';
 
 interface QueryData {
@@ -53,19 +54,9 @@ export const Header = () => {
     },
   };
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        close.search();
-      }
-    };
+  useKeyDown('Escape', close.search);
 
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [close])
+  useKeyDown('Escape', close.login);
 
   useDisableScroll('no-scroll', isMenuOpen);
 

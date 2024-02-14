@@ -1,19 +1,17 @@
 import React, { memo, useState } from "react";
 import { Link } from 'react-router-dom';
-import './LoginForm.scss';
 import CloseIcon from '@mui/icons-material/Close';
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IUser } from "../../types/IUser";
 import { Loader } from "../Loader/Loader";
-import { useQuery } from "@apollo/client";
 import { AUTH_USER, QueryAuth } from "../../graphql/queries/getAuth/authenticateUser";
 import { client } from "../../graphql/client";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { addUser } from "../../app/slices/userSlice";
-import { GET_ALL_USERS, QueryUsers } from "../../graphql/queries/getAll/getAllUsers";
+import { addUser, addUserJWT } from "../../app/slices/userSlice";
 import { emailPattern } from "../../utils/emailPattern";
 import { passwordRules } from "../../utils/passwordRules";
 import { usePasswordToggle } from "../../hooks/usePasswordToggle";
+import './LoginForm.scss';
 
 type Props = {
   onClose: () => void,
@@ -21,8 +19,8 @@ type Props = {
 
 export const LoginForm: React.FC<Props> = memo(({ onClose }) => {
   const { type, toggleIcon, togglePasswordIcon } = usePasswordToggle();
-  const user = useAppSelector(state => state.user.user);
   const [message, setMessage] = useState<string | null>(null);
+  const userJwt = useAppSelector(state => state.user.userJWT);
 
   const {
     register,
@@ -31,9 +29,6 @@ export const LoginForm: React.FC<Props> = memo(({ onClose }) => {
     reset,
   } = useForm<IUser>();
   const dispatch = useAppDispatch();
-  const { data } = useQuery<QueryUsers>(GET_ALL_USERS);
-
-  const users = data?.getAllUsers;
 
   const navigateToRegister = () => {
     onClose();
@@ -47,29 +42,29 @@ export const LoginForm: React.FC<Props> = memo(({ onClose }) => {
           password: data.password,
         },
       };
-  
+
       const authResult = await client.query<QueryAuth>({
         query: AUTH_USER,
         variables: authenticationData,
       });
 
-      const user = users?.find(user => user.email === authenticationData.request.email);
-   
+      console.log(authResult.data.authenticateUser.jwtToken)
+
       if (authResult.data && authResult.data.authenticateUser && authResult.data.authenticateUser.jwtToken) {
-        console.log("Authentication successful!");
-        dispatch(addUser(user))
+        dispatch(addUserJWT(authResult.data.authenticateUser.jwtToken));
+        console.log(userJwt, 'jwt user')
+        setMessage('Authentication successful!');
         setTimeout(() => {
-          setMessage('Authentication successful!')
           onClose();
         }, 3000);
       } else {
         console.error("Authentication failed");
-        setMessage('Authentication failed. Please check your credentials!')
+        setMessage('Authentication failed. Please check your credentials!');
       }
-      reset()
+      reset();
     } catch (error) {
       console.error("Error during authentication:", error);
-      setMessage('An unexpected error occurred. Please try again later.')
+      setMessage('An unexpected error occurred. Please try again later.');
     }
   };
 
@@ -77,8 +72,8 @@ export const LoginForm: React.FC<Props> = memo(({ onClose }) => {
     <div className="login">
       <div className="login__top">
         <h2 className="login__title">
-          {!!message ? (
-            <span className={user ? 'login__success-title' : 'login__warn-title'}>{message}</span>
+          {message ? (
+            <span className={userJwt ? 'login__success-title' : 'login__warn-title'}>{message}</span>
           ) : (
             'Login to your personal account'
           )}

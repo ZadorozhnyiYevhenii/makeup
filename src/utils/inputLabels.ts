@@ -16,6 +16,9 @@ export namespace UserInfoTitles {
     street: 'Your street*',
     paymentMethod: 'Your payment method*',
     house: 'Your house',
-    region: 'Your region*'
-  }
-}
+    region: 'Your region*',
+    recipientFirstName: 'Your recipitent first name*',
+    recipientLastName: 'Your recipient last name*',
+    recipientPhoneNumber: 'Your recipient phone number*'
+  };
+};

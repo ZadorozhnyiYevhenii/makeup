@@ -14,6 +14,7 @@ mutation MyMutation($newShippingInfo: NewShippingInfo!, $orderDetailsInfo: [NewO
     orderInfo: $orderInfo,
   ) {
     created
+    paymentMethod
     id
     orderDetails {
       id

@@ -45,9 +45,9 @@ export const AddProductForm = () => {
 
   const handleSuccessMessage = () => {
     setSuccessMessage(true);
-    // setTimeout(() => {
-    //   setSuccessMessage(false);
-    // }, 3000);
+    setTimeout(() => {
+      setSuccessMessage(false);
+    }, 3000);
   };
 
   const onSubmit: SubmitHandler<IProd> = async (data) => {

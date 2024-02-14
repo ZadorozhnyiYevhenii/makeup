@@ -1,3 +1,5 @@
+import { IOrder } from "./IOrder";
+
 export interface IUser {
   id: number;
   firstName: string;
@@ -7,4 +9,6 @@ export interface IUser {
   email: string;
   password: string;
   jwtToken: string;
+  shippingInfos: IOrder[];
+  isEmailVerified: boolean;
 };

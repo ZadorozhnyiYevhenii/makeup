@@ -2,12 +2,10 @@ import { handleSwipe } from "./swipe";
 
 
 describe('handleSwipe', () => {
-  // Mock functions for testing
   const mockNextSlide = jest.fn();
   const mockPrevSlide = jest.fn();
 
   afterEach(() => {
-    // Clear mock function calls after each test
     jest.clearAllMocks();
   });
 

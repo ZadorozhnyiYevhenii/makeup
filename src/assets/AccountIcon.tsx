@@ -2,10 +2,10 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useAppSelector } from '../app/hooks';
 
 export const AccountIcon = () => {
-  const user = useAppSelector(state => state.user.user);
+  const userJWT = useAppSelector(state => state.user.userJWT);
   return (
     <>
-      {!!user ? (
+      {!!userJWT ? (
         <PersonIcon />
       ) : (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="black">

@@ -3,14 +3,14 @@ import { useAppSelector } from "../../app/hooks";
 import cn from 'classnames';
 import { CartList } from "../../components/CartList/CartList";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import './CheckoutPage.scss';
 import { CheckoutExistingUserForm } from "../../components/CheckoutComponents/CheckoutExistingUserForm/CheckoutExistingUserForm";
 import { CheckoutForm } from "../../components/CheckoutComponents/CheckoutFormWrapper/CheckoutFormWrapper";
+import './CheckoutPage.scss';
 
 export const CheckOutPage = () => {
   const total = useAppSelector(state => state.cart.totalAmount);
   const [toggleTitle, setToggleTitle] = useState(false);
-  const user = useAppSelector(state => state.user.user);
+  const userJWT = useAppSelector(state => state.user.userJWT);
 
   const handleOpenCartList = () => {
     setToggleTitle(prev => !prev);
@@ -48,7 +48,7 @@ export const CheckOutPage = () => {
         </div>
       </div>
       <div className="checkout__form">
-        {!user ? (
+        {!userJWT ? (
           <CheckoutForm />
         ) : (
           <CheckoutExistingUserForm />

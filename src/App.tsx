@@ -1,61 +1,48 @@
-import { Suspense, lazy } from 'react'
+import { Suspense, } from 'react';
 import { Header } from "./components/HeaderComponents/Header/Header";
-import { Route, Routes } from 'react-router-dom';
-import { HomePage } from './pages/HomePage/HomePage';
-import { BackToTopButton } from './components/BackToTopButton/BackToTopButton';
-import { ErrorPage } from './pages/404/404';
-import { useAppSelector } from './app/hooks';
-import { UserPage } from './pages/UserPage/UserPage';
+import { Routes, Route } from 'react-router-dom';
 import { Footer } from './components/FooterComponents/Footer/Footer';
 import { Loader } from './components/Loader/Loader';
-import { SearchedPage } from './pages/SearchedPage/SearchedPage';
-import './App.scss';
-const ProductCardPage = lazy(() => import("./pages/ProductCardPage/ProductCardPage").then((module) => ({ default: module.ProductCardPage })));
-const CategoriesPage = lazy(() => import('./pages/CategoriesPage/CategoriesPage').then((module) => ({ default: module.CategoriesPage })));
-const AdminPageProduct = lazy(() => import('./pages/AdminPageAdd/AdminPageAdd').then((module) => ({ default: module.AdminPageProduct })));
-const AdminPage = lazy(() => import('./pages/AdminPage/AdminPage').then((module) => ({ default: module.AdminPage })));
-const CheckOutPage = lazy(() => import('./pages/CheckOutPage/CheckOutPage').then((module) => ({ default: module.CheckOutPage })));
-const AdminPageChange = lazy(() => import('./pages/AdminPageChange/AdminPageChange').then((module) => ({ default: module.AdminPageChange })));
-const AdminPageDeleteProduct = lazy(() => import('./pages/AdminPageDelete/AdminPageDelete').then((module) => ({ default: module.AdminPageDeleteProduct })));
-const Cart = lazy(() => import('./pages/Cart/Cart').then((module) => ({ default: module.Cart })));
-const RegisterPage = lazy(() => import('./pages/RegisterPage/RegisterPage').then((module) => ({ default: module.RegisterPage })));
+import { router } from './router';
+import { BackToTopButton } from './components/BackToTopButton/BackToTopButton';
+import './App.scss'
 
 function App() {
-  const user = useAppSelector(state => state.user.user);
+const allPaths = router.map(route => route.children?.map(r => r.children?.map(childRoute => childRoute))).flat();
+
+const adminChildrenPathes = allPaths.filter(p => p).flat();
 
   return (
     <div className="App">
-      <Header />
-
-      <Suspense fallback={<Loader />}>
-        <Routes>
-          <Route path='/makeup/'>
-            <Route index element={<HomePage />} />
-            <Route path='product/:id' element={<ProductCardPage />} />
-            <Route path='category/:id' element={<CategoriesPage />} />
-            <Route path='search' element={<SearchedPage />} />
-            <Route path='cart' element={<Cart />} />
-            <Route path='register' element={<RegisterPage />} />
-            {!!user && (
-              <Route path='user' element={<UserPage />} />
-            )}
-            <Route path='admin/'>
-              <Route index element={<AdminPage />} />
-              <Route path='addproduct' element={<AdminPageProduct />} />
-              <Route path='changeproduct' element={<AdminPageChange />} />
-              <Route path='deleteproduct' element={<AdminPageDeleteProduct />} />
-            </Route>
-
-            <Route path='checkout' element={<CheckOutPage />} />
-
-            <Route path='*' element={<ErrorPage />} />
-          </Route>
-        </Routes>
-      </Suspense>
-      <BackToTopButton />
-
-      {window.location.pathname !== '/makeup/checkout' && <Footer />}
-    </div>
+    <Header />
+    <Suspense fallback={<Loader />}>
+      <Routes>
+        {router.map((route, index) => (
+          <Route
+            key={index}
+            path={route.path}
+            element={route.element}
+          />
+        ))}
+        {router.map(route => route.children && route.children.map((childRoute, childIndex) => (
+          <Route
+            key={childIndex}
+            path={childRoute.path}
+            element={childRoute.element}
+          />
+        )))}
+        {adminChildrenPathes && adminChildrenPathes.map((childRoute, childIndex) => (
+          <Route
+            key={childIndex}
+            path={childRoute?.path}
+            element={childRoute?.element}
+          />
+        ))}
+      </Routes>
+    </Suspense>
+    <BackToTopButton />
+    {window.location.pathname !== '/makeup/checkout' && <Footer />}
+  </div>
   );
 }
 

@@ -11,17 +11,19 @@ import { ADD_ORDER_NEW_USER, MutationAddOrder } from "../../../graphql/mutations
 import { UserInfoTitles } from "../../../utils/inputLabels";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { QueryComponent } from "../../QueryComponent/QueryComponent";
-import { Link } from "react-router-dom";
 import { clearCart } from "../../../app/slices/cartSlice";
 import { UserInputWithLabel } from "../../UserComponents/UserInputWithLabel/UserInputWithLabel";
 import { UserSelectWithLabel } from "../../UserComponents/UserSelectWithLabel/UserSelectWithLabel";
 import { TabWrapper } from "../../TabComponents/TabWrapper/TabWrapper";
 import './CheckoutNewUserForm.scss';
+import { CheckoutSuccessMessage } from "../CheckoutSuccessMessage/CheckoutSuccessMessage";
 
 export const CheckoutNewUserForm = () => {
   const [activePart, setActivePart] = useState(CheckoutTitlesEnum.SubTitle.PERSONAL_INFO);
   const [successMessage, setSuccessMessage] = useState('');
+
   const { register, handleSubmit, reset, formState: { errors }, watch } = useForm<IUser | IOrder>();
+
   const { cart, counts } = useAppSelector(state => state.cart);
   const dispatch = useAppDispatch();
 
@@ -30,32 +32,32 @@ export const CheckoutNewUserForm = () => {
 
   const [addOrder, { loading, error }] = useMutation<MutationAddOrder>(ADD_ORDER_NEW_USER);
 
-  const onSubmit: SubmitHandler<IUser | IOrder> = async (data) => {
+  const onSubmit: SubmitHandler<IUser | IOrder> = async (formData) => {
     try {
       const orderDetailsInfo = cart.map(cartItem => ({
         variationDetailsId: cartItem.variationDetailsId,
         quantity: counts[`${cartItem.id}_${cartItem.variationName}`],
       }));
-      const { data: result } = await addOrder({
+      const { data } = await addOrder({
         variables: {
           newShippingInfo: {
-            city: (data as IOrder).city,
-            street: (data as IOrder).street,
-            house: (data as IOrder).house,
-            region: (data as IOrder).region,
-            recipientFirstName: (data as IOrder).recipientFirstName,
-            recipientLastName: (data as IOrder).recipientLastName,
-            recipientPhoneNumber: (data as IOrder).recipientPhoneNumber
+            city: (formData as IOrder).city,
+            street: (formData as IOrder).street,
+            house: (formData as IOrder).house,
+            region: (formData as IOrder).region,
+            recipientFirstName: (formData as IOrder).recipientFirstName,
+            recipientLastName: (formData as IOrder).recipientLastName,
+            recipientPhoneNumber: (formData as IOrder).recipientPhoneNumber
           },
           orderInfo: {
-            paymentMethod: (data as IOrder).paymentMethod,
-            userComment: (data as IOrder).userComment
+            paymentMethod: (formData as IOrder).paymentMethod,
+            userComment: (formData as IOrder).userComment
           },
           orderDetailsInfo,
         }
       });
 
-      console.log('Success', result?.addOrder)
+      console.log('Success', data?.addOrder)
       dispatch(clearCart())
       reset();
       setSuccessMessage('Your order successfully added!')
@@ -135,10 +137,7 @@ export const CheckoutNewUserForm = () => {
           </div>
         </div>
       ) : (
-        <div className="checkout-user-form__modal">
-          <p className="checkout-user-form__modal-message">{successMessage}</p>
-          <Link to={'/makeup'} className="checkout-user-form__modal-link">Shopping more</Link>
-        </div>
+        <CheckoutSuccessMessage message={successMessage} />
       )}
     </QueryComponent>
   )

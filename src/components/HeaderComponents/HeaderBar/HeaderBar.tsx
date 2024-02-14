@@ -37,7 +37,7 @@ export const HeaderBar: FC<Props> = ({
   onSearchClose
 }) => {
   const { cart } = useAppSelector(state => state.cart);
-  const user = useAppSelector(state => state.user.user);
+  const userJWT = useAppSelector(state => state.user.userJWT);
   const location = useLocation();
 
   const cartQuantity = !!cart?.length ? cart?.length : '';
@@ -78,7 +78,7 @@ export const HeaderBar: FC<Props> = ({
         <Logo />
       </Link>
       <div className="header-bar__right">
-        {!user ? (
+        {!userJWT ? (
           <div
             className="header-bar__account"
             onClick={onLoginOpen}
@@ -88,7 +88,7 @@ export const HeaderBar: FC<Props> = ({
         ) : (
           <Link
             className="header-bar__account"
-            to='makeup/user'
+            to='/makeup/user'
           >
             <AccountIcon />
           </Link>
